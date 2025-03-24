@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class Inventory extends JPanel {
+public class InventoryPage extends JPanel {
 
     private final Color darkcolor = Color.BLACK;
     private final Color lightcolor = Color.WHITE;
@@ -40,7 +40,22 @@ public class Inventory extends JPanel {
     }
 
 
-    public Inventory() {
+    private void sortInventory() {
+        Pages.callEvent("sortInventory");
+    }
+
+
+    private void backButtonPressed() {
+        Interface.changePage("home");
+    }
+
+
+    private void gotoNewItemPage() {
+        Interface.changePage("newitem");
+    }
+
+
+    public InventoryPage() {
         setLayout(null);
         setBackground(Color.DARK_GRAY);
 
@@ -48,19 +63,19 @@ public class Inventory extends JPanel {
         backButton.setBackground(lightcolor);
         backButton.setForeground(darkcolor);
         backButton.setBounds(30, 10, 80, 30);
-        backButton.addActionListener(_ -> Interface.changePage("home"));
+        backButton.addActionListener(_ -> backButtonPressed());
 
         JButton sortButton = new JButton("Sort");
         sortButton.setBackground(lightcolor);
         sortButton.setForeground(darkcolor);
         sortButton.setBounds(475, 10, 80, 30);
-        sortButton.addActionListener(_ -> Pages.callEvent("sortInventory"));
+        sortButton.addActionListener(_ -> sortInventory());
         
         JButton topMiddleButton = new JButton("Add New");
         topMiddleButton.setBackground(lightcolor);
         topMiddleButton.setForeground(darkcolor);
         topMiddleButton.setBounds(Interface.getCenterX(120), 10, 120, 30);
-        topMiddleButton.addActionListener(_ -> Interface.changePage("newitem"));
+        topMiddleButton.addActionListener(_ -> gotoNewItemPage());
 
         String[] columns = {"ID", "Barcode", "Name", "Location", "Type", "Description", "Price", "Stock"};
         tableModel = new DefaultTableModel(columns, 0) {

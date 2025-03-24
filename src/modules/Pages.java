@@ -4,9 +4,9 @@ public class Pages {
 
     static final pages.Home HomePage = new pages.Home();
     static final pages.Login LoginPage = new pages.Login();
-    static final pages.Inventory InventoryPage = new pages.Inventory();
+    static final pages.InventoryPage InventoryPage = new pages.InventoryPage();
     static final pages.NewItem NewItemPage = new pages.NewItem();
-    static final pages.Transaction TransactionPage = new pages.Transaction();
+    static final pages.TransactionPage TransactionPage = new pages.TransactionPage();
     static final pages.ItemSelect itemSelectPage = new pages.ItemSelect();
 
 
@@ -24,7 +24,14 @@ public class Pages {
             break;
             case "cellSelected": Inventory.cellSelected(); 
             break;
-            case "itemSelect": Inventory.gotoItemSelection();
+            case "transaction": Transaction.gotoTransactionPage();
+            break;
+            case "addToCustomerList": 
+            case "addToInventoryList": Transaction.gotoItemSelection(action);
+            break;
+            case "addSelected": Transaction.addSelectedItem(); 
+            break;
+            case "listRowSelected": Transaction.listRowSelected();
             break;
             default: System.out.println("Unmapped Action: "+action);
         }

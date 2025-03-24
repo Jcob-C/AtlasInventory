@@ -29,13 +29,12 @@ public class Inventory {
                     Interface.popupMessage("Selected Row Deleted");
             break;
         }
-        gotoInventory();
+        updateCachedInventory();
     }
 
 
     static void gotoInventory() {
-        cachedInventory = Database.getTable("inventory", 8);
-        Pages.InventoryPage.updateTable(cachedInventory);
+        updateCachedInventory();
         Interface.changePage("inventory");
     }
 
@@ -69,10 +68,19 @@ public class Inventory {
     }
 
 
-    static void gotoItemSelection() {
+    static String[] getCachedInventoryRow(int i) {
+        return cachedInventory[i];
+    }
+
+
+    static void updateCachedInventory() {
         cachedInventory = Database.getTable("inventory", 8);
-        Pages.itemSelectPage.updateTable(cachedInventory);
-        Interface.changePage("itemSelect");
+        Pages.InventoryPage.updateTable(cachedInventory);
+    }
+
+
+    static String[][] getCachedInventory() {
+        return cachedInventory;
     }
  
 
@@ -137,7 +145,6 @@ public class Inventory {
         } 
         catch (Exception _) {
             Interface.popupMessage("Double.parseDouble() Error");
-            System.exit(0);
         } 
         return 0d;
     }

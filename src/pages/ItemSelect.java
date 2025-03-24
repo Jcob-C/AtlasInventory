@@ -1,5 +1,6 @@
 package pages;
 import modules.Interface;
+import modules.Pages;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -12,15 +13,14 @@ public class ItemSelect extends JPanel {
 
     private final Color darkcolor = Color.BLACK;
     private final Color lightcolor = Color.WHITE;
-
     private int selectedRow;
 
     private JTable table;
     private DefaultTableModel tableModel;
 
 
-    public Object getSelectedItemID() {
-        return tableModel.getValueAt(selectedRow, 0);
+    public int getSelectedRow() {
+        return selectedRow;
     }
 
 
@@ -63,6 +63,7 @@ public class ItemSelect extends JPanel {
                 int row = table.getSelectedRow();
                 if (row != -1) {
                     selectedRow = row;
+                    Pages.callEvent("addSelected");
                 }
             }
         });
@@ -73,6 +74,4 @@ public class ItemSelect extends JPanel {
         add(backButton);
         add(scrollPane);
     }    
-
-
 }

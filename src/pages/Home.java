@@ -25,7 +25,7 @@ public class Home extends JPanel {
         button2.setBackground(lightcolor);
         button2.setForeground(darkcolor);
         button2.setBounds(Interface.getCenterX(150), 90, 150, 40);
-        button2.addActionListener(_ -> Interface.changePage("transaction"));
+        button2.addActionListener(_ -> Pages.callEvent("transaction"));
 
         JButton button3 = new JButton("Button 3");
         button3.setBackground(lightcolor);
