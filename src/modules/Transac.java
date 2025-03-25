@@ -1,6 +1,6 @@
 package modules;
 
-public class Transaction {
+public class Transac {
 
     private static String 
         selectedTable, 
@@ -71,7 +71,7 @@ public class Transaction {
         if(table == null) return 0;
         float totalPrice = 0;
         for (String[] x : table) {
-            totalPrice += Float.parseFloat(x[2]);
+            totalPrice += Float.parseFloat(x[2]) * Float.parseFloat(x[4]);
         }
         return totalPrice;
     }

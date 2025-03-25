@@ -98,7 +98,7 @@ public class TransactionPage extends JPanel {
         addCustomerButton.addActionListener(_ -> addToCustomerPressed());
         add(addCustomerButton);
         
-        String[] columns = {"ID", "Name", "Price", "Status", "Quantity"};
+        String[] columns = {"ID", "Name", "Price", "Condition", "Quantity"};
         customerTableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {

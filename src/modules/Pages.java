@@ -24,14 +24,14 @@ public class Pages {
             break;
             case "cellSelected": Inventory.cellSelected(); 
             break;
-            case "transaction": Transaction.gotoTransactionPage();
+            case "transaction": Transac.gotoTransactionPage();
             break;
             case "addToCustomerList": 
-            case "addToInventoryList": Transaction.gotoItemSelection(action);
+            case "addToInventoryList": Transac.gotoItemSelection(action);
             break;
-            case "addSelected": Transaction.addSelectedItem(); 
+            case "addSelected": Transac.addSelectedItem(); 
             break;
-            case "listRowSelected": Transaction.listRowSelected();
+            case "listRowSelected": Transac.listRowSelected();
             break;
             default: System.out.println("Unmapped Action: "+action);
         }
