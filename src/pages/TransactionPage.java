@@ -18,6 +18,12 @@ public class TransactionPage extends JPanel {
     private JTable customerTable, inventoryTable;
     private DefaultTableModel customerTableModel, inventoryTableModel;
     private JLabel customerTotalLabel, inventoryTotalLabel;
+
+    private final JButton 
+    orderButton = new JButton("Order"),
+    sellButton = new JButton("Sell"), 
+    refundButton = new JButton("Refund"), 
+    swapButton = new JButton("Swap");
     
     private int selectedRow = -1;
     private String selectedTable = null;
@@ -52,6 +58,14 @@ public class TransactionPage extends JPanel {
                 customerTableModel.addRow(customerData[i]);
             }
         }
+    }
+
+
+    public void setButtonsVisibility(boolean refund, boolean swap, boolean order, boolean sell) {
+        refundButton.setVisible(refund);
+        swapButton.setVisible(swap);
+        orderButton.setVisible(order);
+        sellButton.setVisible(sell);
     }
 
 
@@ -143,7 +157,8 @@ public class TransactionPage extends JPanel {
         addInventoryButton.addActionListener(_ -> addToInventoryPressed());
         add(addInventoryButton);
         
-        inventoryTableModel = new DefaultTableModel(columns, 0) {
+        String[] columns2 = {"ID", "Name", "Price", "Quantity"};
+        inventoryTableModel = new DefaultTableModel(columns2, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -174,11 +189,6 @@ public class TransactionPage extends JPanel {
         inventoryTotalLabel.setForeground(lightcolor);
         inventoryTotalLabel.setBounds(offsetX + 310, 30, 280, 15);
         add(inventoryTotalLabel);
-        
-        JButton orderButton = new JButton("Order");
-        JButton sellButton = new JButton("Sell");
-        JButton refundButton = new JButton("Refund");
-        JButton swapButton = new JButton("Swap");
         
         orderButton.setBackground(lightcolor);
         sellButton.setBackground(lightcolor);

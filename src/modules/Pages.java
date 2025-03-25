@@ -33,6 +33,14 @@ public class Pages {
             break;
             case "listRowSelected": Transac.listRowSelected();
             break;
+            case "sell":
+            break;
+            case "refund":
+            break;
+            case "order":
+            break;
+            case "swap":
+            break;
             default: System.out.println("Unmapped Action: "+action);
         }
     }

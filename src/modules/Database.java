@@ -154,6 +154,25 @@ public class Database {
     }
 
 
+    public static int getInventoryQuantity(int id) {
+        String query = "SELECT stock FROM inventory WHERE id = ?";
+        try (
+            Connection conn = connectToDB();
+            PreparedStatement queryBuild = conn.prepareStatement(query);
+            ) 
+        {
+            queryBuild.setInt(1, id);
+            try (ResultSet result = queryBuild.executeQuery()) {
+                if(result.next()) return result.getInt(1);
+            }
+        }
+        catch (Exception e) { 
+            Interface.popupMessage("Get Stock Error: "+e.getMessage());
+        }
+        return -1;
+    }
+
+
     private static Connection connectToDB() throws Exception {
         return DriverManager.getConnection(urlDB, userDB, passDB);
     }

@@ -13,6 +13,7 @@ public class Transac {
         inventoryTable = null;
         Pages.TransactionPage.updateTotalPrices(0,0);
         Pages.TransactionPage.updateTablesDisplay(inventoryTable, customerTable);
+        Pages.TransactionPage.setButtonsVisibility(false,false,false,false);
         Interface.changePage("transaction");
     }
 
@@ -35,6 +36,12 @@ public class Transac {
             "OK",
             "1"
         };
+        String[] newRow2 = new String[] {
+            cachedInventory[selectedRow][0],
+            cachedInventory[selectedRow][3],
+            cachedInventory[selectedRow][6],
+            "1"
+        };
         int rowIndex;
         switch (selectedTable) {
             case "addToCustomerList":
@@ -49,15 +56,16 @@ public class Transac {
             case "addToInventoryList":
                 rowIndex = findIDIn(inventoryTable, newRow[0]);
                 if (findIDIn(inventoryTable, newRow[0]) == -1) {
-                    inventoryTable = addToTable(inventoryTable, newRow);
+                    inventoryTable = addToTable(inventoryTable, newRow2);
                 }
                 else {
                     addQuantity("inventory", rowIndex);
                 }
             break;
         }
+        setButtonsFromTable();
         Pages.TransactionPage.updateTablesDisplay(inventoryTable, customerTable);
-        Pages.TransactionPage.updateTotalPrices(getTotalPrice(customerTable),getTotalPrice(inventoryTable));
+        Pages.TransactionPage.updateTotalPrices(getTotalPrice(customerTable,4),getTotalPrice(inventoryTable,3));
         Interface.changePage("transaction");
     }
 
@@ -67,11 +75,27 @@ public class Transac {
     }
 
 
-    private static float getTotalPrice(String[][] table) {
+    private static void setButtonsFromTable() {
+        if (inventoryTable == null && customerTable == null) {
+            Pages.TransactionPage.setButtonsVisibility(false, false, false, false);
+        }
+        else if (inventoryTable != null && customerTable != null) {
+            Pages.TransactionPage.setButtonsVisibility(false, true, false, false);
+        }
+        else if (inventoryTable == null && customerTable != null) {
+            Pages.TransactionPage.setButtonsVisibility(true, false, false, false);
+        }
+        else if (inventoryTable != null && customerTable == null) {
+            Pages.TransactionPage.setButtonsVisibility(false, false, true, true);
+        }
+    }
+
+
+    private static float getTotalPrice(String[][] table, int quantityIndex) {
         if(table == null) return 0;
         float totalPrice = 0;
         for (String[] x : table) {
-            totalPrice += Float.parseFloat(x[2]) * Float.parseFloat(x[4]);
+            totalPrice += Float.parseFloat(x[2]) * Float.parseFloat(x[quantityIndex]);
         }
         return totalPrice;
     }
@@ -83,7 +107,7 @@ public class Transac {
                 customerTable[index][4] = ""+(Integer.parseInt(customerTable[index][4])+1);
             break;
             case "inventory": 
-                inventoryTable[index][4] = ""+(Integer.parseInt(inventoryTable[index][4])+1);
+                inventoryTable[index][3] = ""+(Integer.parseInt(inventoryTable[index][3])+1);
             break;
         }
     }
