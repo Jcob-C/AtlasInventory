@@ -70,6 +70,7 @@ public class Transact {
 
 
     private static void updateTransactionPage() {
+        combineCustomerListRepeats();
         updateDynamicButtons();
         transactPage.updateTablesDisplay(inventoryTable, customerTable);
         transactPage.updateTotalPrices(totalPrice(customerTable,4),totalPrice(inventoryTable,3));
@@ -136,13 +137,61 @@ public class Transact {
                     inventoryTable = tableWithoutRow(inventoryTable, selectedRow);
             break;
             case 1:
-
+                String newQuantity = Interface.popupInput("Enter new Quantity");
+                if (isInt(newQuantity) && 0 < toInt(newQuantity)) {
+                    if (selectedTable.equals("customer"))
+                        customerTable[selectedRow][4] = newQuantity;
+                    else
+                        inventoryTable[selectedRow][3] = newQuantity;
+                }
+                else {
+                    Interface.popupMessage("Invalid Quantity");
+                }
             break;
             case 2:
                 changeItemCondition(selectedRow);
             break;
         }
         updateTransactionPage();
+    }
+
+
+    private static void combineCustomerListRepeats() {
+        if (customerTable == null) return;
+        boolean dupes = true;
+        while (dupes) {
+            dupes = false;
+            for (int i = 0; i < customerTable.length; i++) {
+                for (int o = 0; o < customerTable.length; o++) {
+                    if (i != o && customerTable[i][0].equals(customerTable[o][0]) && customerTable[i][3].equals(customerTable[o][3])) {
+                        customerTable[i][4] = String.valueOf(toInt(customerTable[i][4])+toInt(customerTable[o][4]));
+                        customerTable = tableWithoutRow(customerTable, o);
+                        dupes = true;
+                    }
+                }
+            }
+        }
+    }
+
+
+    private static boolean isInt(String intText) {
+        try {
+            Integer.parseInt(intText);
+            return true;
+        } catch (Exception _) {
+            return false;
+        }
+    }  
+    
+    
+    private static Integer toInt(String numString) {
+        try {
+            return Integer.parseInt(numString);
+        } 
+        catch (Exception _) {
+            Interface.popupMessage("Integer.parseInt() Error");
+            return null;
+        } 
     }
 
 

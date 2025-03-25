@@ -172,6 +172,6 @@ public class Inventory {
         catch (Exception _) {
             Interface.popupMessage("Double.parseDouble() Error");
         } 
-        return 0d;
+        return 0;
     }
 }

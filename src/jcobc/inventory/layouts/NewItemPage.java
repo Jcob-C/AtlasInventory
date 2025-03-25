@@ -134,7 +134,7 @@ public class NewItemPage extends JPanel {
         add(tfStock);
         
         int buttonsY = startY + 2 * (labelHeight + fieldHeight + verticalGap) + fieldHeight + 2 * verticalGap + labelHeight + fieldHeight + 20;
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton("Back");
         cancelButton.setBackground(lightcolor);
         cancelButton.setForeground(darkcolor);
         cancelButton.setBounds((600 - 80) / 2 - 50, buttonsY, 80, 30);

@@ -9,7 +9,7 @@ public class HomePage extends JPanel {
 
     private final Color darkcolor = Color.BLACK;
     private final Color lightcolor = Color.WHITE;
-
+    
     
     public HomePage() {
         setLayout(null);
