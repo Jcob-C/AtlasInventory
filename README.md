@@ -35,7 +35,6 @@ CREATE TABLE sales_items (
     sale_id INT NOT NULL,
     item_id INT NOT NULL,
     quantity INT NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
     FOREIGN KEY (item_id) REFERENCES inventory(id) ON DELETE CASCADE
 );
@@ -43,6 +42,8 @@ CREATE TABLE sales_items (
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    payment_id VARCHAR(20) NOT NULL,
+    customer_address VARCHAR(50) NOT NULL,
     total_price DECIMAL(10,2) NOT NULL DEFAULT 0.00
 );
 
@@ -51,7 +52,6 @@ CREATE TABLE orders_items (
     order_id INT NOT NULL,
     item_id INT NOT NULL,
     quantity INT NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (item_id) REFERENCES inventory(id) ON DELETE CASCADE
 );

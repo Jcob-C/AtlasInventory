@@ -53,7 +53,7 @@ public class Inventory {
         String selectedCellContent = cachedInventory[selectedCell[0]][selectedCell[1]],
             selectedColumnName = columnNames[selectedCell[1]];
             
-        switch (Interface.popupOptionsChoiceIndex(new String[]{"Edit Attribute","Delete Row"}, selectedColumnName+": "+selectedCellContent)) {
+        switch (Interface.popupOptionsChoiceIndex(new String[]{"Edit Attribute","Delete Row", "Add Stock"}, selectedColumnName+": "+selectedCellContent)) {
             case 0:
                 String newValue = Interface.popupInput("Enter the new "+selectedColumnName);
                 if (
@@ -67,6 +67,12 @@ public class Inventory {
             case 1:
                 if (Database.deleteRow("inventory", selectedID))
                     Interface.popupMessage("Selected Row Deleted");
+            break;
+            case 2:
+                Integer newStock = Interface.popupIntegerInput("Enter Quantity to Add");
+                if (newStock != null) {
+                    Database.editInventoryAttribute(selectedID, 7, String.valueOf(newStock+toInteger(cachedInventory[selectedCell[0]][7])),"int");
+                }
             break;
         }
         updateCachedInventory();
@@ -161,6 +167,15 @@ public class Inventory {
             case 6: return "double";
             case 7: return "int";
             default: return "string";
+        }
+    }
+
+
+    private static Integer toInteger(String numString) {
+        try {
+            return Integer.parseInt(numString);
+        } catch (Exception e) {
+            return null;
         }
     }
 

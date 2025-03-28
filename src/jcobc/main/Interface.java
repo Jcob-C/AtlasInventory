@@ -79,6 +79,15 @@ public class Interface {
     }
 
 
+    public static Integer popupIntegerInput(String message) {
+        try {
+            return Integer.parseInt(JOptionPane.showInputDialog(message));
+        } catch (Exception _) {
+            return null;
+        }
+    }
+
+
     private static void loadAllPages() {
         Inventory.loadPages();
         Home.loadPages();
