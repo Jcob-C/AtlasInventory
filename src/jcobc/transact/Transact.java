@@ -1,12 +1,13 @@
 package jcobc.transact;
 import jcobc.transact.layouts.*;
 import jcobc.main.*;
-import jcobc.inventory.Inventory;
+
+import jcobc.home.Home;
 
 public class Transact {
 
     private static String 
-        selectedTable, 
+        addToTable,
         customerTable[][], 
         inventoryTable[][];
 
@@ -22,267 +23,185 @@ public class Transact {
 
     public static void callAction(String action) {
         switch(action) {
-            case "gotoTransact": gotoTransactionPage();
+            case "gotoTransact": gotoTransact();
             break;
-            case "gotoHome": Home.callAction("gotoHome");
+            case "gotoHome": gotoHome();
             break;
-            case "addToCustomerList": 
-            case "addToInventoryList": gotoItemSelection(action);
-            break;
-            case "addSelected": addSelectedItem(); 
-            break;
-            case "listRowSelected": listItemSelected();
-            break;
-            case "sell": 
-            break;
-            case "refund":
-            break;
-            case "order":
-            break;
-            case "swap":
-            break;
-            default: System.out.println("Unmapped Action: "+action);
-        }
-    }
-
-
-    private static void gotoTransactionPage() {
-        clearTransactionPage();
-        Interface.changePage("transact");
-    }
-
-
-    private static void gotoItemSelection(String table) {
-        selectedTable = table;
-        Inventory.updateCachedInventory();
-        itemSelectPage.updateTable(Inventory.cachedInventory());
-        Interface.changePage("itemSelect");
-    }
-
-
-    private static void clearTransactionPage() {
-        customerTable = null;
-        inventoryTable = null;
-        transactPage.updateTotalPrices(0,0);
-        transactPage.updateTablesDisplay(inventoryTable, customerTable);
-        transactPage.setButtonsVisibility(false,false,false,false);
-    }
-
-
-    private static void updateTransactionPage() {
-        combineCustomerListRepeats();
-        updateDynamicButtons();
-        transactPage.updateTablesDisplay(inventoryTable, customerTable);
-        transactPage.updateTotalPrices(totalPrice(customerTable,4),totalPrice(inventoryTable,3));
-    }
-
-
-    private static void addSelectedItem() {
-        String cachedInventory[][] = Inventory.cachedInventory();
-        int selectedRow = itemSelectPage.getSelectedRow();
-        String[] 
-        newRow = new String[] {
-            cachedInventory[selectedRow][0],
-            cachedInventory[selectedRow][2],
-            cachedInventory[selectedRow][6],
-            "OK",
-            "1" }, 
-        newRow2 = new String[] {
-            cachedInventory[selectedRow][0],
-            cachedInventory[selectedRow][2],
-            cachedInventory[selectedRow][6],
-            "1" };
-        int rowIndex;
-        switch (selectedTable) {
             case "addToCustomerList":
-                rowIndex = idRowIndex(customerTable, newRow[0]);
-                if (idRowIndex(customerTable, newRow[0]) == -1 || customerTable[rowIndex][3].equals("Defective")) {
-                    customerTable = tableWithNewRow(customerTable, newRow);
-                }
-                else addToQuantity("customer", rowIndex);
+            case "addToInventoryList": gotoItemSelect(action);
             break;
-            case "addToInventoryList":
-                rowIndex = idRowIndex(inventoryTable, newRow[0]);
-                if (idRowIndex(inventoryTable, newRow[0]) == -1) {
-                    inventoryTable = tableWithNewRow(inventoryTable, newRow2);
-                }
-                else addToQuantity("inventory", rowIndex);
+            case "addSelected": addSelected();
             break;
+            case "listRowSelected": editListItem();
+            break;
+            default: Interface.popupMessage("Unmapped Action: "+action);
         }
-        updateTransactionPage();
+    }
+
+
+    private static void gotoTransact() {
+        mergeRepeats();
+        enableAppropriateButtons();
+        transactPage.updateTablesDisplay(inventoryTable, customerTable);
+        transactPage.updateTotalPrices(totalPrice(customerTable), totalPrice(inventoryTable));
         Interface.changePage("transact");
     }
 
 
-    private static void listItemSelected() {
-        int selectedRow = transactPage.getSelectedRow();
-        String 
-        selectedTable = transactPage.getSelectedTable(),
-        options[] = null;
-        
-        if (selectedTable.equals("customer")) 
-            options = new String[]
-                {"Remove Item", "Edit Quantity", "Change Condition"};
-        else if (selectedTable.equals("inventory"))
-            options = new String[]
-                {"Remove Item", "Edit Quantity"};
-
-        int optionSelected = Interface.popupOptionsChoiceIndex(options, "");  
-
-        switch (optionSelected) {
-            case 0:
-                if (selectedTable.equals("customer"))
-                    customerTable = tableWithoutRow(customerTable, selectedRow);
-                else
-                    inventoryTable = tableWithoutRow(inventoryTable, selectedRow);
-            break;
-            case 1:
-                String newQuantity = Interface.popupInput("Enter new Quantity");
-                if (isInt(newQuantity) && 0 < toInt(newQuantity)) {
-                    if (selectedTable.equals("customer"))
-                        customerTable[selectedRow][4] = newQuantity;
-                    else
-                        inventoryTable[selectedRow][3] = newQuantity;
-                }
-                else {
-                    Interface.popupMessage("Invalid Quantity");
-                }
-            break;
-            case 2:
-                changeItemCondition(selectedRow);
-            break;
-        }
-        updateTransactionPage();
+    private static void gotoHome() {
+        customerTable = null; inventoryTable = null;
+        Home.callAction("gotoHome");
     }
 
 
-    private static void combineCustomerListRepeats() {
-        if (customerTable == null) return;
-        boolean dupes = true;
-        while (dupes) {
-            dupes = false;
-            for (int i = 0; i < customerTable.length; i++) {
-                for (int o = 0; o < customerTable.length; o++) {
-                    if (i != o && customerTable[i][0].equals(customerTable[o][0]) && customerTable[i][3].equals(customerTable[o][3])) {
-                        customerTable[i][4] = String.valueOf(toInt(customerTable[i][4])+toInt(customerTable[o][4]));
-                        customerTable = tableWithoutRow(customerTable, o);
-                        dupes = true;
-                    }
-                }
-            }
-        }
-    }
-
-
-    private static boolean isInt(String intText) {
-        try {
-            Integer.parseInt(intText);
-            return true;
-        } catch (Exception _) {
-            return false;
-        }
-    }  
-    
-    
-    private static Integer toInt(String numString) {
-        try {
-            return Integer.parseInt(numString);
-        } 
-        catch (Exception _) {
-            Interface.popupMessage("Integer.parseInt() Error");
-            return null;
-        } 
-    }
-
-
-    private static void changeItemCondition(int rowIndex) {
-        switch (customerTable[rowIndex][3]) {
-            case "OK": customerTable[rowIndex][3] = "Defective";
-            break;
-            case "Defective": customerTable[rowIndex][3] = "OK";
-            break;
-        }
-    }
-
-
-    private static void updateDynamicButtons() {
-        if (inventoryTable == null && customerTable == null) {
-            transactPage.setButtonsVisibility(false, false, false, false);
-        }
-        else if (inventoryTable != null && customerTable != null) {
-            transactPage.setButtonsVisibility(false, true, false, false);
-        }
-        else if (inventoryTable == null && customerTable != null) {
-            transactPage.setButtonsVisibility(true, false, false, false);
-        }
-        else if (inventoryTable != null && customerTable == null) {
-            transactPage.setButtonsVisibility(false, false, true, true);
-        }
-    }
-
-
-    private static void addToQuantity(String table, int index) {
-        switch (table) {
-            case "customer": 
-                customerTable[index][4] = ""+(Integer.parseInt(customerTable[index][4])+1);
-            break;
-            case "inventory": 
-                inventoryTable[index][3] = ""+(Integer.parseInt(inventoryTable[index][3])+1);
-            break;
-        }
-    }
-
-
-    private static float totalPrice(String[][] table, int quantityIndex) {
-        if(table == null) return 0;
-        float totalPrice = 0;
-        for (String[] x : table) {
-            totalPrice += Float.parseFloat(x[2]) * Float.parseFloat(x[quantityIndex]);
+    private static double totalPrice(String[][] table) {
+        if (table == null) return 0;
+        double totalPrice = 0;
+        for (String x[] : table) {
+            totalPrice += (Main.toDouble(x[2]) * Main.toInteger(x[x.length-1]));
         }
         return totalPrice;
     }
 
 
-    private static int idRowIndex(String[][] table, String id) {
-        if (table == null) return -1;
-        for (int i = 0; i < table.length; i++) {
-            if (table[i][0].equals(id)) {
-                return i;
-            }
+    private static void enableAppropriateButtons() {
+        if (customerTable == null && inventoryTable == null) {
+            transactPage.setButtonsVisibility(false, false, false, false);
         }
-        return -1;
+        else if (customerTable == null && inventoryTable != null) {
+            transactPage.setButtonsVisibility(false, false, true, true);
+        }
+        else if (customerTable != null && inventoryTable == null) {
+            transactPage.setButtonsVisibility(true, false, false, false);
+        }
+        else if (customerTable != null && inventoryTable != null) {
+            transactPage.setButtonsVisibility(false, true, false, false);
+        }
     }
 
 
-    private static String[][] tableWithNewRow(String[][] table, String[] newRow) {
-        if (table == null) {
-            return new String[][]{newRow};
+    public static void gotoItemSelect(String action) {
+        switch (action) {
+            case "addToCustomerList": addToTable = "cus";
+            break;
+            case "addToInventoryList": addToTable = "inv";
+            break;
         }
-        String[][] newTable = new String[table.length+1][table[0].length];
-        for (int i = 0; i < table.length; i++) {
-            for (int o = 0; o < table[i].length; o++) {
-                newTable[i][o] = table[i][o];
-            }
-        }
-        for (int i = 0; i < newRow.length; i++) {
-            newTable[table.length][i] = newRow[i];
-        }
-        return newTable;
+        itemSelectPage.updateTablesDisplay(Database.updateInventoryCache());
+        Interface.changePage("itemSelect");
     }
 
 
-    private static String[][] tableWithoutRow(String[][] table, int rowIndex) {
-        if (table == null || table.length == 1) return null;
-        String[][] newTable = new String[table.length-1][table[0].length];
-        int offset = 0;
-        for (int i = 0; i < newTable.length; i++) {
-            if (rowIndex == i) {
-                offset = 1;
-            }
-            for (int o = 0; o < table[i].length; o++) {
-                newTable[i][o] = table[i+offset][o];
+    private static void addSelected() {
+        if (addToTable.equals("cus")) {
+            String
+            selectedRow[] = Database.inventoryCache()[itemSelectPage.selectedRow()],
+            newRow[] = {
+                selectedRow[0],
+                selectedRow[2],
+                selectedRow[6],
+                "OK",
+                "1",
+            };
+            customerTable = Main.withNewRow(customerTable, newRow);
+        }
+        else if (addToTable.equals("inv")) {
+            String
+            selectedRow[] = Database.inventoryCache()[itemSelectPage.selectedRow()],
+            newRow[] = {
+                selectedRow[0],
+                selectedRow[2],
+                selectedRow[6],
+                "1",
+            };
+            inventoryTable = Main.withNewRow(inventoryTable, newRow);
+        }
+        gotoTransact();
+    }
+
+
+    private static void mergeRepeats() {
+        if (customerTable == null) return;
+        for (int i = 0; i < customerTable.length; i++) {
+            for (int o = 0; o < customerTable.length; o++) {
+                if (
+                    i != o && 
+                    customerTable[i][0].equals(customerTable[o][0]) && 
+                    customerTable[i][3].equals(customerTable[o][3])
+                    )
+                {
+                    customerTable[i][4] = String.valueOf(
+                        Main.toInteger(customerTable[i][4])
+                        +
+                        Main.toInteger(customerTable[o][4])
+                        );
+                    customerTable = Main.withoutRow(customerTable, o);
+                }
             }
         }
-        return newTable;
+        if (inventoryTable == null) return;
+        for (int i = 0; i < inventoryTable.length; i++) {
+            for (int o = 0; o < inventoryTable.length; o++) {
+                if (
+                    i != o && 
+                    inventoryTable[i][0].equals(inventoryTable[o][0])
+                    )
+                {
+                    inventoryTable[i][3] = String.valueOf (
+                        Main.toInteger(inventoryTable[i][3])
+                        +
+                        Main.toInteger(inventoryTable[o][3])
+                        );
+                    inventoryTable = Main.withoutRow(inventoryTable, o);
+                }
+            }
+        }
+        transactPage.updateTablesDisplay(inventoryTable, customerTable);
+    }
+
+
+    private static void editListItem() {
+        String selectedTable = transactPage.selectedTable();
+        int selectedRow = transactPage.selectedRow();
+        if (selectedTable.equals("cus")) {
+            String options[] = {"Remove Item","Change Condition","Edit Quantity"};
+            int selectedOption = Interface.popupOptionsChosenIndex(options,"");
+            switch (selectedOption) {
+                case 0:
+                    customerTable = Main.withoutRow(customerTable, selectedRow);
+                break;
+                case 1:
+                    if (customerTable[selectedRow][3].equals("OK")) {
+                        customerTable[selectedRow][3] = "Defective";
+                    }
+                    else if (customerTable[selectedRow][3].equals("Defective")) {
+                        customerTable[selectedRow][3] = "OK";
+                    }
+                break;
+                case 2:
+                    Integer newQuantity =Interface.popupIntegerInput("Enter new Quantity");
+                    if (newQuantity != null) {
+                        customerTable[selectedRow][4] = String.valueOf(newQuantity);
+                    }
+                break;
+            
+            }
+        }
+        else if (selectedTable.equals("inv")) {
+            String options[] = {"Remove Item","Edit Quantity"};
+            int selectedOption = Interface.popupOptionsChosenIndex(options,"");
+            switch (selectedOption) {
+                case 0:
+                    inventoryTable = Main.withoutRow(inventoryTable, selectedRow);
+                break;
+                case 1:
+                    Integer newQuantity =Interface.popupIntegerInput("Enter new Quantity");
+                    if (newQuantity != null) {
+                        inventoryTable[selectedRow][4] = String.valueOf(newQuantity);
+                    }
+                break;
+            }
+        } 
+        gotoTransact();
     }
 }

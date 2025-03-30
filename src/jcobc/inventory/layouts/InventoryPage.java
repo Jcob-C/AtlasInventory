@@ -14,18 +14,18 @@ public class InventoryPage extends JPanel {
     private final Color darkcolor = Color.BLACK;
     private final Color lightcolor = Color.WHITE;
 
-    private final int selectedCell[] = new int[2];
+    private final Integer selectedCell[] = new Integer[2];
 
     private JTable table;
     private DefaultTableModel tableModel;
 
 
-    public int[] getSelected() {
+    public Integer[] selectedCell() {
         return selectedCell;
     }
 
 
-    public void updateTable(Object[][] data) {
+    public void updateTableDisplay(Object[][] data) {
         tableModel.setRowCount(0);
         for (Object[] row : data) {
             tableModel.addRow(row);
@@ -33,24 +33,24 @@ public class InventoryPage extends JPanel {
     }
     
     
-    private void cellSelected(int row, int column) {
+    private void cellSelect(int row, int column) {
         selectedCell[0] = row;
         selectedCell[1] = column;
         Inventory.callAction("cellSelected");
     }
 
 
-    private void sortInventory() {
+    private void sortButton() {
         Inventory.callAction("sortInventory");
     }
 
 
-    private void backButtonPressed() {
+    private void backButton() {
         Inventory.callAction("gotoHome");
     }
 
 
-    private void gotoNewItemPage() {
+    private void addNewButton() {
         Inventory.callAction("gotoNewItem");
     }
 
@@ -63,19 +63,19 @@ public class InventoryPage extends JPanel {
         backButton.setBackground(lightcolor);
         backButton.setForeground(darkcolor);
         backButton.setBounds(30, 10, 80, 30);
-        backButton.addActionListener(_ -> backButtonPressed());
+        backButton.addActionListener(_ -> backButton());
 
         JButton sortButton = new JButton("Sort");
         sortButton.setBackground(lightcolor);
         sortButton.setForeground(darkcolor);
         sortButton.setBounds(475, 10, 80, 30);
-        sortButton.addActionListener(_ -> sortInventory());
+        sortButton.addActionListener(_ -> sortButton());
         
         JButton topMiddleButton = new JButton("Add New");
         topMiddleButton.setBackground(lightcolor);
         topMiddleButton.setForeground(darkcolor);
         topMiddleButton.setBounds(Interface.centerX(120), 10, 120, 30);
-        topMiddleButton.addActionListener(_ -> gotoNewItemPage());
+        topMiddleButton.addActionListener(_ -> addNewButton());
 
         String[] columns = {"ID", "Barcode", "Name", "Location", "Type", "Description", "Price", "Stock"};
         tableModel = new DefaultTableModel(columns, 0) {
@@ -98,7 +98,7 @@ public class InventoryPage extends JPanel {
                 int row = table.getSelectedRow();
                 int col = table.getSelectedColumn();
                 if (row != -1 && col != -1) {
-                    cellSelected(row, col);
+                    cellSelect(row, col);
                 }
             }
         });

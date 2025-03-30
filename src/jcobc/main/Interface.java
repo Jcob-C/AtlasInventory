@@ -1,4 +1,6 @@
 package jcobc.main;
+
+import jcobc.home.Home;
 import jcobc.inventory.Inventory;
 import jcobc.transact.Transact;
 
@@ -7,7 +9,7 @@ import java.awt.*;
 
 public class Interface {
 
-    private static final String initialPage = "login";
+    private static final String initialPage = "home";
 
     private static final JFrame frame = new JFrame();
     private static final CardLayout cardLayout = new CardLayout();
@@ -55,7 +57,7 @@ public class Interface {
     }
 
 
-    public static int popupOptionsChoiceIndex(String[] options, String message) {
+    public static int popupOptionsChosenIndex(String[] options, String message) {
         return JOptionPane.showOptionDialog(
             null,                       
             message,        
@@ -80,11 +82,7 @@ public class Interface {
 
 
     public static Integer popupIntegerInput(String message) {
-        try {
-            return Integer.parseInt(JOptionPane.showInputDialog(message));
-        } catch (Exception _) {
-            return null;
-        }
+        return Main.toInteger(JOptionPane.showInputDialog(message));
     }
 
 

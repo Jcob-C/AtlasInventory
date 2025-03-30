@@ -11,9 +11,22 @@ public class Database {
         passDB = "celestino04!",
         inventoryColumnNamesDB[] = {"id","barcode","itemName","itemLocation","itemType","descr","price","stock"};
 
+    private static String inventoryCache[][] = null;
+
+
+    public static String[][] inventoryCache() {
+        return inventoryCache;
+    }
+
+
+    public static String[][] updateInventoryCache() {
+        inventoryCache = table("inventory", 8);
+        return inventoryCache;
+    }
+
 
     public static void checkConnection() {
-        try (Connection conn = connectToDB()) {
+        try (Connection conn = connectionToDB()) {
             if (conn == null) {
                 Interface.popupMessage("Database Connection Failed"); 
                 System.exit(0);
@@ -29,7 +42,7 @@ public class Database {
     public static boolean validateAccount(String[] inputAccount) {
         String query = "SELECT username FROM staff WHERE username = ? AND pass = ?";
         try (
-            Connection conn = connectToDB();
+            Connection conn = connectionToDB();
             PreparedStatement queryBuild = conn.prepareStatement(query)
             ) 
         { 
@@ -50,7 +63,7 @@ public class Database {
     public static boolean inventoryInsert(String[] newItem) {
         String query = "INSERT INTO inventory (barcode, itemName, itemLocation, itemType, descr, price, stock) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (
-            Connection conn = connectToDB();
+            Connection conn = connectionToDB();
             PreparedStatement queryBuild = conn.prepareStatement(query)
             ) 
         {
@@ -71,59 +84,17 @@ public class Database {
     }
 
 
-    public static int getTableSize(String table) {
-        int tableSize = 0;
-        String query = "SELECT COUNT(*) FROM "+table;
-        try (
-            Connection conn = connectToDB();
-            Statement queryBuild = conn.createStatement();
-            ResultSet result = queryBuild.executeQuery(query);
-            ) 
-        {
-            if (result.next()) tableSize = result.getInt(1);
-        }
-        catch (Exception e) { 
-            Interface.popupMessage("Get Table Size Error: "+e.getMessage());
-        }
-        return tableSize;
-    }
-
-
-    public static String[][] getTable(String table, int columns) {
-        String query = "SELECT * FROM "+table,
-        outputTable[][] = new String[getTableSize(table)][columns];
-        try (
-            Connection conn = connectToDB();
-            Statement queryBuild = conn.createStatement();
-            ResultSet result = queryBuild.executeQuery(query);
-            ) 
-        {
-            int o = 0;
-            while (result.next()) {
-                for (int i = 0; i < columns; i++) {
-                    outputTable[o][i] = result.getString(i+1);
-                }
-                o++;
-            }
-        }
-        catch (Exception e) { 
-            Interface.popupMessage("Get Whole Table Error: "+e.getMessage());
-        }
-        return outputTable;
-    }
-
-
-    public static boolean editInventoryAttribute(int id, int column, String newValue, String newValueType) {
+    public static boolean editInventoryAttribute(int id, int column, String newValue) {
         String query = "UPDATE inventory SET " + inventoryColumnNamesDB[column] + " = ? WHERE id = ?";
         try (
-            Connection conn = connectToDB();
+            Connection conn = connectionToDB();
             PreparedStatement stmt = conn.prepareStatement(query)
             ) 
         {
-            switch (newValueType) {
-                case "double": stmt.setBigDecimal(1, new BigDecimal(newValue)); 
+            switch (column) {
+                case 6: stmt.setBigDecimal(1, new BigDecimal(newValue)); 
                 break;
-                case "int": stmt.setInt(1, Integer.parseInt(newValue)); 
+                case 7: stmt.setInt(1, Integer.parseInt(newValue)); 
                 break; 
                 default: stmt.setString(1, newValue); 
             }
@@ -140,7 +111,7 @@ public class Database {
     public static boolean deleteRow(String table, int id) {
         String query = "DELETE FROM " + table + " WHERE id = ?";
         try (
-            Connection conn = connectToDB();
+            Connection conn = connectionToDB();
             PreparedStatement stmt = conn.prepareStatement(query)
             ) 
         {
@@ -154,26 +125,67 @@ public class Database {
     }
 
 
-    public static int getInventoryQuantity(int id) {
-        String query = "SELECT stock FROM inventory WHERE id = ?";
+    public static boolean addStock(int newStock, int id) {
+        String query = "UPDATE inventory SET stock = stock + ? WHERE id = ?";
         try (
-            Connection conn = connectToDB();
-            PreparedStatement queryBuild = conn.prepareStatement(query);
+            Connection conn = connectionToDB();
+            PreparedStatement stmt = conn.prepareStatement(query)
             ) 
         {
-            queryBuild.setInt(1, id);
-            try (ResultSet result = queryBuild.executeQuery()) {
-                if(result.next()) return result.getInt(1);
-            }
+            stmt.setInt(1, newStock);
+            stmt.setInt(2, id);
+            return stmt.executeUpdate() > 0;
         }
-        catch (Exception e) { 
-            Interface.popupMessage("Get Stock Error: "+e.getMessage());
+        catch (Exception e) {
+            Interface.popupMessage("Stock Addition Error: "+e.getMessage());
         }
-        return -1;
+        return false;
     }
 
 
-    private static Connection connectToDB() throws Exception {
+    private static Connection connectionToDB() throws Exception {
         return DriverManager.getConnection(urlDB, userDB, passDB);
+    }
+
+
+    private static int tableSize(String table) {
+        int tableSize = 0;
+        String query = "SELECT COUNT(*) FROM "+table;
+        try (
+            Connection conn = connectionToDB();
+            Statement queryBuild = conn.createStatement();
+            ResultSet result = queryBuild.executeQuery(query);
+            ) 
+        {
+            if (result.next()) tableSize = result.getInt(1);
+        }
+        catch (Exception e) { 
+            Interface.popupMessage("Get Table Size Error: "+e.getMessage());
+        }
+        return tableSize;
+    }
+
+
+    private static String[][] table(String table, int columns) {
+        String query = "SELECT * FROM "+table,
+        outputTable[][] = new String[tableSize(table)][columns];
+        try (
+            Connection conn = connectionToDB();
+            Statement queryBuild = conn.createStatement();
+            ResultSet result = queryBuild.executeQuery(query);
+            ) 
+        {
+            int o = 0;
+            while (result.next()) {
+                for (int i = 0; i < columns; i++) {
+                    outputTable[o][i] = result.getString(i+1);
+                }
+                o++;
+            }
+        }
+        catch (Exception e) { 
+            Interface.popupMessage("Get Whole Table Error: "+e.getMessage());
+        }
+        return outputTable;
     }
 }

@@ -2,11 +2,14 @@ package jcobc.inventory;
 import jcobc.inventory.layouts.*;
 import jcobc.main.*;
 
+import jcobc.home.Home;
+
 public class Inventory {
 
-    private static String 
-        cachedInventory[][] = null,
-        columnNames[] = {"ID","Barcode","Name","Location","Type","Description","Price","Stock"};
+    private static String
+        columnNames[] = {
+            "ID","Barcode","Name","Location","Type","Description","Price","Stock"
+        };
 
     private static final InventoryPage inventoryPage = new InventoryPage();
     private static final NewItemPage newItemPage = new NewItemPage();
@@ -26,167 +29,85 @@ public class Inventory {
             break;
             case "gotoHome": Home.callAction("gotoHome");
             break;
-            case "newItem": createNewItem(); 
+            case "newItem": insertNewItem(); 
             break;
             case "sortInventory": sortInventory(); 
             break;
             case "cellSelected": cellSelected(); 
             break;
-            default: System.out.println("Unmapped Action: "+action);
+            default: Interface.popupMessage("Unmapped Inventory Action: "+action);
         }
-    }
-
-
-    public static String[][] cachedInventory() {
-        return cachedInventory;
-    }
-
-
-    public static void updateCachedInventory() {
-        cachedInventory = Database.getTable("inventory", 8);
-    }
-
-
-    private static void cellSelected() {
-        int selectedCell[] = inventoryPage.getSelected(),
-            selectedID = Integer.parseInt(cachedInventory[selectedCell[0]][0]); 
-        String selectedCellContent = cachedInventory[selectedCell[0]][selectedCell[1]],
-            selectedColumnName = columnNames[selectedCell[1]];
-            
-        switch (Interface.popupOptionsChoiceIndex(new String[]{"Edit Attribute","Delete Row", "Add Stock"}, selectedColumnName+": "+selectedCellContent)) {
-            case 0:
-                String newValue = Interface.popupInput("Enter the new "+selectedColumnName);
-                if (
-                    newValue != null && 
-                    Database.editInventoryAttribute(selectedID, selectedCell[1], newValue, columnDataType(selectedCell[1]))
-                    ) 
-                {
-                    Interface.popupMessage("Item Attribute Updated");
-                } 
-            break;
-            case 1:
-                if (Database.deleteRow("inventory", selectedID))
-                    Interface.popupMessage("Selected Row Deleted");
-            break;
-            case 2:
-                Integer newStock = Interface.popupIntegerInput("Enter Quantity to Add");
-                if (newStock != null) {
-                    Database.editInventoryAttribute(selectedID, 7, String.valueOf(newStock+toInteger(cachedInventory[selectedCell[0]][7])),"int");
-                }
-            break;
-        }
-        updateCachedInventory();
-        inventoryPage.updateTable(cachedInventory);
     }
 
 
     private static void gotoInventory() {
-        updateCachedInventory();
-        inventoryPage.updateTable(cachedInventory);
+        inventoryPage.updateTableDisplay(Database.updateInventoryCache());
         Interface.changePage("inventory");
     }
 
-
-    private static void createNewItem() {
-        if (Database.inventoryInsert(newItemPage.getNewItemInput())) {
-            Interface.popupMessage("New Item Added");
+    
+    private static void insertNewItem() {
+        boolean inserted = Database.inventoryInsert(newItemPage.newItemInputs());
+        if (inserted) {
             newItemPage.clearNewItemInput();
+            Interface.popupMessage("New Item Added");
             gotoInventory();
         }
     }
 
 
     private static void sortInventory() {
-        int column = Interface.popupOptionsChoiceIndex(new String[]
-            {"ID","Barcode","Name","Location","Type","Price","Stock"}, "Sort by?");
-        if (column == -1) 
-            return;
+        String[] 
+            options1 = {"ID","Barcode","Name","Location","Type","Price","Stock"},
+            options2 = {"Ascending", "Descending"};
 
-        int ascending = Interface.popupOptionsChoiceIndex(new String[]
-            {"Ascending","Descending"}, "Order by?");
-        if (ascending == -1) 
-            return;
+        int choice1 = Interface.popupOptionsChosenIndex(options1, "Sort by:");
+        if (choice1 == -1) return;
+        int choice2 = Interface.popupOptionsChosenIndex(options2, "Order by:");
+        if (choice2 == -1) return;
 
-        if (column == 5 || column == 6) 
-            numSortCachedInventory(column+1, ascending==0);
-        else 
-            stringSortCachedInventory(column, ascending==0);
-
-        inventoryPage.updateTable(cachedInventory);
-    }
-
-
-    private static void stringSortCachedInventory(int column, boolean ascending) {
-        boolean unsorted = true;
-        String[] holder = null;
-        while (unsorted) {
-            unsorted = false;
-            for (int i = 1; i < cachedInventory.length; i++) {
-                int comparison = cachedInventory[i-1][column].compareToIgnoreCase(cachedInventory[i][column]);
-                if ( 
-                    (comparison > 0 && ascending) ||
-                    (comparison < 0 && !ascending) 
-                    ) 
-                {
-                    holder = cachedInventory[i-1];
-                    cachedInventory[i-1] = cachedInventory[i];
-                    cachedInventory[i] = holder;
-                    unsorted = true;
-                }
-            }
+        boolean ascending = true;
+        if (choice2 == 1) ascending = false;
+        if (choice1 > 4) choice1 ++;
+        
+        if (choice1 > 4 || choice1 == 0) {
+            inventoryPage.updateTableDisplay(Main.numSorted(Database.updateInventoryCache(), choice1, ascending));
+        }
+        else {
+            inventoryPage.updateTableDisplay(Main.strSorted(Database.updateInventoryCache(), choice1, ascending));
         }
     }
 
 
-    private static void numSortCachedInventory(int column, boolean ascending) {
-        boolean unsorted = true;
-        String[] holder = null;
-        while (unsorted) {
-            unsorted = false;
-            for (int i = 1; i < cachedInventory.length; i++) {
-                double 
-                    prev = toDouble(cachedInventory[i-1][column]), 
-                    current = toDouble(cachedInventory[i][column]);
-                if ( 
-                    (prev > current && ascending) ||
-                    (prev < current && !ascending) 
-                    ) 
-                {
-                    holder = cachedInventory[i-1];
-                    cachedInventory[i-1] = cachedInventory[i];
-                    cachedInventory[i] = holder;
-                    unsorted = true;
-                }
-            }
-        }
-    }
-    
-    
-    private static String columnDataType(int index) {
-        switch (index) {
-            case 6: return "double";
-            case 7: return "int";
-            default: return "string";
-        }
-    }
-
-
-    private static Integer toInteger(String numString) {
-        try {
-            return Integer.parseInt(numString);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    
-    private static double toDouble(String numString) {
-        try {
-            return Double.parseDouble(numString);
-        } 
-        catch (Exception _) {
-            Interface.popupMessage("Double.parseDouble() Error");
-        } 
-        return 0;
+    private static void cellSelected() {
+        String 
+            inventoryCache[][] = Database.inventoryCache(),
+            options[] = {"Restock","Edit","Delete"};
+        Integer
+            selectedCell[] = inventoryPage.selectedCell(),
+            selectedRow = selectedCell[0],
+            selectedColumn = selectedCell[1],
+            selectedID = Main.toInteger(inventoryCache[selectedRow][0]),
+            optionChosen = 
+                Interface.popupOptionsChosenIndex(
+                    options,
+                    columnNames[selectedColumn]+": "+inventoryCache[selectedRow][selectedColumn]
+                );
+        switch (optionChosen) {
+            case 0:
+                int newStock = Interface.popupIntegerInput("Enter amount to add:");
+                Database.addStock(newStock, selectedID);
+            break;
+            case 1:
+                String newValue = Interface.popupInput(
+                    "Enter the new "+columnNames[selectedColumn]
+                );
+                Database.editInventoryAttribute(selectedID, selectedColumn, newValue);
+            break;
+            case 2:
+                Database.deleteRow("inventory", selectedID);
+            break;
+        }    
+        gotoInventory();
     }
 }

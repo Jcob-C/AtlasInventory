@@ -1,5 +1,5 @@
-package jcobc.main.layouts;
-import jcobc.main.Home;
+package jcobc.home.layouts;
+import jcobc.home.Home;
 import jcobc.main.Interface;
 
 import java.awt.Color;
@@ -21,7 +21,7 @@ public class HomePage extends JPanel {
         button1.setBounds(Interface.centerX(150), 30, 150, 40);
         button1.addActionListener(_ -> Home.callAction("gotoInventory"));
 
-        JButton button2 = new JButton("Transaction");
+        JButton button2 = new JButton("Transact");
         button2.setBackground(lightcolor);
         button2.setForeground(darkcolor);
         button2.setBounds(Interface.centerX(150), 90, 150, 40);

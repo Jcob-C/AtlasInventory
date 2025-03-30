@@ -13,7 +13,7 @@ public class NewItemPage extends JPanel {
     private JTextField tfBarcode, tfName, tfLocation, tfType, tfDescription, tfPrice, tfStock;
     
 
-    public String[] getNewItemInput() {
+    public String[] newItemInputs() {
         String newItem[] = new String[7];
         newItem[0] = tfBarcode.getText();
         newItem[1] = tfName.getText();
@@ -34,6 +34,16 @@ public class NewItemPage extends JPanel {
         tfDescription.setText(null);
         tfPrice.setText(null);
         tfStock.setText(null);
+    }
+
+
+    private void backButton() {
+        Inventory.callAction("gotoInventory");
+    }
+
+
+    private void submitButton() {
+        Inventory.callAction("newItem");
     }
 
 
@@ -138,14 +148,14 @@ public class NewItemPage extends JPanel {
         cancelButton.setBackground(lightcolor);
         cancelButton.setForeground(darkcolor);
         cancelButton.setBounds((600 - 80) / 2 - 50, buttonsY, 80, 30);
-        cancelButton.addActionListener(_ -> Inventory.callAction("gotoInventory"));
+        cancelButton.addActionListener(_ -> backButton());
         add(cancelButton);
         
         JButton submitButton = new JButton("Add");
         submitButton.setBackground(lightcolor);
         submitButton.setForeground(darkcolor);
         submitButton.setBounds((600 - 80) / 2 + 50, buttonsY, 80, 30);
-        submitButton.addActionListener(_ -> Inventory.callAction("newItem"));
+        submitButton.addActionListener(_ -> submitButton());
         add(submitButton);
     }
 }

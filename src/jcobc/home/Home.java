@@ -1,5 +1,7 @@
-package jcobc.main;
-import jcobc.main.layouts.*;
+package jcobc.home;
+import jcobc.home.layouts.*;
+import jcobc.main.*;
+
 import jcobc.inventory.Inventory;
 import jcobc.transact.Transact;
 
@@ -29,7 +31,7 @@ public class Home {
             break;
             case "gotoTransact": Transact.callAction("gotoTransact");
             break;
-            default: System.out.println("Unmapped Action: "+action);
+            default: Interface.popupMessage("Unmapped Home Action: "+action);
         }
     }
 

@@ -1,5 +1,5 @@
-package jcobc.main.layouts;
-import jcobc.main.Home;
+package jcobc.home.layouts;
+import jcobc.home.Home;
 import jcobc.main.Interface;
 
 import java.awt.Color;

@@ -19,26 +19,26 @@ public class TransactPage extends JPanel {
     private JLabel customerTotalLabel, inventoryTotalLabel;
 
     private final JButton 
-    orderButton = new JButton("Order"),
-    sellButton = new JButton("Sell"), 
-    refundButton = new JButton("Refund"), 
-    swapButton = new JButton("Swap");
+        orderButton = new JButton("Order"),
+        sellButton = new JButton("Sell"), 
+        refundButton = new JButton("Refund"), 
+        swapButton = new JButton("Swap");
     
     private int selectedRow = -1;
     private String selectedTable = null;
 
         
-    public int getSelectedRow() {
+    public int selectedRow() {
         return selectedRow;
     }
 
 
-    public String getSelectedTable() {
+    public String selectedTable() {
         return selectedTable;
     }
 
 
-    public void updateTotalPrices(float newCustomerTotal, float newInventoryTotal) {
+    public void updateTotalPrices(double newCustomerTotal, double newInventoryTotal) {
         customerTotalLabel.setText("Total Price: "+newCustomerTotal);
         inventoryTotalLabel.setText("Total Price: "+newInventoryTotal);
     }
@@ -68,17 +68,17 @@ public class TransactPage extends JPanel {
     }
 
 
-    private void backButtonPressed() {
+    private void backButton() {
         Transact.callAction("gotoHome");
     }
 
 
-    private void addToCustomerPressed() {
+    private void addToCustomer() {
         Transact.callAction("addToCustomerList");
     }
 
 
-    private void addToInventoryPressed() {
+    private void addToInventory() {
         Transact.callAction("addToInventoryList");
     }
 
@@ -96,19 +96,19 @@ public class TransactPage extends JPanel {
         backButton.setBackground(lightcolor);
         backButton.setForeground(darkcolor);
         backButton.setBounds(offsetX + 10, 10, 70, 30);
-        backButton.addActionListener(_ -> backButtonPressed());
+        backButton.addActionListener(_ -> backButton());
         add(backButton);
 
-        JLabel customerLabel = new JLabel("Customer", SwingConstants.CENTER);
+        JLabel customerLabel = new JLabel("From Customer", SwingConstants.CENTER);
         customerLabel.setForeground(lightcolor);
-        customerLabel.setBounds(offsetX + 80, 5, 200, 30);
+        customerLabel.setBounds(offsetX + 60, 5, 200, 30);
         add(customerLabel);
         
         JButton addCustomerButton = new JButton("Add");
         addCustomerButton.setBackground(lightcolor);
         addCustomerButton.setForeground(darkcolor);
         addCustomerButton.setBounds(offsetX + 220, 10, 70, 30);
-        addCustomerButton.addActionListener(_ -> addToCustomerPressed());
+        addCustomerButton.addActionListener(_ -> addToCustomer());
         add(addCustomerButton);
         
         String[] columns = {"ID", "Name", "Price", "Condition", "Quantity"};
@@ -130,7 +130,7 @@ public class TransactPage extends JPanel {
         customerTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 selectedRow = customerTable.getSelectedRow();
-                selectedTable = "customer";
+                selectedTable = "cus";
                 rowSelected();
             }
         });
@@ -144,16 +144,16 @@ public class TransactPage extends JPanel {
         customerTotalLabel.setBounds(offsetX + 10, 30, 280, 15);
         add(customerTotalLabel);
 
-        JLabel inventoryLabel = new JLabel("Inventory", SwingConstants.CENTER);
+        JLabel inventoryLabel = new JLabel("From Inventory", SwingConstants.CENTER);
         inventoryLabel.setForeground(lightcolor);
-        inventoryLabel.setBounds(offsetX + 380, 5, 200, 30);
+        inventoryLabel.setBounds(offsetX + 360, 5, 200, 30);
         add(inventoryLabel);
         
         JButton addInventoryButton = new JButton("Add");
         addInventoryButton.setBackground(lightcolor);
         addInventoryButton.setForeground(darkcolor);
         addInventoryButton.setBounds(offsetX + 520, 10, 70, 30);
-        addInventoryButton.addActionListener(_ -> addToInventoryPressed());
+        addInventoryButton.addActionListener(_ -> addToInventory());
         add(addInventoryButton);
         
         String[] columns2 = {"ID", "Name", "Price", "Quantity"};
@@ -175,7 +175,7 @@ public class TransactPage extends JPanel {
         inventoryTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 selectedRow = inventoryTable.getSelectedRow();
-                selectedTable = "inventory";
+                selectedTable = "inv";
                 rowSelected();
             }
         });

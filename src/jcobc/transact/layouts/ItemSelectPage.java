@@ -19,16 +19,21 @@ public class ItemSelectPage extends JPanel {
     private DefaultTableModel tableModel;
 
 
-    public int getSelectedRow() {
+    public int selectedRow() {
         return selectedRow;
     }
 
 
-    public void updateTable(Object[][] data) {
+    public void updateTablesDisplay(Object[][] data) {
         tableModel.setRowCount(0);
         for (Object[] row : data) {
             tableModel.addRow(row);
         }
+    }
+
+
+    private void rowSelected() {
+        Transact.callAction("addSelected");
     }
 
 
@@ -63,7 +68,7 @@ public class ItemSelectPage extends JPanel {
                 int row = table.getSelectedRow();
                 if (row != -1) {
                     selectedRow = row;
-                    Transact.callAction("addSelected");
+                    rowSelected();
                 }
             }
         });
