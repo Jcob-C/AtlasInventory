@@ -27,6 +27,9 @@ CREATE TABLE inventory (
 CREATE TABLE sales (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sale_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    customer_name VARCHAR(50) NOT NULL,
+    customer_contact VARCHAR(20) NOT NULL,
+    customer_address VARCHAR(50) NOT NULL,
     total_price DECIMAL(10,2) NOT NULL DEFAULT 0.00
 );
 
@@ -43,6 +46,7 @@ CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
     payment_id VARCHAR(20) NOT NULL,
+    customer_name VARCHAR(50) NOT NULL,
     customer_contact VARCHAR(20) NOT NULL,
     customer_address VARCHAR(50) NOT NULL,
     total_price DECIMAL(10,2) NOT NULL DEFAULT 0.00
@@ -58,4 +62,4 @@ CREATE TABLE orders_items (
 );
 
 insert into staff(fullName, contactNo, address, username, pass, workRole) 
-values('bitch','911','hell','admin','pass','admin');
+values('name','911','hell','admin','pass','admin');

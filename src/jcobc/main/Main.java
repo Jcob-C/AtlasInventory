@@ -58,7 +58,7 @@ public class Main {
             return null;
         }
         else if (table.length <= 1) {
-            return new String[0][table[0].length];
+            return null;
         }
         String newTable[][] = new String[table.length-1][table[0].length];
         int offset = 0;
