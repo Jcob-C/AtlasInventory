@@ -26,7 +26,9 @@ public class InventoryPage extends JPanel {
 
 
     public void updateTableDisplay(Object[][] data) {
+        
         tableModel.setRowCount(0);
+        if (data == null) return;
         for (Object[] row : data) {
             tableModel.addRow(row);
         }
@@ -55,6 +57,16 @@ public class InventoryPage extends JPanel {
     }
 
 
+    private void searchButton() {
+        Inventory.callAction("search");
+    }
+
+
+    private void refreshButton() {
+        Inventory.callAction("gotoInventory");
+    }
+
+
     public InventoryPage() {
         setLayout(null);
         setBackground(Color.DARK_GRAY);
@@ -70,6 +82,18 @@ public class InventoryPage extends JPanel {
         sortButton.setForeground(darkcolor);
         sortButton.setBounds(475, 10, 80, 30);
         sortButton.addActionListener(_ -> sortButton());
+
+        JButton searchButton = new JButton("Search");
+        searchButton.setBackground(lightcolor);
+        searchButton.setForeground(darkcolor);
+        searchButton.setBounds(375, 10, 80, 30);
+        searchButton.addActionListener(_ -> searchButton());
+
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.setBackground(lightcolor);
+        refreshButton.setForeground(darkcolor);
+        refreshButton.setBounds(130, 10, 80, 30);
+        refreshButton.addActionListener(_ -> refreshButton());
         
         JButton topMiddleButton = new JButton("Add New");
         topMiddleButton.setBackground(lightcolor);
@@ -106,6 +130,8 @@ public class InventoryPage extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(Interface.centerX(560), 50, 560, 350);
 
+        add(refreshButton);
+        add(searchButton);
         add(backButton);
         add(sortButton);
         add(topMiddleButton);

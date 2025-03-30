@@ -35,6 +35,8 @@ public class Inventory {
             break;
             case "cellSelected": cellSelected(); 
             break;
+            case "search": filterInventoryCache();
+            break; 
             default: Interface.popupMessage("Unmapped Inventory Action: "+action);
         }
     }
@@ -71,10 +73,10 @@ public class Inventory {
         if (choice1 > 4) choice1 ++;
         
         if (choice1 > 4 || choice1 == 0) {
-            inventoryPage.updateTableDisplay(Main.numSorted(Database.updateInventoryCache(), choice1, ascending));
+            inventoryPage.updateTableDisplay(Main.numSorted(Database.inventoryCache(), choice1, ascending));
         }
         else {
-            inventoryPage.updateTableDisplay(Main.strSorted(Database.updateInventoryCache(), choice1, ascending));
+            inventoryPage.updateTableDisplay(Main.strSorted(Database.inventoryCache(), choice1, ascending));
         }
     }
 
@@ -109,5 +111,24 @@ public class Inventory {
             break;
         }    
         gotoInventory();
+    }
+
+
+    private static void filterInventoryCache() {
+        String 
+            searchWord = Interface.popupInput("Enter the keyword:"),
+            newInventoryCache[][] = null,
+            inventoryCache[][] = Database.updateInventoryCache();
+        if (searchWord == null) return;
+        for (String x[] : inventoryCache) {
+            for (String y : x) {
+                if (y.contains(searchWord)) {
+                    newInventoryCache = Main.withNewRow(newInventoryCache, x);
+                    break;
+                }
+            }
+        }
+        Database.setInventoryCache(newInventoryCache);
+        inventoryPage.updateTableDisplay(Database.inventoryCache());
     }
 }

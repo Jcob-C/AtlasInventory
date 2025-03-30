@@ -25,6 +25,11 @@ public class Database {
     }
 
 
+    public static void setInventoryCache(String[][] newTable) {
+        inventoryCache = newTable;
+    }
+
+
     public static void checkConnection() {
         try (Connection conn = connectionToDB()) {
             if (conn == null) {
