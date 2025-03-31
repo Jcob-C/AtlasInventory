@@ -74,25 +74,25 @@ public class InventoryPage extends JPanel {
         JButton backButton = new JButton("Back");
         backButton.setBackground(lightcolor);
         backButton.setForeground(darkcolor);
-        backButton.setBounds(30, 10, 80, 30);
+        backButton.setBounds(Interface.centerX(80)-325, 10, 80, 30);
         backButton.addActionListener(_ -> backButton());
 
         JButton sortButton = new JButton("Sort");
         sortButton.setBackground(lightcolor);
         sortButton.setForeground(darkcolor);
-        sortButton.setBounds(475, 10, 80, 30);
+        sortButton.setBounds(Interface.centerX(80)+325, 10, 80, 30);
         sortButton.addActionListener(_ -> sortButton());
 
         JButton searchButton = new JButton("Search");
         searchButton.setBackground(lightcolor);
         searchButton.setForeground(darkcolor);
-        searchButton.setBounds(375, 10, 80, 30);
+        searchButton.setBounds(Interface.centerX(80)+225, 10, 80, 30);
         searchButton.addActionListener(_ -> searchButton());
 
         JButton refreshButton = new JButton("Refresh");
         refreshButton.setBackground(lightcolor);
         refreshButton.setForeground(darkcolor);
-        refreshButton.setBounds(130, 10, 80, 30);
+        refreshButton.setBounds(Interface.centerX(80)-225, 10, 80, 30);
         refreshButton.addActionListener(_ -> refreshButton());
         
         JButton topMiddleButton = new JButton("Add New");
@@ -128,7 +128,7 @@ public class InventoryPage extends JPanel {
         });
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(Interface.centerX(560), 50, 560, 350);
+        scrollPane.setBounds(Interface.centerX(750), 50, 750, 500);
 
         add(refreshButton);
         add(searchButton);

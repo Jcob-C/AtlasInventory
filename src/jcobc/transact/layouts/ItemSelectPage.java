@@ -74,7 +74,7 @@ public class ItemSelectPage extends JPanel {
         });
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(Interface.centerX(560), 50, 560, 350);
+        scrollPane.setBounds(Interface.centerX(750), 50, 750, 500);
 
         add(backButton);
         add(scrollPane);

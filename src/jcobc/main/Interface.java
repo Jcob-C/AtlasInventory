@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class Interface {
 
-    private static final String initialPage = "login";
+    private static final String initialPage = "home";
 
     private static final JFrame frame = new JFrame();
     private static final CardLayout cardLayout = new CardLayout();
@@ -24,7 +24,7 @@ public class Interface {
         frame.setTitle("Inventory System");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 450);
+        frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         loadAllPages();
         changePage(initialPage);

@@ -32,12 +32,12 @@ public class Main {
 
 
     public static String[][] withNewRow(String[][] table, String[] newRow) {
-        if (table == null || table.length == 0) {
-            return new String[][]{newRow};
-        }
-        else if (newRow.length > table[0].length) {
+        if (table != null && newRow.length > table[0].length) {
             Interface.popupMessage("withNewRow() failed: newRow.length > table[0].length");
             return table;
+        }
+        else if (table == null || table.length == 0) {
+            return new String[][]{newRow};
         }
         String newTable[][] = new String[table.length+1][table[0].length];
         for (int i = 0; i < table.length; i++) {

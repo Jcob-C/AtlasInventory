@@ -95,19 +95,19 @@ public class TransactPage extends JPanel {
         JButton backButton = new JButton("Back");
         backButton.setBackground(lightcolor);
         backButton.setForeground(darkcolor);
-        backButton.setBounds(offsetX + 10, 10, 70, 30);
+        backButton.setBounds(offsetX + 20, 10, 70, 30);
         backButton.addActionListener(_ -> backButton());
         add(backButton);
 
         JLabel customerLabel = new JLabel("From Customer", SwingConstants.CENTER);
         customerLabel.setForeground(lightcolor);
-        customerLabel.setBounds(offsetX + 60, 5, 200, 30);
+        customerLabel.setBounds(offsetX + 125, 5, 200, 30);
         add(customerLabel);
         
         JButton addCustomerButton = new JButton("Add");
         addCustomerButton.setBackground(lightcolor);
         addCustomerButton.setForeground(darkcolor);
-        addCustomerButton.setBounds(offsetX + 220, 10, 70, 30);
+        addCustomerButton.setBounds(offsetX + 290, 10, 70, 30);
         addCustomerButton.addActionListener(_ -> addToCustomer());
         add(addCustomerButton);
         
@@ -136,23 +136,23 @@ public class TransactPage extends JPanel {
         });
         
         JScrollPane customerScrollPane = new JScrollPane(customerTable);
-        customerScrollPane.setBounds(offsetX + 10, 50, 280, 300);
+        customerScrollPane.setBounds(offsetX + 15, 50, 375, 450);
         add(customerScrollPane);
 
         customerTotalLabel = new JLabel("Total Price: 0.00", SwingConstants.CENTER);
         customerTotalLabel.setForeground(lightcolor);
-        customerTotalLabel.setBounds(offsetX + 10, 30, 280, 15);
+        customerTotalLabel.setBounds(offsetX + 80, 30, 280, 15);
         add(customerTotalLabel);
 
         JLabel inventoryLabel = new JLabel("From Inventory", SwingConstants.CENTER);
         inventoryLabel.setForeground(lightcolor);
-        inventoryLabel.setBounds(offsetX + 360, 5, 200, 30);
+        inventoryLabel.setBounds(offsetX + 517, 5, 200, 30);
         add(inventoryLabel);
         
         JButton addInventoryButton = new JButton("Add");
         addInventoryButton.setBackground(lightcolor);
         addInventoryButton.setForeground(darkcolor);
-        addInventoryButton.setBounds(offsetX + 520, 10, 70, 30);
+        addInventoryButton.setBounds(offsetX + 690, 10, 70, 30);
         addInventoryButton.addActionListener(_ -> addToInventory());
         add(addInventoryButton);
         
@@ -181,12 +181,12 @@ public class TransactPage extends JPanel {
         });
         
         JScrollPane inventoryScrollPane = new JScrollPane(inventoryTable);
-        inventoryScrollPane.setBounds(offsetX + 310, 50, 280, 300);
+        inventoryScrollPane.setBounds(offsetX + 410, 50, 375, 450);
         add(inventoryScrollPane);
 
         inventoryTotalLabel = new JLabel("Total Price: 0.00", SwingConstants.CENTER);
         inventoryTotalLabel.setForeground(lightcolor);
-        inventoryTotalLabel.setBounds(offsetX + 310, 30, 280, 15);
+        inventoryTotalLabel.setBounds(offsetX + 475, 30, 280, 15);
         add(inventoryTotalLabel);
         
         orderButton.setBackground(lightcolor);

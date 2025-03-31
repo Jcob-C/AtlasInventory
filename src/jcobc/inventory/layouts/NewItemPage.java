@@ -54,8 +54,8 @@ public class NewItemPage extends JPanel {
         int labelHeight = 20;
         int fieldHeight = 30;
         int verticalGap = 15;
-        int leftX = 50;
-        int rightX = 310;
+        int leftX = 100;
+        int rightX = 450;
         int startY = 50;
         int fieldWidth = 240;
         
