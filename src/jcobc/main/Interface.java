@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class Interface {
 
-    private static final String initialPage = "login";
+    private static final String initialPage = "home";
 
     private static final JFrame frame = new JFrame();
     private static final CardLayout cardLayout = new CardLayout();

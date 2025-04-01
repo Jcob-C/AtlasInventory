@@ -1,4 +1,5 @@
 package jcobc.transact.layouts;
+import jcobc.main.Interface;
 import jcobc.transact.Transact;
 
 import java.awt.Color;
@@ -18,8 +19,7 @@ public class TransactPage extends JPanel {
     private DefaultTableModel customerTableModel, inventoryTableModel;
     private JLabel customerTotalLabel, inventoryTotalLabel;
 
-    private final JButton 
-        orderButton = new JButton("Order"),
+    private final JButton
         sellButton = new JButton("Sell"), 
         refundButton = new JButton("Refund"), 
         swapButton = new JButton("Swap");
@@ -60,10 +60,9 @@ public class TransactPage extends JPanel {
     }
 
 
-    public void setButtonsVisibility(boolean refund, boolean swap, boolean order, boolean sell) {
+    public void setButtonsVisibility(boolean refund, boolean swap, boolean sell) {
         refundButton.setVisible(refund);
         swapButton.setVisible(swap);
-        orderButton.setVisible(order);
         sellButton.setVisible(sell);
     }
 
@@ -189,17 +188,18 @@ public class TransactPage extends JPanel {
         inventoryTotalLabel.setBounds(offsetX + 475, 30, 280, 15);
         add(inventoryTotalLabel);
         
-        orderButton.setBackground(lightcolor);
         sellButton.setBackground(lightcolor);
         refundButton.setBackground(lightcolor);
         swapButton.setBackground(lightcolor);
         
-        orderButton.setBounds(offsetX + 310, 360, 130, 40);
-        sellButton.setBounds(offsetX + 450, 360, 130, 40);
-        refundButton.setBounds(offsetX + 20, 360, 130, 40);
-        swapButton.setBounds(offsetX + 160, 360, 130, 40);
+        sellButton.setBounds(Interface.centerX(130)+300, 510, 130, 40);
+        refundButton.setBounds(Interface.centerX(130)-300, 510, 130, 40);
+        swapButton.setBounds(Interface.centerX(130), 510, 130, 40);
         
-        add(orderButton);
+        sellButton.addActionListener(_ -> Transact.callAction("transact"));
+        refundButton.addActionListener(_ -> Transact.callAction("transact"));
+        swapButton.addActionListener(_ -> Transact.callAction("transact"));
+
         add(sellButton);
         add(refundButton);
         add(swapButton);

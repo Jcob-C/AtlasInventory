@@ -108,8 +108,8 @@ public class Database {
         } 
         catch (Exception e) {
             Interface.popupMessage("Attribute Edit Error: "+e.getMessage());
+            return false;
         }
-        return false;
     }
 
 
@@ -145,6 +145,51 @@ public class Database {
             Interface.popupMessage("Stock Addition Error: "+e.getMessage());
         }
         return false;
+    }
+
+
+    public static int salesInsert(String customerName, double totalPrice) {
+        String query = "INSERT INTO sales (customer_name, total_price) VALUES (?, ?)";
+        try (
+            Connection conn = connectionToDB();
+            PreparedStatement queryBuild = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
+            ) 
+        {
+            queryBuild.setString(1, customerName); 
+            queryBuild.setBigDecimal(2, new BigDecimal(totalPrice));
+    
+            int affectedRows = queryBuild.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = queryBuild.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Interface.popupMessage("Sales Insert Error: " + e.getMessage());
+        }
+        return -1;
+    }
+    
+
+    public static boolean salesItemInsert(int salesID, int itemID, double soldPrice, int quantity) {
+        String query = "INSERT INTO sales_items (sale_id, item_id, soldPrice, quantity) VALUES (?, ?, ?, ?)";
+        try (
+            Connection conn = connectionToDB();
+            PreparedStatement queryBuild = conn.prepareStatement(query)
+            ) 
+        {
+            queryBuild.setInt(1, salesID); 
+            queryBuild.setInt(2, itemID); 
+            queryBuild.setBigDecimal(3, new BigDecimal(soldPrice));
+            queryBuild.setInt(4, quantity); 
+
+            return queryBuild.executeUpdate() > 0;
+        } catch (Exception e) {
+            Interface.popupMessage("Sales Item Insert Error: " + e.getMessage());
+            return false;
+        }
     }
 
 

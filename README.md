@@ -28,36 +28,16 @@ CREATE TABLE sales (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sale_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
     customer_name VARCHAR(50) NOT NULL,
-    customer_contact VARCHAR(20) NOT NULL,
-    customer_address VARCHAR(50) NOT NULL,
-    total_price DECIMAL(10,2) NOT NULL DEFAULT 0.00
+    total_price DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE sales_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sale_id INT NOT NULL,
     item_id INT NOT NULL,
+    soldPrice DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL,
     FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES inventory(id) ON DELETE CASCADE
-);
-
-CREATE TABLE orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
-    payment_id VARCHAR(20) NOT NULL,
-    customer_name VARCHAR(50) NOT NULL,
-    customer_contact VARCHAR(20) NOT NULL,
-    customer_address VARCHAR(50) NOT NULL,
-    total_price DECIMAL(10,2) NOT NULL DEFAULT 0.00
-);
-
-CREATE TABLE orders_items (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    item_id INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (item_id) REFERENCES inventory(id) ON DELETE CASCADE
 );
 

@@ -34,8 +34,28 @@ public class Transact {
             break;
             case "listRowSelected": editListItem();
             break;
+            case "transact": Recorder.recordSale(customerTable, inventoryTable);
+            break;
             default: Interface.popupMessage("Unmapped Action: "+action);
         }
+    }
+    
+    
+    public static double totalPrice(String[][] table) {
+        if (table == null) return 0;
+        double totalPrice = 0;
+        for (String x[] : table) {
+            totalPrice += (Main.toDouble(x[2]) * Main.toInteger(x[x.length-1]));
+        }
+        return totalPrice;
+    }
+
+
+    public static void transactionDone() {
+        customerTable = null; inventoryTable = null;
+        enableAppropriateButtons();
+        transactPage.updateTablesDisplay(inventoryTable, customerTable);
+        transactPage.updateTotalPrices(totalPrice(customerTable), totalPrice(inventoryTable));
     }
 
 
@@ -54,28 +74,18 @@ public class Transact {
     }
 
 
-    private static double totalPrice(String[][] table) {
-        if (table == null) return 0;
-        double totalPrice = 0;
-        for (String x[] : table) {
-            totalPrice += (Main.toDouble(x[2]) * Main.toInteger(x[x.length-1]));
-        }
-        return totalPrice;
-    }
-
-
     private static void enableAppropriateButtons() {
         if (customerTable == null && inventoryTable == null) {
-            transactPage.setButtonsVisibility(false, false, false, false);
+            transactPage.setButtonsVisibility(false, false, false);
         }
         else if (customerTable == null && inventoryTable != null) {
-            transactPage.setButtonsVisibility(false, false, true, true);
+            transactPage.setButtonsVisibility(false, false, true);
         }
         else if (customerTable != null && inventoryTable == null) {
-            transactPage.setButtonsVisibility(true, false, false, false);
+            transactPage.setButtonsVisibility(true, false, false);
         }
         else if (customerTable != null && inventoryTable != null) {
-            transactPage.setButtonsVisibility(false, true, false, false);
+            transactPage.setButtonsVisibility(false, true, false);
         }
     }
 
@@ -121,38 +131,40 @@ public class Transact {
 
 
     private static void mergeRepeats() {
-        if (customerTable == null) return;
-        for (int i = 0; i < customerTable.length; i++) {
-            for (int o = 0; o < customerTable.length; o++) {
-                if (
-                    i != o && 
-                    customerTable[i][0].equals(customerTable[o][0]) && 
-                    customerTable[i][3].equals(customerTable[o][3])
-                    )
-                {
-                    customerTable[i][4] = String.valueOf(
-                        Main.toInteger(customerTable[i][4])
-                        +
-                        Main.toInteger(customerTable[o][4])
+        if (customerTable != null) {
+            for (int i = 0; i < customerTable.length; i++) {
+                for (int o = 0; o < customerTable.length; o++) {
+                    if (
+                        i != o && 
+                        customerTable[i][0].equals(customerTable[o][0]) && 
+                        customerTable[i][3].equals(customerTable[o][3])
+                        )
+                    {
+                        customerTable[i][4] = String.valueOf(
+                            Main.toInteger(customerTable[i][4])
+                            +
+                            Main.toInteger(customerTable[o][4])
                         );
-                    customerTable = Main.withoutRow(customerTable, o);
+                        customerTable = Main.withoutRow(customerTable, o);
+                    }
                 }
             }
         }
-        if (inventoryTable == null) return;
-        for (int i = 0; i < inventoryTable.length; i++) {
-            for (int o = 0; o < inventoryTable.length; o++) {
-                if (
-                    i != o && 
-                    inventoryTable[i][0].equals(inventoryTable[o][0])
-                    )
-                {
-                    inventoryTable[i][3] = String.valueOf (
-                        Main.toInteger(inventoryTable[i][3])
-                        +
-                        Main.toInteger(inventoryTable[o][3])
+        if (inventoryTable != null) {
+            for (int i = 0; i < inventoryTable.length; i++) {
+                for (int o = 0; o < inventoryTable.length; o++) {
+                    if (
+                        i != o && 
+                        inventoryTable[i][0].equals(inventoryTable[o][0])
+                        )
+                    {
+                        inventoryTable[i][3] = String.valueOf (
+                            Main.toInteger(inventoryTable[i][3])
+                            +
+                            Main.toInteger(inventoryTable[o][3])
                         );
-                    inventoryTable = Main.withoutRow(inventoryTable, o);
+                        inventoryTable = Main.withoutRow(inventoryTable, o);
+                    }
                 }
             }
         }
@@ -197,7 +209,7 @@ public class Transact {
                 case 1:
                     Integer newQuantity =Interface.popupIntegerInput("Enter new Quantity");
                     if (newQuantity != null) {
-                        inventoryTable[selectedRow][4] = String.valueOf(newQuantity);
+                        inventoryTable[selectedRow][3] = String.valueOf(newQuantity);
                     }
                 break;
             }
