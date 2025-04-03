@@ -69,35 +69,35 @@ public class InventoryPage extends JPanel {
 
     public InventoryPage() {
         setLayout(null);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Interface.mediumColor);
 
         JButton backButton = new JButton("Back");
-        backButton.setBackground(lightcolor);
-        backButton.setForeground(darkcolor);
+        backButton.setBackground(Interface.darkColor);
+        backButton.setForeground(Interface.lightColor);
         backButton.setBounds(Interface.centerX(80)-325, 10, 80, 30);
         backButton.addActionListener(_ -> backButton());
 
         JButton sortButton = new JButton("Sort");
-        sortButton.setBackground(lightcolor);
-        sortButton.setForeground(darkcolor);
+        sortButton.setBackground(Interface.darkColor);
+        sortButton.setForeground(Interface.lightColor);
         sortButton.setBounds(Interface.centerX(80)+325, 10, 80, 30);
         sortButton.addActionListener(_ -> sortButton());
 
         JButton searchButton = new JButton("Search");
-        searchButton.setBackground(lightcolor);
-        searchButton.setForeground(darkcolor);
+        searchButton.setBackground(Interface.darkColor);
+        searchButton.setForeground(Interface.lightColor);
         searchButton.setBounds(Interface.centerX(80)+225, 10, 80, 30);
         searchButton.addActionListener(_ -> searchButton());
 
         JButton refreshButton = new JButton("Refresh");
-        refreshButton.setBackground(lightcolor);
-        refreshButton.setForeground(darkcolor);
+        refreshButton.setBackground(Interface.darkColor);
+        refreshButton.setForeground(Interface.lightColor);
         refreshButton.setBounds(Interface.centerX(80)-225, 10, 80, 30);
         refreshButton.addActionListener(_ -> refreshButton());
         
         JButton topMiddleButton = new JButton("Add New");
-        topMiddleButton.setBackground(lightcolor);
-        topMiddleButton.setForeground(darkcolor);
+        topMiddleButton.setBackground(Interface.darkColor);
+        topMiddleButton.setForeground(Interface.lightColor);
         topMiddleButton.setBounds(Interface.centerX(120), 10, 120, 30);
         topMiddleButton.addActionListener(_ -> addNewButton());
 
@@ -110,11 +110,11 @@ public class InventoryPage extends JPanel {
         };
         
         table = new JTable(tableModel);
-        table.setSelectionBackground(darkcolor);
-        table.setSelectionForeground(lightcolor);
-        table.setBackground(lightcolor);
-        table.setForeground(darkcolor);
-        table.setBorder(new LineBorder(lightcolor, 2));
+        table.setSelectionBackground(Interface.lightColor);
+        table.setSelectionForeground(Interface.darkColor);
+        table.setBackground(Interface.darkColor);
+        table.setForeground(Interface.lightColor);
+        table.setBorder(new LineBorder(Interface.darkColor, 2));
         table.getTableHeader().setReorderingAllowed(false);
         table.setRowHeight(25);
         table.addMouseListener(new MouseAdapter() {

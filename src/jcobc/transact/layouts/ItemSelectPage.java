@@ -39,11 +39,11 @@ public class ItemSelectPage extends JPanel {
 
     public ItemSelectPage() {
         setLayout(null);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Interface.mediumColor);
 
         JButton backButton = new JButton("Back");
-        backButton.setBackground(lightcolor);
-        backButton.setForeground(darkcolor);
+        backButton.setBackground(Interface.darkColor);
+        backButton.setForeground(Interface.lightColor);
         backButton.setBounds(30, 10, 80, 30);
         backButton.addActionListener(_ -> Interface.goPrevPage());
 
@@ -56,11 +56,11 @@ public class ItemSelectPage extends JPanel {
         };
         
         table = new JTable(tableModel);
-        table.setSelectionBackground(darkcolor);
-        table.setSelectionForeground(lightcolor);
-        table.setBackground(lightcolor);
-        table.setForeground(darkcolor);
-        table.setBorder(new LineBorder(lightcolor, 2));
+        table.setSelectionBackground(Interface.lightColor);
+        table.setSelectionForeground(Interface.darkColor);
+        table.setBackground(Interface.darkColor);
+        table.setForeground(Interface.lightColor);
+        table.setBorder(new LineBorder(Interface.darkColor, 2));
         table.getTableHeader().setReorderingAllowed(false);
         table.setRowHeight(25);
         table.addMouseListener(new MouseAdapter() {

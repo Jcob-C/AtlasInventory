@@ -11,6 +11,10 @@ public class Interface {
 
     private static final String initialPage = "login";
 
+    public static final Color lightColor = Color.WHITE;
+    public static final Color mediumColor = Color.GRAY;
+    public static final Color darkColor = Color.DARK_GRAY;
+
     private static final JFrame frame = new JFrame();
     private static final CardLayout cardLayout = new CardLayout();
     private static final JPanel mainPanel = new JPanel(cardLayout);

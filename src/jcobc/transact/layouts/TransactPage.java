@@ -89,23 +89,23 @@ public class TransactPage extends JPanel {
 
     public TransactPage() {
         setLayout(null);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Interface.mediumColor);
 
         JButton backButton = new JButton("Back");
-        backButton.setBackground(lightcolor);
-        backButton.setForeground(darkcolor);
+        backButton.setBackground(Interface.darkColor);
+        backButton.setForeground(Interface.lightColor);
         backButton.setBounds(offsetX + 20, 10, 70, 30);
         backButton.addActionListener(_ -> backButton());
         add(backButton);
 
         JLabel customerLabel = new JLabel("From Customer", SwingConstants.CENTER);
-        customerLabel.setForeground(lightcolor);
+        customerLabel.setForeground(Interface.lightColor);
         customerLabel.setBounds(offsetX + 125, 5, 200, 30);
         add(customerLabel);
         
         JButton addCustomerButton = new JButton("Add");
-        addCustomerButton.setBackground(lightcolor);
-        addCustomerButton.setForeground(darkcolor);
+        addCustomerButton.setBackground(Interface.darkColor);
+        addCustomerButton.setForeground(Interface.lightColor);
         addCustomerButton.setBounds(offsetX + 290, 10, 70, 30);
         addCustomerButton.addActionListener(_ -> addToCustomer());
         add(addCustomerButton);
@@ -120,11 +120,11 @@ public class TransactPage extends JPanel {
         
         customerTable = new JTable(customerTableModel);
         customerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        customerTable.setSelectionBackground(darkcolor);
-        customerTable.setSelectionForeground(lightcolor);
-        customerTable.setBackground(lightcolor);
-        customerTable.setForeground(darkcolor);
-        customerTable.setBorder(new LineBorder(lightcolor, 2));
+        customerTable.setSelectionBackground(Interface.lightColor);
+        customerTable.setSelectionForeground(Interface.darkColor);
+        customerTable.setBackground(Interface.darkColor);
+        customerTable.setForeground(Interface.lightColor);
+        customerTable.setBorder(new LineBorder(Interface.darkColor, 2));
         customerTable.setRowHeight(25);
         customerTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -139,18 +139,18 @@ public class TransactPage extends JPanel {
         add(customerScrollPane);
 
         customerTotalLabel = new JLabel("Total Price: 0.00", SwingConstants.CENTER);
-        customerTotalLabel.setForeground(lightcolor);
+        customerTotalLabel.setForeground(Interface.lightColor);
         customerTotalLabel.setBounds(offsetX + 80, 30, 280, 15);
         add(customerTotalLabel);
 
         JLabel inventoryLabel = new JLabel("From Inventory", SwingConstants.CENTER);
-        inventoryLabel.setForeground(lightcolor);
+        inventoryLabel.setForeground(Interface.lightColor);
         inventoryLabel.setBounds(offsetX + 517, 5, 200, 30);
         add(inventoryLabel);
         
         JButton addInventoryButton = new JButton("Add");
-        addInventoryButton.setBackground(lightcolor);
-        addInventoryButton.setForeground(darkcolor);
+        addInventoryButton.setBackground(Interface.darkColor);
+        addInventoryButton.setForeground(Interface.lightColor);
         addInventoryButton.setBounds(offsetX + 690, 10, 70, 30);
         addInventoryButton.addActionListener(_ -> addToInventory());
         add(addInventoryButton);
@@ -165,11 +165,11 @@ public class TransactPage extends JPanel {
         
         inventoryTable = new JTable(inventoryTableModel);
         inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        inventoryTable.setSelectionBackground(darkcolor);
-        inventoryTable.setSelectionForeground(lightcolor);
-        inventoryTable.setBackground(lightcolor);
-        inventoryTable.setForeground(darkcolor);
-        inventoryTable.setBorder(new LineBorder(lightcolor, 2));
+        inventoryTable.setSelectionBackground(Interface.lightColor);
+        inventoryTable.setSelectionForeground(Interface.darkColor);
+        inventoryTable.setBackground(Interface.darkColor);
+        inventoryTable.setForeground(Interface.lightColor);
+        inventoryTable.setBorder(new LineBorder(Interface.darkColor, 2));
         inventoryTable.setRowHeight(25);
         inventoryTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -184,13 +184,17 @@ public class TransactPage extends JPanel {
         add(inventoryScrollPane);
 
         inventoryTotalLabel = new JLabel("Total Price: 0.00", SwingConstants.CENTER);
-        inventoryTotalLabel.setForeground(lightcolor);
+        inventoryTotalLabel.setForeground(Interface.lightColor);
         inventoryTotalLabel.setBounds(offsetX + 475, 30, 280, 15);
         add(inventoryTotalLabel);
         
-        sellButton.setBackground(lightcolor);
-        refundButton.setBackground(lightcolor);
-        swapButton.setBackground(lightcolor);
+        sellButton.setBackground(Interface.darkColor);
+        refundButton.setBackground(Interface.darkColor);
+        swapButton.setBackground(Interface.darkColor);
+
+        sellButton.setForeground(Interface.lightColor);
+        refundButton.setForeground(Interface.lightColor);
+        swapButton.setForeground(Interface.lightColor);
         
         sellButton.setBounds(Interface.centerX(130)+300, 510, 130, 40);
         refundButton.setBounds(Interface.centerX(130)-300, 510, 130, 40);

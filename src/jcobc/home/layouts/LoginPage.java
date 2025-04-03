@@ -31,29 +31,29 @@ public class LoginPage extends JPanel {
 
     public LoginPage() {
         setLayout(null);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Interface.mediumColor);
 
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setBounds(Interface.centerX(200),60,200,40);
-        usernameLabel.setForeground(lightcolor);
+        usernameLabel.setForeground(Interface.lightColor);
 
         userField.setBounds(Interface.centerX(200),100,200,40);
-        userField.setBorder(new LineBorder(lightcolor, 2));
-        userField.setBackground(darkcolor);
-        userField.setForeground(lightcolor);
+        userField.setBorder(new LineBorder(Interface.darkColor, 2));
+        userField.setBackground(Interface.lightColor);
+        userField.setForeground(Interface.darkColor);
 
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setBounds(Interface.centerX(200),160,200,40);
-        passwordLabel.setForeground(lightcolor);
+        passwordLabel.setForeground(Interface.lightColor);
 
         passField.setBounds(Interface.centerX(200),200,200,40);
-        passField.setBorder(new LineBorder(lightcolor, 2));
-        passField.setBackground(darkcolor);
-        passField.setForeground(lightcolor);
+        passField.setBorder(new LineBorder(Interface.darkColor, 2));
+        passField.setBackground(Interface.lightColor);
+        passField.setForeground(Interface.darkColor);
 
         JButton loginButton = new JButton("LOGIN");
-        loginButton.setBackground(lightcolor);
-        loginButton.setForeground(darkcolor);
+        loginButton.setBackground(Interface.darkColor);
+        loginButton.setForeground(Interface.lightColor);
         loginButton.setBounds(Interface.centerX(100),300,100,20);
         loginButton.addActionListener(_ -> Home.callAction("login"));
 
