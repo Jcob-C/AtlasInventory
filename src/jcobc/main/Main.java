@@ -2,14 +2,9 @@ package jcobc.main;
 
 public class Main {
 
-    
-    public static boolean checkIfNumber(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (Exception _) {
-            return false;
-        }
+
+    public static void print(Object x) {
+        System.out.println(x);
     }
 
 

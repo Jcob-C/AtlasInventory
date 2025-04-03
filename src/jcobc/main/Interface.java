@@ -86,6 +86,11 @@ public class Interface {
     }
 
 
+    public static Double popupDoubleInput(String message) {
+        return Main.toDouble(JOptionPane.showInputDialog(message));
+    }
+
+
     private static void loadAllPages() {
         Inventory.loadPages();
         Home.loadPages();

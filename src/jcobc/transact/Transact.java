@@ -45,6 +45,7 @@ public class Transact {
         if (table == null) return 0;
         double totalPrice = 0;
         for (String x[] : table) {
+            if (x[3].equals("Defective")) continue;
             totalPrice += (Main.toDouble(x[2]) * Main.toInteger(x[x.length-1]));
         }
         return totalPrice;

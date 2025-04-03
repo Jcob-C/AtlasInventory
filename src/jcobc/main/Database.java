@@ -65,6 +65,23 @@ public class Database {
     }
 
 
+    public static boolean deleteRow(String table, int id) {
+        String query = "DELETE FROM " + table + " WHERE id = ?";
+        try (
+            Connection conn = connectionToDB();
+            PreparedStatement stmt = conn.prepareStatement(query)
+            ) 
+        {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+        }
+        catch (Exception e) {
+            Interface.popupMessage("Row Deletion Error: "+e.getMessage());
+        }
+        return false;
+    }
+
+
     public static boolean inventoryInsert(String[] newItem) {
         String query = "INSERT INTO inventory (barcode, itemName, itemLocation, itemType, descr, price, stock) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (
@@ -113,20 +130,24 @@ public class Database {
     }
 
 
-    public static boolean deleteRow(String table, int id) {
-        String query = "DELETE FROM " + table + " WHERE id = ?";
+    public static Integer getStock(int itemID) {
+        String query = "SELECT stock FROM inventory WHERE id = ?";
         try (
             Connection conn = connectionToDB();
-            PreparedStatement stmt = conn.prepareStatement(query)
+            PreparedStatement queryBuild = conn.prepareStatement(query)
             ) 
-        {
-            stmt.setInt(1, id);
-            return stmt.executeUpdate() > 0;
+        { 
+            queryBuild.setInt(1, itemID);
+
+            try (ResultSet result = queryBuild.executeQuery()) {
+                result.next();
+                return result.getInt(1);
+            }
         }
-        catch (Exception e) {
-            Interface.popupMessage("Row Deletion Error: "+e.getMessage());
+        catch (Exception e) { 
+            Interface.popupMessage("Get Stock Error: "+e.getMessage());
         }
-        return false;
+        return 0;
     }
 
 

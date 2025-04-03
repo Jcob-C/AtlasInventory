@@ -41,5 +41,6 @@ CREATE TABLE sales_items (
     FOREIGN KEY (item_id) REFERENCES inventory(id) ON DELETE CASCADE
 );
 
-insert into staff(fullName, contactNo, address, username, pass, workRole) 
-values('name','911','hell','admin','pass','admin');
+insert into 
+staff (fullName, contactNo, address, username, pass, workRole) 
+values ('name','911','hell','admin','pass','admin');

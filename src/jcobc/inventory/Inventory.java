@@ -104,6 +104,7 @@ public class Inventory {
                 String newValue = Interface.popupInput(
                     "Enter the new "+columnNames[selectedColumn]
                 );
+                if (newValue == null) break;
                 Database.editInventoryAttribute(selectedID, selectedColumn, newValue);
             break;
             case 2:
