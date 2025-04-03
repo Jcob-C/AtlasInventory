@@ -2,14 +2,10 @@ package jcobc.home.layouts;
 import jcobc.home.Home;
 import jcobc.main.Interface;
 
-import java.awt.Color;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 public class LoginPage extends JPanel {
-
-    private final Color darkcolor = Color.BLACK;
-    private final Color lightcolor = Color.WHITE;
 
     private final JTextField userField = new JTextField();
     private final JPasswordField passField = new JPasswordField();
@@ -21,10 +17,11 @@ public class LoginPage extends JPanel {
     }
 
 
-    public String[] getInputAccount() {
+    public String[] inputAccount() {
         String password = "";
-        for (char x : passField.getPassword())
+        for (char x : passField.getPassword()) {
             password += x;
+        }
         return new String[] {userField.getText(), password};
     }
 
@@ -55,12 +52,13 @@ public class LoginPage extends JPanel {
         loginButton.setBackground(Interface.darkColor);
         loginButton.setForeground(Interface.lightColor);
         loginButton.setBounds(Interface.centerX(100),300,100,20);
+        
         loginButton.addActionListener(_ -> Home.callAction("login"));
-
-        add(passwordLabel);
+        
         add(usernameLabel);
-        add(loginButton);
         add(userField);
+        add(passwordLabel);
         add(passField);
+        add(loginButton);
     }
 }

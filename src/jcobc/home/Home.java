@@ -42,7 +42,7 @@ public class Home {
 
     
     private static void login() {
-        String inputAccount[] = loginPage.getInputAccount();
+        String inputAccount[] = loginPage.inputAccount();
         if (Database.validateAccount(inputAccount)) {
             loggedinUsername = inputAccount[0];
             loginPage.clearInputAccount();

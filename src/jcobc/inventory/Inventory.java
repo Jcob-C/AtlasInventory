@@ -6,10 +6,9 @@ import jcobc.home.Home;
 
 public class Inventory {
 
-    private static String
-        columnNames[] = {
-            "ID","Barcode","Name","Location","Type","Description","Price","Stock"
-        };
+    private static String columnNames[] = {
+        "ID","Barcode","Name","Location","Type","Description","Price","Stock"
+    };
 
     private static final InventoryPage inventoryPage = new InventoryPage();
     private static final NewItemPage newItemPage = new NewItemPage();
@@ -51,7 +50,7 @@ public class Inventory {
     private static void insertNewItem() {
         boolean inserted = Database.inventoryInsert(newItemPage.newItemInputs());
         if (inserted) {
-            newItemPage.clearNewItemInput();
+            newItemPage.clearNewItemInputs();
             Interface.popupMessage("New Item Added");
             gotoInventory();
         }
