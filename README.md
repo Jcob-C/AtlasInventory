@@ -35,6 +35,7 @@ CREATE TABLE sales_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sale_id INT NOT NULL,
     item_id INT NOT NULL,
+    itemName VARCHAR(100) NOT NULL,
     soldPrice DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL,
     FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,

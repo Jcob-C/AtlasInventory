@@ -3,6 +3,7 @@ package jcobc.main;
 import jcobc.home.Home;
 import jcobc.inventory.Inventory;
 import jcobc.transact.Transact;
+import jcobc.history.History;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,5 +100,6 @@ public class Interface {
         Inventory.loadPages();
         Home.loadPages();
         Transact.loadPages();
+        History.loadPages();
     }
 }

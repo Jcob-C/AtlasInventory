@@ -1,4 +1,5 @@
 package jcobc.home;
+import jcobc.history.History;
 import jcobc.home.layouts.*;
 import jcobc.main.*;
 
@@ -30,6 +31,8 @@ public class Home {
             case "gotoInventory": Inventory.callAction("gotoInventory");
             break;
             case "gotoTransact": Transact.callAction("gotoTransact");
+            break;
+            case "gotoHistoryMenu": History.callAction("gotoHistoryMenu");
             break;
             default: Interface.popupMessage("Unmapped Home Action: "+action);
         }

@@ -194,8 +194,8 @@ public class Database {
     }
     
 
-    public static boolean salesItemInsert(int salesID, int itemID, double soldPrice, int quantity) {
-        String query = "INSERT INTO sales_items (sale_id, item_id, soldPrice, quantity) VALUES (?, ?, ?, ?)";
+    public static boolean salesItemInsert(int salesID, int itemID, String itemName, double soldPrice, int quantity) {
+        String query = "INSERT INTO sales_items (sale_id, item_id, itemName, soldPrice, quantity) VALUES (?, ?, ?, ?, ?)";
         try (
             Connection conn = connectionToDB();
             PreparedStatement queryBuild = conn.prepareStatement(query)
@@ -203,14 +203,63 @@ public class Database {
         {
             queryBuild.setInt(1, salesID); 
             queryBuild.setInt(2, itemID); 
-            queryBuild.setBigDecimal(3, new BigDecimal(soldPrice));
-            queryBuild.setInt(4, quantity); 
+            queryBuild.setString(3, itemName);
+            queryBuild.setBigDecimal(4, new BigDecimal(soldPrice));
+            queryBuild.setInt(5, quantity); 
 
             return queryBuild.executeUpdate() > 0;
         } catch (Exception e) {
             Interface.popupMessage("Sales Item Insert Error: " + e.getMessage());
             return false;
         }
+    }
+    
+    
+    public static String[][] table(String table, int columns) {
+        String query = "SELECT * FROM "+table,
+        outputTable[][] = new String[tableSize(table)][columns];
+        try (
+            Connection conn = connectionToDB();
+            Statement queryBuild = conn.createStatement();
+            ResultSet result = queryBuild.executeQuery(query);
+            ) 
+        {
+            int o = 0;
+            while (result.next()) {
+                for (int i = 0; i < columns; i++) {
+                    outputTable[o][i] = result.getString(i+1);
+                }
+                o++;
+            }
+        }
+        catch (Exception e) { 
+            Interface.popupMessage("Get Whole Table Error: "+e.getMessage());
+        }
+        return outputTable;
+    }
+
+
+    public static String[][] itemsList(String id) {
+        String query = "SELECT * FROM sales_items WHERE sale_id = "+id,
+        outputTable[][] = null;
+        try (
+            Connection conn = connectionToDB();
+            Statement queryBuild = conn.createStatement();
+            ResultSet result = queryBuild.executeQuery(query);
+            ) 
+        {
+            while (result.next()) {
+                String newRow[] = new String[6];
+                for (int i = 0; i < 6; i++) {
+                    newRow[i] = result.getString(i+1);
+                }
+                outputTable = Main.withNewRow(outputTable, newRow);
+            }
+        }
+        catch (Exception e) { 
+            Interface.popupMessage("Get Sale Items List Error: "+e.getMessage());
+        }
+        return outputTable;
     }
 
 
@@ -237,26 +286,5 @@ public class Database {
     }
 
 
-    private static String[][] table(String table, int columns) {
-        String query = "SELECT * FROM "+table,
-        outputTable[][] = new String[tableSize(table)][columns];
-        try (
-            Connection conn = connectionToDB();
-            Statement queryBuild = conn.createStatement();
-            ResultSet result = queryBuild.executeQuery(query);
-            ) 
-        {
-            int o = 0;
-            while (result.next()) {
-                for (int i = 0; i < columns; i++) {
-                    outputTable[o][i] = result.getString(i+1);
-                }
-                o++;
-            }
-        }
-        catch (Exception e) { 
-            Interface.popupMessage("Get Whole Table Error: "+e.getMessage());
-        }
-        return outputTable;
-    }
+    
 }

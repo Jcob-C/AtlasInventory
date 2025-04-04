@@ -26,12 +26,12 @@ public class HomePage extends JPanel {
         button3.setForeground(Interface.lightColor);
         button3.setBounds(Interface.centerX(150), 200, 150, 40);     
 
-        JButton button4 = new JButton("Orders");
+        JButton button4 = new JButton("---");
         button4.setBackground(Interface.darkColor);
         button4.setForeground(Interface.lightColor);
         button4.setBounds(Interface.centerX(150), 260, 150, 40);        
 
-        JButton button5 = new JButton("Accounts");
+        JButton button5 = new JButton("---");
         button5.setBackground(Interface.darkColor);
         button5.setForeground(Interface.lightColor);
         button5.setBounds(Interface.centerX(150), 320, 150, 40);      
@@ -44,9 +44,7 @@ public class HomePage extends JPanel {
         button6.addActionListener(_ -> Home.callAction("logout"));
         button1.addActionListener(_ -> Home.callAction("gotoInventory"));
         button2.addActionListener(_ -> Home.callAction("gotoTransact"));
-        button3.addActionListener(_ -> Home.callAction("button3"));
-        button4.addActionListener(_ -> Home.callAction("button4"));
-        button5.addActionListener(_ -> Home.callAction("button5"));
+        button3.addActionListener(_ -> Home.callAction("gotoHistoryMenu"));
 
         add(button1);
         add(button2);

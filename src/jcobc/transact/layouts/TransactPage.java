@@ -78,7 +78,7 @@ public class TransactPage extends JPanel {
         JButton addCustomerButton = new JButton("Add");
         addCustomerButton.setBackground(Interface.darkColor);
         addCustomerButton.setForeground(Interface.lightColor);
-        addCustomerButton.setBounds(offsetX + 290, 10, 70, 30);
+        addCustomerButton.setBounds(offsetX + 295, 10, 70, 30);
         
         String[] columns = {"ID", "Name", "Price", "Condition", "Quantity"};
         customerTableModel = new DefaultTableModel(columns, 0);

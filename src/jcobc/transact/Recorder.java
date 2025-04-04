@@ -32,7 +32,8 @@ public class Recorder {
             for (int i  = 0; i < inv.length; i++) {
                 Database.salesItemInsert(
                     salesID, 
-                    Main.toInteger(inv[i][0]), 
+                    Main.toInteger(inv[i][0]),
+                    inv[i][1],
                     Main.toDouble(inv[i][2]),
                     Main.toInteger(inv[i][3])
                 );
@@ -44,6 +45,7 @@ public class Recorder {
                 Database.salesItemInsert(
                     salesID, 
                     Main.toInteger(cus[i][0]), 
+                    cus[i][1],
                     Main.toDouble(cus[i][2]),
                     Main.toInteger("-"+cus[i][4])
                 );
