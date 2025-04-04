@@ -11,8 +11,8 @@ import java.awt.*;
 public class Interface {
     
     public static final Color lightColor = Color.WHITE;
-    public static final Color mediumColor = Color.GRAY;
-    public static final Color darkColor = Color.DARK_GRAY;
+    public static final Color mediumColor = Color.DARK_GRAY;
+    public static final Color darkColor = Color.BLACK;
 
     private static final String initialPage = "login";
 

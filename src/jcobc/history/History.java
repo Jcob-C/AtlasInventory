@@ -1,5 +1,4 @@
 package jcobc.history;
-import javax.xml.crypto.Data;
 
 import jcobc.history.layouts.*;
 import jcobc.main.*;
@@ -50,6 +49,7 @@ public class History {
     private static void searchTransactID() {
         Integer searchID = Interface.popupIntegerInput("Enter Transaction ID:");
         if (searchID == null) return;
+        gotoTransactions();
         String 
             ID = ""+searchID,
             newTable[][] = null;
