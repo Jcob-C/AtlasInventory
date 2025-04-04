@@ -38,8 +38,8 @@ CREATE TABLE sales_items (
     itemName VARCHAR(100) NOT NULL,
     soldPrice DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL,
-    FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES inventory(id) ON DELETE CASCADE
+    FOREIGN KEY (sale_id) REFERENCES sales(id),
+    FOREIGN KEY (item_id) REFERENCES inventory(id)
 );
 
 insert into 
