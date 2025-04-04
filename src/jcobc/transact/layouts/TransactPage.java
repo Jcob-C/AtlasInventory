@@ -81,8 +81,12 @@ public class TransactPage extends JPanel {
         addCustomerButton.setBounds(offsetX + 295, 10, 70, 30);
         
         String[] columns = {"ID", "Name", "Price", "Condition", "Quantity"};
-        customerTableModel = new DefaultTableModel(columns, 0);
-        
+        customerTableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Makes all cells uneditable
+            }
+        };
         JTable customerTable = new JTable(customerTableModel);
         customerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         customerTable.setSelectionBackground(Interface.lightColor);
@@ -110,8 +114,12 @@ public class TransactPage extends JPanel {
         addInventoryButton.setBounds(offsetX + 690, 10, 70, 30);
         
         String[] columns2 = {"ID", "Name", "Price", "Quantity"};
-        inventoryTableModel = new DefaultTableModel(columns2, 0);
-        
+        inventoryTableModel = new DefaultTableModel(columns2, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Makes all cells uneditable
+            }
+        };
         JTable inventoryTable = new JTable(inventoryTableModel);
         inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         inventoryTable.setSelectionBackground(Interface.lightColor);

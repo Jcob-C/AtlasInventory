@@ -37,7 +37,12 @@ public class ItemsListPage extends JPanel {
         backButton.setBounds(Interface.centerX(80)-325, 10, 80, 30);
 
         String[] columns = {"Item ID","Item Name","Sold Price","Quantity Sold"};
-        tableModel = new DefaultTableModel(columns, 0);
+        tableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Makes all cells uneditable
+            }
+        };
         JTable table = new JTable(tableModel);
         table.setSelectionBackground(Interface.lightColor);
         table.setSelectionForeground(Interface.darkColor);

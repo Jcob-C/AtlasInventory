@@ -58,7 +58,12 @@ public class InventoryPage extends JPanel {
         topMiddleButton.setBounds(Interface.centerX(120), 10, 120, 30);
 
         String[] columns = {"ID","Barcode","Name","Location","Type","Description","Price","Stock"};
-        tableModel = new DefaultTableModel(columns, 0);
+        tableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Makes all cells uneditable
+            }
+        };
         JTable table = new JTable(tableModel);
         table.setSelectionBackground(Interface.lightColor);
         table.setSelectionForeground(Interface.darkColor);

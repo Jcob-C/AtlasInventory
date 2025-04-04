@@ -49,7 +49,12 @@ public class TransactionsPage extends JPanel {
         refreshButton.setBounds(Interface.centerX(80)-225, 10, 80, 30);
 
         String[] columns = {"ID","Date & Time","Customer Name","Total Price"};
-        tableModel = new DefaultTableModel(columns, 0);
+        tableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Makes all cells uneditable
+            }
+        };
         JTable table = new JTable(tableModel);
         table.setSelectionBackground(Interface.lightColor);
         table.setSelectionForeground(Interface.darkColor);
