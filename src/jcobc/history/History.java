@@ -48,8 +48,8 @@ public class History {
 
     private static void searchTransactID() {
         Integer searchID = Interface.popupIntegerInput("Enter Transaction ID:");
-        if (searchID == null) return;
         gotoTransactions();
+        if (searchID == null || salesTableCache == null) return;
         String 
             ID = ""+searchID,
             newTable[][] = null;

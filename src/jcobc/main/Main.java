@@ -28,7 +28,7 @@ public class Main {
 
     public static String[][] withNewRow(String[][] table, String[] newRow) {
         if (table != null && newRow.length > table[0].length) {
-            Interface.popupMessage("withNewRow() failed: newRow.length > table[0].length");
+            print("withNewRow() failed: newRow.length > table[0].length");
             return table;
         }
         else if (table == null || table.length == 0) {
@@ -49,7 +49,7 @@ public class Main {
 
     public static String[][] withoutRow(String[][] table, int rowIndex) {
         if (rowIndex < 0 || table.length <= rowIndex) {
-            Interface.popupMessage("withoutRow() failed: rowIndex < 0 || table.length <= rowIndex");
+            print("withoutRow() failed: rowIndex < 0 || table.length <= rowIndex");
             return null;
         }
         else if (table.length <= 1) {
@@ -71,7 +71,7 @@ public class Main {
 
     public static String[][] numSorted(String[][] table, int columnIndex, boolean ascending) {
         if (table == null || table.length == 0 || columnIndex < 0 || columnIndex >= table[0].length) {
-            Interface.popupMessage("numSorted() failed: table == null || table.length == 0 || columnIndex < 0 || columnIndex >= table[0].length");
+            print("numSorted() failed: table == null || table.length == 0 || columnIndex < 0 || columnIndex >= table[0].length");
             return null;
         }
         String 
@@ -98,7 +98,7 @@ public class Main {
 
     public static String[][] strSorted(String[][] table, int columnIndex, boolean ascending) {
         if (table == null || table.length == 0 || columnIndex < 0 || columnIndex >= table[0].length) {
-            Interface.popupMessage("strSorted() failed: table == null || table.length == 0 || columnIndex < 0 || columnIndex >= table[0].length");
+            print("strSorted() failed: table == null || table.length == 0 || columnIndex < 0 || columnIndex >= table[0].length");
             return null;
         }
         String 
