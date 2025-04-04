@@ -83,7 +83,7 @@ public class Inventory {
     private static void cellSelected() {
         String 
             inventoryCache[][] = Database.inventoryCache(),
-            options[] = {"Restock","Edit","Delete"};
+            options[] = {"Restock Item","Edit Attribute","Delete Item"};
         Integer
             selectedCell[] = inventoryPage.selectedCell(),
             selectedRow = selectedCell[0],
@@ -96,7 +96,8 @@ public class Inventory {
                 );
         switch (optionChosen) {
             case 0:
-                int newStock = Interface.popupIntegerInput("Enter amount to add:");
+                Integer newStock = Interface.popupIntegerInput("Enter amount to add:");
+                if (newStock == null) break;
                 Database.addStock(newStock, selectedID);
             break;
             case 1:
