@@ -1,0 +1,58 @@
+Title:
+Dashboard Module  
+
+Purpose:
+The Dashboard Module serves as the central landing interface for staff upon successful login. It provides a quick overview of critical system information, specifically highlighting the inventory items with the lowest stock levels to support timely restocking actions. Additionally, it functions as a navigational hub, offering direct access to other system modules via a clean and accessible menu.  
+
+Functionalities:  
+1. Lowest Stock Display  
+- Retrieves and displays a list of inventory items that are below or nearing their minimum stock threshold.  
+- Sorts items in ascending order of quantity to prioritize the most urgent stock shortages.  
+2. Module Navigation Menu
+- Provides clickable UI elements for navigating to other system modules (e.g., Inventory, Sales, Reports, User Management, etc.).  
+- Adjusts available menu options based on the logged-in user's role and permissions.  
+
+Backend Logic:
+A. Low Stock Retrieval 
+1. Establishes a connection to the database.  
+2. Queries the inventory table to find items with quantities below a predefined threshold.  
+3. Sorts and limits the result set for efficient display.  
+4. Returns the results to the UI for display.  
+B. Menu Rendering Based on Role  
+1. Retrieves user role from the login session or token.  
+2. Determines which modules are accessible based on role-based access control (RBAC).  
+3. Dynamically generates the menu options accordingly.  
+
+Database Tables: 
+1. Inventory
+- Stores information about all stock items, including current quantity, minimum threshold levels, and restocking details.  
+- Used to identify items with low stock levels.  
+2. Accounts
+- Defines which users can access which modules, enabling dynamic and secure menu generation.  
+
+Planned Files:
+1. DashboardController.java
+- Handles all backend logic associated with the dashboard, including data retrieval and user role analysis.  
+- Coordinates requests between the UI and database layer.  
+2. DashboardLayout.java  
+- Provides the user interface layout for the dashboard screen.  
+- Displays stock alerts and module navigation menu.  
+3. DashboardDB.java  
+- Contains queries and database operations related to the dashboard’s features, including inventory status checks and role-based access retrieval. 
+4. Resources
+- Images and other files that could be used for the design of the user interface.
+
+Input and Outputs:
+A. Input
+1. Logged-in User Role 
+2. Request to Load Dashboard 
+3. Button Clicks (Menu Items) 
+4. Refresh Button 
+– Allows users to manually refresh low stock data.  
+B. Output
+1. Lowest Stock List
+- A sorted list of low-stock items (e.g., Item Name, Current Stock, Minimum Threshold).  
+2. Dynamic Menu
+- A menu tailored to the logged-in user’s role.
+4. Navigation Events
+- When a button is clicked, the user is routed to the selected module.  

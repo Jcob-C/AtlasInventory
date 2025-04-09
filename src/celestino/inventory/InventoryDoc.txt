@@ -1,0 +1,80 @@
+Title:
+Inventory Module  
+
+Purpose:
+The Inventory Module is a comprehensive interface for managing product stock data. It allows staff to view, search, update, restock, delete, and add items within the inventory database. The module supports item selection through a JTable, direct manipulation of attributes, and barcode scanner integration for rapid item lookup and registration. It ensures efficient stock management and streamlined operations.
+
+Functionalities:
+1. Inventory Viewing
+- Displays all inventory items in a JTable format with sortable columns (e.g., Item ID, Name, Quantity, Category, Price).  
+2. Search and Sort
+- Enables keyword-based search across multiple attributes (e.g., name, category, ID).  
+- Allows sorting by any column to quickly analyze inventory (e.g., by quantity, price, etc.).  
+3. Item Selection and Editing  
+- Users can select an item row in the JTable and modify editable fields (e.g., price, quantity, category).  
+- Changes are submitted and updated in the database in real-time or on save.  
+4. Item Deletion  
+- Allows users to permanently remove selected items from the inventory database after confirmation.  
+5. Restock Items  
+- Enables users to update the quantity of an item, marking it as restocked and optionally logging the restock event.  
+6. New Item Registration  
+- Provides a form to manually add new items to the database with attributes such as name, barcode, category, price, and stock level.  
+7. Barcode Scanner Support  
+- When an item’s barcode is scanned:  
+A. If found in the database, the item is auto-searched and highlighted in the JTable.  
+B. If not found, the system prompts the user with an option to register it as a new item.  
+
+Backend Logic:  
+A. Search & Sort  
+- Applies SQL `LIKE` queries for search operations.  
+- Uses SQL `ORDER BY` for sorting or client-side sorting depending on implementation.  
+B. Item Editing  
+1. On selection, loads the item's current data.  
+2. On edit, validates the input and sends an update query to the database.  
+3. Refreshes the JTable upon success.  
+C. Deletion  
+- Prompts confirmation before executing a `DELETE` query on the selected item.  
+D. Restocking  
+- Adds a specified quantity to the selected item’s existing stock.  
+- Optionally logs the transaction in an activity or restock log.  
+E. Barcode Scanner Integration  
+- Captures barcode input from a connected scanner.  
+- Performs a real-time lookup in the inventory table.  
+- Offers to pre-fill the “Add New Item” form if not found.  
+
+Database Tables:  
+1. Inventory  
+- Contains details for each item: ID, Name, Barcode, Category, Quantity, Price, etc.  
+2. Activity Log *(optional)*  
+- Records events such as restocks, edits, and deletions for auditing purposes.  
+
+Planned Files:  
+1. InventoryManager.java  
+- Handles logic for searching, sorting, editing, deleting, restocking, and barcode actions.  
+- Manages validation and communication between UI and DB.  
+2. InventoryLayout.java  
+- Renders the JTable, buttons (edit, delete, restock, add), and barcode scan UI.  
+- Provides dynamic UI responses based on scanner input and user actions.  
+3. InventoryDB.java  
+- Handles database operations: queries, inserts, updates, deletes, and barcode lookups.  
+
+Input and Outputs:  
+A. Input  
+1. Search Keywords  
+2. Column Sort Requests  
+3. Table Row Selections  
+4. Edit Field Inputs  
+5. Delete Button  
+6. Restock Quantity + Button  
+7. Add New Item Form Inputs  
+8. Barcode Scan Input  
+B. Output  
+1. Filtered/Sorted JTable  
+- Reflects search and sort criteria.  
+2. Success Messages  
+- Item updated, restocked, added, or deleted successfully.  
+3. Error Messages  
+- Invalid input, database error, or permission issue.  
+4. Barcode Scanner Response  
+- Item found: highlights in table.  
+- Item not found: opens new item registration prompt prefilled with scanned barcode.  

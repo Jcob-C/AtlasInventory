@@ -1,5 +1,5 @@
 package celestino.orders;
 
-public class MakeOrderLayout {
+public class OrderViewLayout {
     
 }

@@ -1,0 +1,87 @@
+Title:  
+Orders Module  
+
+Purpose:  
+The Orders Module provides an interface for managing customer orders. It allows users to view, search, sort, and manage existing orders, as well as create new ones. For each order, users can update its status or view the items it contains. The module also facilitates new order creation through an intuitive item list maker, where users can select items, set quantities, and input customer information before submitting the order to the database.
+
+Functionalities:  
+1. Orders Display  
+- Shows all existing orders in a JTable format with columns such as Order ID, Customer Name, Date, Status, Total Price, etc.  
+2. Search and Sort  
+- Supports keyword search on attributes like Order ID, Customer Name, Status, or Date.  
+- Allows sorting by any visible column.  
+3. Order Selection  
+- Selecting an order allows two actions:  
+  a. View Items – Opens a detailed page listing all items in the selected order.  
+  b. Update Status – Provides a dropdown to change the status (e.g., Pending, Completed, Cancelled).  
+4. New Order Creation  
+- Leads to an Item List Maker view where selected items are compiled for a new order.  
+A. Add Item  
+- Opens the Item Selection Page, where users can browse inventory and select items to add to the order list.  
+B. Edit Item List  
+- Displays selected items in a JTable with editable quantity fields and remove options.  
+C. Customer Information Input  
+- Fields to enter customer name, contact number, and address.  
+D. Submit Order  
+- Sends the new order data to the database, automatically creating entries in both the Orders and Orders Items tables.  
+
+Backend Logic:  
+A. Order Viewing  
+- Queries the Orders table and populates the JTable with relevant details.  
+- Search and sort operations apply SQL filtering or are done client-side depending on implementation.  
+B. Status Update  
+- Updates the selected order’s status with an `UPDATE` query to the Orders table.  
+C. View Order Items  
+- On selection, queries Orders Items joined with `inventory` to show item names, prices, and quantities.  
+D. New Order Creation  
+1. Items are selected and quantity is set.  
+2. On submission:  
+   - Inserts a new row into Orders.  
+   - Inserts multiple rows into Orders Items, linked via the newly generated `order_id`.  
+   - Calculates and stores the total price in the Orders table.  
+
+Database Tables:  
+1. Orders  
+- Used to store overall order information including customer details, date/time, status, and total price.
+2. Order Items  
+- Used to store individual items included in each order, linked by order ID.
+3. Inventory  
+- Used to select available items when creating or viewing order contents.
+
+Planned Files:  
+1. OrdersManager.java  
+- Handles order display, search, sort, status updates, and routing to detailed item view or new order creation.  
+2. OrdersLayout.java  
+- UI layout for the main orders page, showing the order list and control buttons.  
+3. OrderViewLayout.java  
+- Displays items associated with a specific order in a read-only JTable.  
+4. OrderBuilderLayout.java  
+- Item list maker UI for building a new order with customer info and item selection.  
+5. OrderItemSelectLayout.java  
+- UI for browsing and selecting items from inventory to add to an order.  
+6. OrdersDB.java  
+- Manages all database interactions: retrieving orders, updating statuses, inserting new orders and associated items.  
+
+Input and Outputs:  
+A. Input  
+1. Search Keywords  
+2. Sort Column Selection  
+3. Selected Order Row  
+4. New Order Button  
+5. Item Selection (during new order)  
+6. Quantity Input for each item  
+7. Delete Selected Item  
+8. Customer Name, Contact No, Address  
+9. Submit Order  
+10. Update Status Dropdown  
+B. Output  
+1. Orders Table  
+- Display of orders based on current search/sort filters.  
+2. Order Items View  
+- Detailed list of items in a selected order.  
+3. Success Messages  
+- Order added, status updated, or item list modified successfully.  
+4. Error Messages  
+- Invalid input, missing customer info, or database errors.  
+5. Confirmation Dialogs  
+- Before submitting a new order or changing status.  

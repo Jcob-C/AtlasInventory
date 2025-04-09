@@ -1,0 +1,77 @@
+Title:  
+Transact Module  
+
+Purpose:  
+The Transact Module is designed to handle direct sales, product refunds, and item swaps through a unified interface. It features a menu for selecting the transaction type, and each transaction type provides an interactive builder for compiling items involved in the transaction. Refunds support tagging items with condition details (e.g., defective), and swaps involve both a refund list and a new sale list. All completed transactions are recorded in the database through the Sales and Sale Items tables.
+
+Functionalities:  
+1. Transaction Type Menu  
+- Allows users to select from Sell, Refund, or Swap modes.  
+2. Sell Transaction  
+- Opens a builder interface similar to an order system.  
+- Items are selected from inventory, quantities are set, and customer/employee information is recorded.  
+- Submitted data is stored in Sales and Sale Items.  
+3. Refund Transaction  
+- Same flow as Sell, but includes an additional Condition field for each item (e.g., "Defective", "Wrong Item").  
+- Quantities are stored as negative values in Sale Items.  
+4. Swap Transaction  
+- Combines the Sell and Refund interfaces into a dual-panel layout.  
+- Left: Refund list with condition fields.  
+- Right: Sell list for the items being issued in exchange.  
+- Both parts are saved as part of a single sales entry, where refund item quantities are negative.  
+
+Backend Logic:  
+A. Transaction Builder (Sell/Refund)  
+1. Users select items and set quantities.  
+2. Customer and employee details are entered.  
+3. For refunds, conditions are input per item.  
+4. On submit:  
+   - A new row is inserted into Sales.  
+   - Each item is recorded in Sale Items with quantity and price.  
+   - For refunds, item quantities are saved as negative.  
+B. Swap Builder  
+1. Refund list and sell list are filled independently.  
+2. Both lists are combined under one `sale_id`.  
+3. Sale Items includes negative quantities for refund items and positive for sale items.  
+
+Database Tables:  
+1. Sales  
+- Used to store transaction header data including customer and employee information, date, time, and total amount.  
+2. Sale Items  
+- Used to store item-level data for each transaction.  
+- Supports both positive (sale) and negative (refund) quantities.  
+3. Inventory  
+- Used to select available items for sale, validate stock, and reference item details.  
+
+Planned Files:  
+1. TransactHandler.java  
+- Manages flow between menu selection, transaction building, and data submission.  
+2. TransactLayout.java  
+- UI layout for the main transact menu and transaction interface container.  
+3. TransactionBuilder.java  
+- Shared logic/UI for building item lists for Sell and Refund transactions.  
+4. SwapTransactionBuilder.java  
+- Dual-list interface and logic for handling swap operations.  
+5. ItemSelectLayout.java  
+- UI for browsing and selecting items from inventory to add to the transaction.  
+6. TransactDB.java  
+- Handles inserting sales and sale_items records, including logic for negative quantities in refunds.  
+
+Input and Outputs:  
+A. Input  
+1. Transaction Type Selection (Sell, Refund, Swap)  
+2. Item Selections  
+3. Quantity Inputs  
+4. Condition Field (Refund and Swap only)  
+5. Customer Name  
+6. Employee Name  
+7. Submit Transaction  
+B. Output  
+1. Success Message  
+- Transaction recorded successfully.  
+2. Transaction Receipt *(optional)*  
+- Summary of items and totals, for display or print.  
+3. Error Message  
+- Missing data, invalid quantities, or stock issues.  
+4. Updated Inventory  
+- Reflects changes in item quantities after transaction.  

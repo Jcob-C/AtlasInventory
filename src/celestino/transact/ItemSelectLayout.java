@@ -1,5 +1,5 @@
 package celestino.transact;
 
-public class MenuLayout {
+public class ItemSelectLayout {
     
 }
