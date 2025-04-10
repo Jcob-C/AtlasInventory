@@ -2,7 +2,7 @@ Title:
 Transact Module  
 
 Purpose:  
-The Transact Module is designed to handle direct sales, product refunds, and item swaps through a unified interface. It features a menu for selecting the transaction type, and each transaction type provides an interactive builder for compiling items involved in the transaction. Refunds support tagging items with condition details (e.g., defective), and swaps involve both a refund list and a new sale list. All completed transactions are recorded in the database through the Sales and Sale Items tables.
+The Transact Module is designed to handle sales, product refunds, and item swaps through a unified interface. It features a menu for selecting the transaction type, and each transaction type provides an interactive builder for compiling items involved in the transaction. Refunds support tagging items with condition details (e.g., defective), and swaps involve both a refund list and a new sale list. All completed transactions are recorded in the database through the Sales and Sale Items tables.
 
 Functionalities:  
 1. Transaction Type Menu  
@@ -35,12 +35,12 @@ B. Swap Builder
 3. Sale Items includes negative quantities for refund items and positive for sale items.  
 
 Database Tables:  
-1. Sales  
+1. Sales (sale_id, date, time, customer_name, employee_name, total_price)
 - Used to store transaction header data including customer and employee information, date, time, and total amount.  
-2. Sale Items  
+2. Sale Items (id, sale_id, item_id, price_sold, quantity)
 - Used to store item-level data for each transaction.  
 - Supports both positive (sale) and negative (refund) quantities.  
-3. Inventory  
+3. Inventory (item_id, barcode, name, type, desc, location, stock)
 - Used to select available items for sale, validate stock, and reference item details.  
 
 Planned Files:  
@@ -59,10 +59,9 @@ Planned Files:
 
 Input and Outputs:  
 A. Input  
-1. Transaction Type Selection (Sell, Refund, Swap)  
 2. Item Selections  
 3. Quantity Inputs  
-4. Condition Field (Refund and Swap only)  
+4. Condition Field
 5. Customer Name  
 6. Employee Name  
 7. Submit Transaction  

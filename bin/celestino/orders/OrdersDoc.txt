@@ -41,11 +41,11 @@ D. New Order Creation
    - Calculates and stores the total price in the Orders table.  
 
 Database Tables:  
-1. Orders  
+1. Orders (order_id, date, time, customer_name, address, contact_no, payment_id, status, total_price)
 - Used to store overall order information including customer details, date/time, status, and total price.
-2. Order Items  
+2. Order Items (id, order_id, item_id, price, quantity)
 - Used to store individual items included in each order, linked by order ID.
-3. Inventory  
+3. Inventory (item_id, barcode, name, type, desc, location, stock)
 - Used to select available items when creating or viewing order contents.
 
 Planned Files:  
@@ -68,7 +68,7 @@ A. Input
 2. Sort Column Selection  
 3. Selected Order Row  
 4. New Order Button  
-5. Item Selection (during new order)  
+5. Item Selection
 6. Quantity Input for each item  
 7. Delete Selected Item  
 8. Customer Name, Contact No, Address  
