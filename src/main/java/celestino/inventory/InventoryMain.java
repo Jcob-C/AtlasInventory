@@ -5,12 +5,6 @@ import celestino.inventory.ui.InventoryPanel;
 
 public class InventoryMain {
 
-    Integer sorted = null;
-    String
-        searched = null,
-        order = null;
-
-
     public void call_action(String action) {
         switch (action) {
             case "refresh": refresh_table();
@@ -27,11 +21,16 @@ public class InventoryMain {
     public InventoryMain() {
         Main.add_card(inventory_card, "inventory");
     }
-
+    
 
     private final InventoryPanel inventory_card = new InventoryPanel(this);
     private final InventoryDB inventory_db = new InventoryDB();
-
+    private Integer sorted = null;
+    private String
+        searched = null,
+        order = null
+    ;
+    
 
     private void refresh_table() {
         inventory_card.update_table_pane(inventory_db.get_inventory_table());

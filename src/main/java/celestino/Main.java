@@ -61,6 +61,11 @@ public class Main {
     }
 
 
+    public static void popup_error(String message) {
+        JOptionPane.showMessageDialog(window, message, "Error Message", JOptionPane.ERROR_MESSAGE);
+    }
+
+
     private static final String default_font = "Segoe UI";
     private static final JFrame window = new JFrame();
     private static final CardLayout card_layout = new CardLayout();
@@ -91,7 +96,7 @@ public class Main {
 
         try(Connection conn = db_connection()) {
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            popup_error(e.getMessage());
             System.exit(0);
         }
     }
