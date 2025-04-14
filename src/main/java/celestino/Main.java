@@ -38,6 +38,14 @@ public class Main {
     }
 
 
+    public static int popup_option(String message, String[] options) {
+        int choice = JOptionPane.showOptionDialog(
+            window, message, "Choose", 0, JOptionPane.QUESTION_MESSAGE, null, options, 1
+        );
+        return choice;
+    }
+
+
     public static void add_card(JPanel card, String card_name) {
         main_panel.add(card, card_name);
     }

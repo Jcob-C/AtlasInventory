@@ -30,10 +30,14 @@ public class InventoryPanel extends JPanel {
     }
 
 
+    public String get_value_at(int x, int y) {
+        return String.valueOf(inventory_table.getValueAt(x,y));
+    }
+
+
     public InventoryPanel(InventoryMain parent) {
         setLayout(null);
 
-        JComboBox column_sort_select = new JComboBox(inventory_table_columns);
         JScrollPane inventory_table_pane = new JScrollPane(inventory_table);
         JPanel 
             top_bar = new JPanel(),
@@ -101,5 +105,5 @@ public class InventoryPanel extends JPanel {
     ;
     private final JTable inventory_table = new EZTable(inventory_table_columns);
     private final JTextField search_field = new JTextField();
-    private final JComboBox column_sort_select = new JComboBox(inventory_table_columns);
+    private final JComboBox<String> column_sort_select = new JComboBox<>(inventory_table_columns);
 }
