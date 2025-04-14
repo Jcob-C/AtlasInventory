@@ -5,7 +5,6 @@ import celestino.EZTable;
 import celestino.inventory.InventoryMain;
 
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;

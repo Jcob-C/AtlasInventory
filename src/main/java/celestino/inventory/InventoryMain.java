@@ -5,9 +5,11 @@ import celestino.inventory.ui.InventoryPanel;
 
 public class InventoryMain {
 
-    boolean 
-        searched = false,
-        sorted = false;
+    Integer sorted = null;
+    String
+        searched = null,
+        order = null;
+
 
     public void call_action(String action) {
         switch (action) {
@@ -33,33 +35,56 @@ public class InventoryMain {
 
     private void refresh_table() {
         inventory_card.update_table_pane(inventory_db.get_inventory_table());
-        searched = false;
-        sorted = false;
+        searched = null;
+        sorted = null;
+        order = null;
     }
 
 
     private void sort_table() {
-        String order = null;
+        sorted = inventory_card.get_column_sort_index();
+
         switch (Main.popup_option("Sort into?",new String[]{"Lowest First","Highest First"})) {
             case 0: order = "ASC"; break;
             case 1: order = "DESC"; break;
-            default: return;
+            default: order = null; return;
         }
-        inventory_card.update_table_pane(
-            inventory_db.get_sorted_inventory_table(
-                inventory_card.get_column_sort_index(), order
-            )
-        );
-        sorted = true;
+
+        if (searched != null && !searched.equals("")) {
+            inventory_card.update_table_pane(
+                inventory_db.get_searchedsorted_inventory_table(
+                    searched, sorted, order
+                )
+            );
+        }
+        else {
+            inventory_card.update_table_pane(
+                inventory_db.get_sorted_inventory_table(
+                    sorted, order
+                )
+            );
+        }
     }
 
 
     private void search_table() {
-        String keyword = inventory_card.get_search_input();
-        if (keyword == null || keyword.equals("")) return;
-        inventory_card.update_table_pane(
-            inventory_db.get_searched_inventory_table(keyword)
-        );
-        searched = false;
+        searched = inventory_card.get_search_input();
+
+        if (searched == null || searched.equals("")) return;
+
+        if (sorted != null && order != null) {
+            inventory_card.update_table_pane(
+                inventory_db.get_searchedsorted_inventory_table(
+                    searched, sorted, order
+                )
+            );
+        }
+        else {
+            inventory_card.update_table_pane(
+                inventory_db.get_searched_inventory_table(
+                    searched
+                )
+            );
+        }
     }
 }

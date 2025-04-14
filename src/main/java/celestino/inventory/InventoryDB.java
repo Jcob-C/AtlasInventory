@@ -1,12 +1,12 @@
 package celestino.inventory;
 
+import celestino.Main;
+
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import celestino.Main;
 
 public class InventoryDB {
 
