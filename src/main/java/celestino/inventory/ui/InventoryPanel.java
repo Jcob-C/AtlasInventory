@@ -88,8 +88,8 @@ public class InventoryPanel extends JPanel {
         add(ribbon_bar);
         add(inventory_table_pane);
 
-        search_button.addActionListener(e -> parent.call_action("search button"));
-        column_sort_select.addActionListener(e -> parent.call_action("column sort"));
+        search_button.addActionListener(e -> parent.call_action("search"));
+        column_sort_select.addActionListener(e -> parent.call_action("sort"));
         refresh_button.addActionListener(e -> parent.call_action("refresh"));
     }
 

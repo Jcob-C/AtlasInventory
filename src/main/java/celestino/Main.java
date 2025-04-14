@@ -57,22 +57,15 @@ public class Main {
         if (table != null && (new_row == null || new_row.length <= 0)) return table;
         else if (new_row != null && (table == null || table.length <= 0)) return new Object[][]{new_row};
         else if ((new_row == null || new_row.length <= 0) && (table == null || table.length <= 0)) return null;
-
-        int
-            old_length = table.length,
-            new_length = old_length + 1
-        ;
+        int 
+        old_length = table.length, 
+        new_length = old_length + 1;
         Object new_table[][] = new Object[new_length][table[0].length];
-
-        for (int x = 0; x < old_length; x++) {
-            for (int y = 0; y < table[x].length; y++) {
+        for (int x = 0; x < old_length; x++) 
+            for (int y = 0; y < table[x].length; y++) 
                 new_table[x][y] = table[x][y];
-            }
-        }
-        for (int x = 0; !(x >= new_row.length || x >= new_table[old_length].length); x++) {
+        for (int x = 0; !(x >= new_row.length || x >= new_table[old_length].length); x++) 
             new_table[old_length][x] = new_row[x];
-        }
-        
         return new_table;
     }
 
@@ -104,6 +97,11 @@ public class Main {
         initiliaze_cards();
         change_card(initial_card);
         window.setVisible(true);
-        db_connection();
+
+        try(Connection conn = db_connection()) {
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
     }
 }
