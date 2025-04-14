@@ -22,12 +22,12 @@ public class InventoryMain {
         Main.add_card(inventory_card, "inventory");
     }
 
-
-    private String inventory_table_cache[][] = null;
+    
     private final InventoryPanel inventory_card = new InventoryPanel(this);
+    private final InventoryDB inventory_db = new InventoryDB();
 
 
     private void refresh_table() {
-        
+        inventory_card.update_table_pane(inventory_db.get_inventory_table());
     }
 }

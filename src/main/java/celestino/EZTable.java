@@ -1,5 +1,7 @@
 package celestino;
 
+import java.util.ArrayList;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,10 +18,16 @@ public class EZTable extends JTable {
     }
 
     
-    public void update_table(Object[][] data) {
+    public void update_table(ArrayList<ArrayList<String>> data) {
         inventory_table_model.setRowCount(0);
-        for (Object[] row : data) {
-            inventory_table_model.addRow(row);
+        for (int x = 0; x < data.size(); x++) {
+            String[] new_row = new String[data.get(x).size()];
+
+            for (int y = 0; y < new_row.length; y++) {
+                new_row[y] = data.get(x).get(y);
+            }
+
+            inventory_table_model.addRow(new_row);
         }
     }
 

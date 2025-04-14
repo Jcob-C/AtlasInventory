@@ -4,6 +4,8 @@ import celestino.Main;
 import celestino.EZTable;
 import celestino.inventory.InventoryMain;
 
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -13,7 +15,7 @@ import javax.swing.JTextField;
 
 public class InventoryPanel extends JPanel {
 
-    public void update_table_pane(Object[][] data) {
+    public void update_table_pane(ArrayList<ArrayList<String>> data) {
         ((EZTable) inventory_table).update_table(data);
     }
 

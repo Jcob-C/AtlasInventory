@@ -53,23 +53,6 @@ public class Main {
     }
 
 
-    public static Object[][] insert_row(Object[][] table, Object[] new_row) {
-        if (table != null && (new_row == null || new_row.length <= 0)) return table;
-        else if (new_row != null && (table == null || table.length <= 0)) return new Object[][]{new_row};
-        else if ((new_row == null || new_row.length <= 0) && (table == null || table.length <= 0)) return null;
-        int 
-        old_length = table.length, 
-        new_length = old_length + 1;
-        Object new_table[][] = new Object[new_length][table[0].length];
-        for (int x = 0; x < old_length; x++) 
-            for (int y = 0; y < table[x].length; y++) 
-                new_table[x][y] = table[x][y];
-        for (int x = 0; !(x >= new_row.length || x >= new_table[old_length].length); x++) 
-            new_table[old_length][x] = new_row[x];
-        return new_table;
-    }
-
-
     private static final String default_font = "Segoe UI";
     private static final JFrame window = new JFrame();
     private static final CardLayout card_layout = new CardLayout();
