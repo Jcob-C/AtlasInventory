@@ -38,15 +38,7 @@ You need to have Maven installed on your machine to manage project dependencies 
      - Find **Path** in **System variables**, and click **Edit**.
      - Add: `C:\Program Files\Apache\Maven\apache-maven-3.9.9\bin`.
 
-4. **Verify Maven Installation**:
-    - Run:
-    
-      ```bash
-      mvn -v
-      ```
-    - This should output the Maven version, Java version, and other details, confirming the installation.
-
-5. **Build the Project**:
+4. **Build the Project**:
     -  Run the following command to **download dependencies** and **build the project**:
 
         ```bash
