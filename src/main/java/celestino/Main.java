@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,8 +19,24 @@ public class Main {
         db_name = "db0321",
         db_password = "",
         db_user = "root",
-        db_url = "jdbc:mysql://localhost:3306/"+db_name
+        db_host = "jdbc:mysql://localhost:3306/",
+        db_url = db_host + db_name
     ;
+    public static final String[] db_command_lines = {
+        "CREATE DATABASE " + db_name + ";",
+        "USE " + db_name + ";",
+        """
+        CREATE TABLE inventory (
+            item_id INT AUTO_INCREMENT PRIMARY KEY,
+            barcode VARCHAR(50) NOT NULL,
+            item_name VARCHAR(100) NOT NULL,
+            item_type VARCHAR(50),
+            descr TEXT,
+            location VARCHAR(100),
+            stock INT DEFAULT 0
+        );
+        """
+    };
     public static final Color theme[] = {
         new Color(255, 255, 255), // light color
         new Color(252, 151, 51), // medium
@@ -33,7 +50,9 @@ public class Main {
 
 
     public static boolean popup_confirm(String message) {
-        int choice = JOptionPane.showOptionDialog(window, message, "Confirmation", 0, 0, null, null, 1);
+        int choice = JOptionPane.showOptionDialog(
+            window, message, "Confirmation", 0, JOptionPane.QUESTION_MESSAGE, null, null, 1
+        );
         return choice == 0;
     }
 
@@ -75,6 +94,23 @@ public class Main {
     private static void initiliaze_cards() {
         new InventoryMain();
     }
+
+
+    private static void initiliaze_database() {
+        if (!popup_confirm("Database not found:\n\nCreate the database?"))
+            System.exit(0);
+        try (
+            Connection conn = DriverManager.getConnection(db_host, db_user, db_password);
+            Statement stmt = conn.createStatement()
+            ) 
+        {
+            for (String cmd : db_command_lines) stmt.executeUpdate(cmd);
+        }
+        catch (SQLException e) {
+            popup_error(e.getMessage());
+            System.exit(0);
+        }
+    }
     
     
     private static void setup_window() {
@@ -96,8 +132,7 @@ public class Main {
 
         try(Connection conn = db_connection()) {
         } catch (SQLException e) {
-            popup_error(e.getMessage());
-            System.exit(0);
+            initiliaze_database();
         }
     }
 }

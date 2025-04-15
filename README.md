@@ -1,25 +1,5 @@
 # Setup Guide
-
-## MySQL
-
-```sql
-CREATE DATABASE db0321;
-USE db0321;
-
-CREATE TABLE inventory (
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    barcode VARCHAR(50) NOT NULL,
-    item_name VARCHAR(100) NOT NULL,
-    item_type VARCHAR(50),
-    descr TEXT,
-    location VARCHAR(100),
-    stock INT DEFAULT 0
-);
-```
-
-## Maven
-
-You need to have Maven installed on your machine to manage project dependencies and build the project. Follow these steps to install Maven:
+You need to have Maven installed on your machine to build the project. If you do not have Maven yet, follow these steps to install Maven:
 
 1. **Download Maven**:
    - Go to the official Maven download page: [Apache Maven Downloads](https://maven.apache.org/download.cgi).
