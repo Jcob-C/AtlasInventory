@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class EZTable extends JTable {
+public class PresetJTable extends JTable {
 
     private DefaultTableModel inventory_table_model;
 
 
-    public EZTable(String[] columns) {
+    public PresetJTable(String[] columns) {
         inventory_table_model = table_model(columns);
         this.setModel(inventory_table_model);
         this.setCellSelectionEnabled(true);

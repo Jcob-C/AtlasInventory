@@ -1,7 +1,7 @@
 package celestino.inventory.ui;
 
 import celestino.Main;
-import celestino.EZTable;
+import celestino.PresetJTable;
 import celestino.inventory.InventoryMain;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 public class InventoryPanel extends JPanel {
 
     public void update_table_pane(ArrayList<ArrayList<String>> data) {
-        ((EZTable) inventory_table).update_table(data);
+        ((PresetJTable) inventory_table).update_table(data);
     }
 
 
@@ -102,7 +102,7 @@ public class InventoryPanel extends JPanel {
     private final String[] inventory_table_columns = 
         {"ID","Barcode","Name","Type","Description","Location","Stock"}
     ;
-    private final JTable inventory_table = new EZTable(inventory_table_columns);
+    private final JTable inventory_table = new PresetJTable(inventory_table_columns);
     private final JTextField search_field = new JTextField();
     private final JComboBox<String> column_sort_select = new JComboBox<>(inventory_table_columns);
 }
