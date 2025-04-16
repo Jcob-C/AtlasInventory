@@ -76,7 +76,6 @@ public class AddItemPanel extends JPanel {
         stock_label.setFont(Main.get_font(16));
         type_label.setFont(Main.get_font(16));
         desc_label.setFont(Main.get_font(16));
-        inventory_button.setFont(Main.get_font(16));
         add_button.setFont(Main.get_font(18));
 
         name_label.setBounds(84,230,71,21);

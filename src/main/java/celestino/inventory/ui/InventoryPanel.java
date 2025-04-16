@@ -17,13 +17,18 @@ public class InventoryPanel extends JPanel {
     public void update_table_pane(ArrayList<ArrayList<String>> data) {
         ((PresetJTable) inventory_table).update_table(data);
     }
+    
 
-
-    public String get_search_input() {
-        return search_field.getText();
+    public void flip_sort_order() {
+        switch(sort_order_button.getText()) {
+            case ">": sort_order_button.setText("<");
+            break;
+            case "<": sort_order_button.setText(">");
+            break;
+        }
     }
-
-
+    
+    
     public Integer get_column_sort_index() {
         return column_sort_select.getSelectedIndex();
     }
@@ -31,6 +36,31 @@ public class InventoryPanel extends JPanel {
 
     public String get_value_at(int x, int y) {
         return String.valueOf(inventory_table.getValueAt(x,y));
+    }
+
+
+    public String get_search_input() {
+        return search_field.getText();
+    }
+    
+    
+    public String get_sort_order() {
+        return sort_order_button.getText();
+    }
+    
+    
+    public void clear_search_field() {
+        search_field.setText("");
+    }
+
+
+    public void reset_sort_order() {
+        sort_order_button.setText(">");
+    }
+    
+    
+    public void reset_column_sort() {
+        column_sort_select.setSelectedIndex(0);
     }
 
 
@@ -49,7 +79,10 @@ public class InventoryPanel extends JPanel {
             search_button = new JButton("Search"),
             refresh_button = new JButton("Refresh")
         ;
+
         setBackground(Main.theme[2]);
+        sort_order_button.setBackground(Main.theme[2]);
+        sort_order_button.setForeground(Main.theme[0]);
         top_bar.setBackground(Main.theme[1]);
         bottom_bar.setBackground(Main.theme[1]);
         ribbon_bar.setBackground(Main.theme[1]);
@@ -64,24 +97,25 @@ public class InventoryPanel extends JPanel {
         refresh_button.setBackground(Main.theme[2]);
         refresh_button.setForeground(Main.theme[0]);
 
-        dashboard_button.setFont(Main.get_font(16));
         add_button.setFont(Main.get_font(18));
         search_button.setFont(Main.get_font(18));
         search_field.setFont(Main.get_font(16));
         column_sort_select.setFont(Main.get_font(14));
         refresh_button.setFont(Main.get_font(16));
 
+        sort_order_button.setBounds(556,53,45,30);
         top_bar.setBounds(0,0,880,30);
         bottom_bar.setBounds(0,630,880,30);
         ribbon_bar.setBounds(57,39,767,59);
         inventory_table_pane.setBounds(27,107,826,523);
         dashboard_button.setBounds(0,0,45,30);
         add_button.setBounds(66,49,92,40);
-        search_button.setBounds(452,49,92,40);
-        search_field.setBounds(196,52,257,32);
-        column_sort_select.setBounds(560,52,124,32);
+        search_button.setBounds(434,49,92,40);
+        search_field.setBounds(178,52,257,32);
+        column_sort_select.setBounds(601,52,101,32);
         refresh_button.setBounds(722,49,92,40);
 
+        add(sort_order_button);
         add(dashboard_button);
         add(add_button);
         add(search_button);
@@ -93,7 +127,9 @@ public class InventoryPanel extends JPanel {
         add(ribbon_bar);
         add(inventory_table_pane);
 
+        sort_order_button.addActionListener(e -> parent.call_action("order sort"));
         search_button.addActionListener(e -> parent.call_action("search"));
+        search_field.addActionListener(e -> parent.call_action("search"));
         column_sort_select.addActionListener(e -> parent.call_action("sort"));
         refresh_button.addActionListener(e -> parent.call_action("refresh"));
         add_button.addActionListener(e -> parent.call_action("new item"));
@@ -106,4 +142,5 @@ public class InventoryPanel extends JPanel {
     private final JTable inventory_table = new PresetJTable(inventory_table_columns);
     private final JTextField search_field = new JTextField();
     private final JComboBox<String> column_sort_select = new JComboBox<>(inventory_table_columns);
+    private final JButton sort_order_button = new JButton(">");
 }

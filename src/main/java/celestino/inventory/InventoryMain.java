@@ -14,6 +14,8 @@ public class InventoryMain {
             break;
             case "search": search_table();
             break;
+            case "order sort": inventory_card.flip_sort_order(); sort_table();
+            break;
             case "sort": sort_table();
             break;
             case "new item": Main.change_card("add item");
@@ -55,23 +57,26 @@ public class InventoryMain {
     
 
     private void refresh_table() {
-        inventory_card.update_table_pane(inventory_db.get_inventory_table());
+        inventory_card.clear_search_field();
+        inventory_card.reset_sort_order();
+        inventory_card.reset_column_sort();
         searched = null;
         sorted = null;
         order = null;
+        inventory_card.update_table_pane(inventory_db.get_inventory_table());
     }
 
 
     private void sort_table() {
         sorted = inventory_card.get_column_sort_index();
 
-        switch (Main.popup_option("Sort into?",new String[]{"Lowest First","Highest First"})) {
-            case 0: order = "ASC"; break;
-            case 1: order = "DESC"; break;
+        switch (inventory_card.get_sort_order()) {
+            case ">": order = "ASC"; break;
+            case "<": order = "DESC"; break;
             default: order = null; return;
         }
 
-        if (searched != null && !searched.equals("")) {
+        if (searched != null) {
             inventory_card.update_table_pane(
                 inventory_db.get_searchedsorted_inventory_table(
                     searched, sorted, order
@@ -90,9 +95,7 @@ public class InventoryMain {
 
     private void search_table() {
         searched = inventory_card.get_search_input();
-
-        if (searched == null || searched.equals("")) return;
-
+        
         if (sorted != null && order != null) {
             inventory_card.update_table_pane(
                 inventory_db.get_searchedsorted_inventory_table(

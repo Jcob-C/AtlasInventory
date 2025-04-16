@@ -2,6 +2,7 @@ package celestino;
 
 import java.util.ArrayList;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 public class PresetJTable extends JTable {
@@ -13,6 +14,7 @@ public class PresetJTable extends JTable {
         inventory_table_model = table_model(columns);
         this.setModel(inventory_table_model);
         this.setCellSelectionEnabled(true);
+        this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.getTableHeader().setReorderingAllowed(false);
     }
 
