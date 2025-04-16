@@ -19,8 +19,7 @@ public class Main {
         db_password = "",
         db_user = "root",
         db_port = "3306",
-        db_host = "localhost",
-        db_url = "jdbc:mysql://" + db_host + ":" + db_port + "/" + db_name
+        db_host = "localhost"
     ;
     public static final Color theme[] = {
         new Color(255, 255, 255), // light color
@@ -30,7 +29,11 @@ public class Main {
     
     
     public static Connection db_connection() throws SQLException {
-        return DriverManager.getConnection(db_url, db_user, db_password);
+        return DriverManager.getConnection(
+            "jdbc:mysql://" + db_host + ":" + db_port + "/" + db_name,
+            db_user,
+            db_password
+        );
     }
 
 

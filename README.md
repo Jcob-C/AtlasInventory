@@ -1,22 +1,29 @@
 # Setup Guide
 
 ## MySQL
- ```sql
- CREATE DATABASE db0321;
- USE db0321;
- 
- CREATE TABLE inventory (
-     item_id INT AUTO_INCREMENT PRIMARY KEY,
-     barcode VARCHAR(50) NOT NULL,
-     item_name VARCHAR(100) NOT NULL,
-     item_type VARCHAR(50),
-     descr TEXT,
-     location VARCHAR(100),
-     stock INT DEFAULT 0
- );
- ```
+
+1. **Create the Database**
+    ```sql
+    CREATE DATABASE db0321;
+    USE db0321;
+    
+    CREATE TABLE inventory (
+        item_id INT AUTO_INCREMENT PRIMARY KEY,
+        barcode VARCHAR(50) NOT NULL,
+        item_name VARCHAR(100) NOT NULL,
+        item_type VARCHAR(50),
+        descr TEXT,
+        location VARCHAR(100),
+        stock INT DEFAULT 0
+    );
+    ```
+
+2. **Set your Database Credentials**
+    - Ensure the system is configured with the correct database access credentials.
+    - You can find the variables that need to be set in: `\src\main\java\celestino\Main.java`
  
 ## Maven
+
 You need to have Maven installed on your machine to build the project. If you do not have Maven yet, follow these steps to install Maven:
 
 1. **Download Maven**:
