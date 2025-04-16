@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    public static final String initial_card = "inventory",
+    public static final String initial_card = "add item",
         db_name = "db0321",
         db_password = "",
         db_user = "root",
@@ -55,6 +55,11 @@ public class Main {
     }
 
 
+    public static void popup_message(String message) {
+        JOptionPane.showMessageDialog(window, message, "Message", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
     public static void add_card(JPanel card, String card_name) {
         main_panel.add(card, card_name);
     }
@@ -67,6 +72,17 @@ public class Main {
 
     public static Font get_font(int size) {
         return new Font(default_font, Font.BOLD, size);
+    }
+
+
+    public static Integer to_integer(String text) {
+        try {
+            return Integer.parseInt(text);
+        } 
+        catch (NumberFormatException e) {
+            System.out.println(text + " is not an Integer");
+            return null;
+        }
     }
     
 
@@ -100,6 +116,7 @@ public class Main {
 
         try(Connection conn = db_connection()) {
         } catch (SQLException e) {
+            e.printStackTrace();
             popup_error(e.getMessage());
             System.exit(0);
         }

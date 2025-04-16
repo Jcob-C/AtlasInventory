@@ -5,6 +5,7 @@ import celestino.Main;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,6 +14,30 @@ public class InventoryDB {
     public final String[] inventory_column_names = 
         {"item_id","barcode","item_name","item_type","descr","location","stock"}
     ;
+
+
+    public boolean insert_new_item(String[] new_item) {
+        String insert_stmt = 
+        """
+        INSERT INTO inventory 
+        (barcode, item_name, item_type, descr, location, stock)
+        VALUES 
+        (?, ?, ?, ?, ?, ?);
+        """;
+        try (
+            Connection conn = Main.db_connection();
+            PreparedStatement stmt = conn.prepareStatement(insert_stmt);
+            ) 
+        {
+            for (int i = 0; i < new_item.length; i++) 
+                stmt.setString(i + 1, new_item[i]);
+            if (stmt.executeUpdate() > 0) return true;
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     
     public ArrayList<ArrayList<String>> get_inventory_table() {
@@ -77,7 +102,7 @@ public class InventoryDB {
             }
         } 
         catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return inventory_table;
     }
