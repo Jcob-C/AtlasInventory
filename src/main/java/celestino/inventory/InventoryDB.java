@@ -16,6 +16,23 @@ public class InventoryDB {
     ;
 
 
+    public boolean delete_item(int id) {
+        String delete_stmt = 
+        "DELETE FROM inventory WHERE item_id = " + id + ";";
+        try (
+            Connection conn = Main.db_connection();
+            Statement stmt = conn.createStatement()
+            ) 
+        {
+            if (stmt.executeUpdate(delete_stmt) > 0) return true;
+        }   
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     public boolean insert_new_item(String[] new_item) {
         String insert_stmt = 
         """
@@ -53,21 +70,21 @@ public class InventoryDB {
 
 
     public ArrayList<ArrayList<String>> get_searched_inventory_table(String keyword) {
-        return get_inventory_table(get_search_inventory_query(keyword));
+        return get_inventory_table(get_searched_inventory_query(keyword));
     }
 
 
-    public ArrayList<ArrayList<String>> get_searchedsorted_inventory_table
+    public ArrayList<ArrayList<String>> get_searched_sorted_inventory_table
         (String keyword,int column_index, String order) 
     {
         return get_inventory_table(
-            get_search_inventory_query(keyword)
+            get_searched_inventory_query(keyword)
             + " ORDER BY " + inventory_column_names[column_index] + " " + order
         );
     }
     
 
-    private String get_search_inventory_query(String keyword) {
+    private String get_searched_inventory_query(String keyword) {
         return "SELECT * FROM inventory WHERE "
             +"CAST(item_id AS CHAR) LIKE '%" + keyword
             +"%' OR barcode LIKE '%" + keyword

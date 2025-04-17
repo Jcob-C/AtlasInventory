@@ -29,12 +29,22 @@ public class InventoryPanel extends JPanel {
     }
     
     
-    public Integer get_column_sort_index() {
+    public Integer get_sort_column_index() {
         return column_sort_select.getSelectedIndex();
     }
 
 
-    public String get_value_at(int x, int y) {
+    public String get_id_at_row(int x) {
+        return String.valueOf(inventory_table.getValueAt(x,0));
+    }
+
+
+    public Integer[] get_selected_xy() {
+        return new Integer[] {selected_row, selected_col};
+    }
+
+
+    public String get_value_at_xy(int x, int y) {
         return String.valueOf(inventory_table.getValueAt(x,y));
     }
 
@@ -49,7 +59,7 @@ public class InventoryPanel extends JPanel {
     }
     
     
-    public void clear_search_field() {
+    public void reset_search_field() {
         search_field.setText("");
     }
 
@@ -59,7 +69,7 @@ public class InventoryPanel extends JPanel {
     }
     
     
-    public void reset_column_sort() {
+    public void reset_sort_column() {
         column_sort_select.setSelectedIndex(0);
     }
 
@@ -133,6 +143,29 @@ public class InventoryPanel extends JPanel {
         column_sort_select.addActionListener(e -> parent.call_action("sort"));
         refresh_button.addActionListener(e -> parent.call_action("refresh"));
         add_button.addActionListener(e -> parent.call_action("new item"));
+        inventory_table.getSelectionModel().addListSelectionListener
+        (e -> {
+                if (
+                    !e.getValueIsAdjusting() && 
+                    selected_row != inventory_table.getSelectedRow()
+                    ) 
+                {
+                    update_selected();
+                    parent.call_action("select cell");
+                }
+            }
+        );
+        inventory_table.getColumnModel().getSelectionModel().addListSelectionListener
+        (e -> {
+                if (!e.getValueIsAdjusting() && 
+                    selected_col != inventory_table.getSelectedColumn()
+                    ) 
+                {
+                    update_selected();
+                    parent.call_action("select cell");
+                }
+            }
+        );
     }
 
 
@@ -143,4 +176,13 @@ public class InventoryPanel extends JPanel {
     private final JTextField search_field = new JTextField();
     private final JComboBox<String> column_sort_select = new JComboBox<>(inventory_table_columns);
     private final JButton sort_order_button = new JButton(">");
+    private Integer 
+        selected_row = -1,
+        selected_col = -1;
+
+
+    private void update_selected() {
+        selected_row = inventory_table.getSelectedRow();
+        selected_col = inventory_table.getSelectedColumn();
+    }
 }

@@ -37,6 +37,7 @@ public class AddItemPanel extends JPanel {
     public AddItemPanel(InventoryMain parent) {
         setLayout(null);
 
+        JScrollPane desc_pane = new JScrollPane(desc_field);
         JPanel 
             top_bar = new JPanel(),
             bottom_bar = new JPanel(),
@@ -129,6 +130,7 @@ public class AddItemPanel extends JPanel {
     }
     
     
+    private final JTextArea desc_field = new JTextArea();
     private final JTextField
         name_field = new JTextField(),
         barcode_field = new JTextField(),
@@ -136,6 +138,4 @@ public class AddItemPanel extends JPanel {
         stock_field = new JTextField(),
         type_field = new JTextField()  
     ;
-    private final JTextArea desc_field = new JTextArea();
-    private final JScrollPane desc_pane = new JScrollPane(desc_field);
 }

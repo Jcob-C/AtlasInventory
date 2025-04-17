@@ -7,12 +7,17 @@ import javax.swing.table.DefaultTableModel;
 
 public class PresetJTable extends JTable {
 
-    private DefaultTableModel inventory_table_model;
+    private DefaultTableModel table_model;
 
 
     public PresetJTable(String[] columns) {
-        inventory_table_model = table_model(columns);
-        this.setModel(inventory_table_model);
+        table_model = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.setModel(table_model);
         this.setCellSelectionEnabled(true);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.getTableHeader().setReorderingAllowed(false);
@@ -20,7 +25,7 @@ public class PresetJTable extends JTable {
 
     
     public void update_table(ArrayList<ArrayList<String>> data) {
-        inventory_table_model.setRowCount(0);
+        table_model.setRowCount(0);
         for (int x = 0; x < data.size(); x++) {
             String[] new_row = new String[data.get(x).size()];
 
@@ -28,7 +33,7 @@ public class PresetJTable extends JTable {
                 new_row[y] = data.get(x).get(y);
             }
 
-            inventory_table_model.addRow(new_row);
+            table_model.addRow(new_row);
         }
     }
 
@@ -40,16 +45,5 @@ public class PresetJTable extends JTable {
             return new Integer[] {row,col};
         }
         return null;
-    }
-
-
-    private DefaultTableModel table_model(Object[] columns) {
-        DefaultTableModel model = new DefaultTableModel(columns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        return model;
     }
 }

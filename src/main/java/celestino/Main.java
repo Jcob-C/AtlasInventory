@@ -97,6 +97,11 @@ public class Main {
 
     private static void initiliaze_cards() {
         new InventoryMain();
+        /*  public InventoryMain() {
+                Main.add_card(inventory_card, "inventory");
+                Main.add_card(add_item_card, "add item");
+            }
+        */
     }
     
     
