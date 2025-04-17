@@ -170,7 +170,7 @@ public class InventoryPanel extends JPanel {
 
 
     private final String[] inventory_table_columns = 
-        {"ID","Barcode","Name","Type","Description","Location","Stock"}
+        {"ID","Barcode","Name","Type","Description","Location","Price","Stock"}
     ;
     private final JTable inventory_table = new PresetJTable(inventory_table_columns);
     private final JTextField search_field = new JTextField();

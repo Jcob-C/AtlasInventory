@@ -9,11 +9,12 @@
     
     CREATE TABLE inventory (
         item_id INT AUTO_INCREMENT PRIMARY KEY,
-        barcode VARCHAR(50) NOT NULL,
-        item_name VARCHAR(100) NOT NULL,
+        barcode VARCHAR(50),
+        item_name VARCHAR(100),
         item_type VARCHAR(50),
         descr TEXT,
         location VARCHAR(100),
+        price DECIMAL(10,2) DEFAULT 0.00,
         stock INT DEFAULT 0
     );
     ```

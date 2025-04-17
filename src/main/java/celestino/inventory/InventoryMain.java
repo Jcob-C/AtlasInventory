@@ -58,7 +58,7 @@ public class InventoryMain {
         switch (decision) {
             case 0: restock_item(selected_id);
             break;
-            case 1: 
+            case 1: edit_item_attribute(selected_id, cell[1]);
             break;
             case 2: delete_item(selected_id);
             break;
@@ -72,12 +72,14 @@ public class InventoryMain {
 
 
     private void edit_item_attribute(int item_id, int column_index) {
-
+        //String new_value = Main.popup_input("Enter the new value:");
     }
 
 
     private void delete_item(int item_id) {
-        if (Main.popup_confirm("Delete item with ID:\n\n                     "+item_id+"\n\n")) {
+        if (Main.popup_confirm
+            ("Delete item with ID:\n\n                     "+item_id+"\n\n")) 
+        {
             if (inventory_db.delete_item(item_id)) {
                 Main.popup_message("Delete Successful");
                 refresh_table();
@@ -90,8 +92,12 @@ public class InventoryMain {
 
 
     private void insert_new_item(String[] new_item_inputs) {
-        if (Main.to_integer(new_item_inputs[5]) == null) {
+        if (Main.to_integer(new_item_inputs[6]) == null) {
             Main.popup_error("Stock input is not a valid number"); 
+            return;
+        }
+        if (Main.to_double(new_item_inputs[5]) == null) {
+            Main.popup_error("Price input is not a valid number"); 
             return;
         }
         if (inventory_db.insert_new_item(new_item_inputs)) {

@@ -63,6 +63,11 @@ public class Main {
     }
 
 
+    public static String popup_input(String message) {
+        return JOptionPane.showInputDialog(message);
+    }
+
+
     public static void add_card(JPanel card, String card_name) {
         main_panel.add(card, card_name);
     }
@@ -83,7 +88,20 @@ public class Main {
             return Integer.parseInt(text);
         } 
         catch (NumberFormatException e) {
-            System.out.println(text + " is not an Integer");
+            e.printStackTrace();
+            System.out.println("\n" + text + " cannot be an Integer");
+            return null;
+        }
+    }
+    
+
+    public static Double to_double(String text) {
+        try {
+            return Double.parseDouble(text);
+        } 
+        catch (NumberFormatException e) {
+            e.printStackTrace();
+            System.out.println("\n" + text + " cannot be a Double");
             return null;
         }
     }

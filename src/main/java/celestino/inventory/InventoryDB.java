@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class InventoryDB {
 
     public final String[] inventory_column_names = 
-        {"item_id","barcode","item_name","item_type","descr","location","stock"}
+        {"item_id","barcode","item_name","item_type","descr","location","price","stock"}
     ;
 
 
@@ -28,6 +28,7 @@ public class InventoryDB {
         }   
         catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }
@@ -37,9 +38,9 @@ public class InventoryDB {
         String insert_stmt = 
         """
         INSERT INTO inventory 
-        (barcode, item_name, item_type, descr, location, stock)
+        (barcode, item_name, item_type, descr, location, price, stock)
         VALUES 
-        (?, ?, ?, ?, ?, ?);
+        (?, ?, ?, ?, ?, ?, ?);
         """;
         try (
             Connection conn = Main.db_connection();
@@ -52,6 +53,7 @@ public class InventoryDB {
         } 
         catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }
@@ -92,6 +94,7 @@ public class InventoryDB {
             +"%' OR item_type LIKE '%" + keyword
             +"%' OR descr LIKE '%" + keyword
             +"%' OR location LIKE '%" + keyword
+            +"%' OR CAST(price AS CHAR) LIKE '%" + keyword
             +"%' OR CAST(stock AS CHAR) LIKE '%" + keyword
             +"%'"
         ;
@@ -115,11 +118,13 @@ public class InventoryDB {
                 new_row.add(rs.getString(5));
                 new_row.add(rs.getString(6));
                 new_row.add(rs.getString(7));
+                new_row.add(rs.getString(8));
                 inventory_table.add(new_row);
             }
         } 
         catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return inventory_table;
     }
