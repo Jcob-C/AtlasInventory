@@ -76,13 +76,29 @@ public class InventoryDB {
     }
 
 
-    public ArrayList<ArrayList<String>> get_searched_sorted_inventory_table
-        (String keyword,int column_index, String order) 
-    {
+    public ArrayList<ArrayList<String>> get_searched_sorted_inventory_table(String keyword,int column_index, String order) {
         return get_inventory_table(
             get_searched_inventory_query(keyword)
             + " ORDER BY " + inventory_column_names[column_index] + " " + order
         );
+    }
+
+
+    public boolean edit_item(int id, int column, String new_value) {
+        String edit_query = "UPDATE inventory SET " + inventory_column_names[column] + " = ? WHERE item_id = " + id + ";";
+        try (
+            Connection conn = Main.db_connection();
+            PreparedStatement stmt = conn.prepareStatement(edit_query) 
+            ) 
+        {
+            stmt.setString(1, new_value);
+            if (stmt.executeUpdate() > 0) return true;
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
     
 

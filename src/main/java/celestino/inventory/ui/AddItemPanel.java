@@ -109,7 +109,7 @@ public class AddItemPanel extends JPanel {
         bottom_bar.setBounds(0,630,880,30);
         ribbon_bar.setBounds(42,191,797,278);
         inventory_button.setBounds(0,0,45,30);
-        add_button.setBounds(350,401,92,40);
+        add_button.setBounds(399,401,92,40);
 
         desc_field.setLineWrap(true);
         desc_field.setWrapStyleWord(true);

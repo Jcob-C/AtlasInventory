@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class PresetJTable extends JTable {
 
-    private DefaultTableModel table_model;
+    private final DefaultTableModel table_model;
 
 
     public PresetJTable(String[] columns) {

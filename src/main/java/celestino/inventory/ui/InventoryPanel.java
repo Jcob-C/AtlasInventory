@@ -14,6 +14,11 @@ import javax.swing.JTextField;
 
 public class InventoryPanel extends JPanel {
 
+    public String[] get_inventory_columns() {
+        return inventory_table_columns;
+    }
+
+
     public void update_table_pane(ArrayList<ArrayList<String>> data) {
         ((PresetJTable) inventory_table).update_table(data);
     }

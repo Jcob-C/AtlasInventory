@@ -36,10 +36,10 @@ public class InventoryMain {
     private final AddItemPanel add_item_card = new AddItemPanel(this);
     private final InventoryPanel inventory_card = new InventoryPanel(this);
     private final InventoryDB inventory_db = new InventoryDB();
-    private Integer sorted = null;
+    private Integer sorted = 0;
     private String
-        searched = null,
-        order = null
+        searched = "",
+        order = "ASC"
     ;
 
 
@@ -49,11 +49,11 @@ public class InventoryMain {
         int 
             selected_id = Main.to_integer(inventory_card.get_id_at_row(cell[0])),
             decision = Main.popup_option(
-                "Item ID: " + selected_id +
-                "\n\nSelected Value:\n" + 
+                "Selected Item ID: " + selected_id +
+                "\n\n" + inventory_card.get_inventory_columns()[cell[1]] + ":\n" + 
                 inventory_card.get_value_at_xy(cell[0],cell[1]) + 
                 "\n\n", 
-                new String[]{"","","Delete"}
+                new String[]{"","Edit","Delete"}
             );
         switch (decision) {
             case 0: restock_item(selected_id);
@@ -67,12 +67,20 @@ public class InventoryMain {
 
 
     private void restock_item(int item_id) {
-
+        
     }
 
 
     private void edit_item_attribute(int item_id, int column_index) {
-        //String new_value = Main.popup_input("Enter the new value:");
+        String new_value = Main.popup_input("Enter the new " + inventory_card.get_inventory_columns()[column_index] + ":");
+        if (new_value == null) return;
+        if (inventory_db.edit_item(item_id,column_index,new_value)) {
+            Main.popup_message("Edit Successful!");
+            update_table();
+        }
+        else {
+            Main.popup_message("Edit Failed");
+        }
     }
 
 
@@ -82,7 +90,7 @@ public class InventoryMain {
         {
             if (inventory_db.delete_item(item_id)) {
                 Main.popup_message("Delete Successful");
-                refresh_table();
+                update_table();
             }
             else {
                 Main.popup_error("Delete Failed");
@@ -112,26 +120,27 @@ public class InventoryMain {
         inventory_card.reset_search_field();
         inventory_card.reset_sort_order();
         inventory_card.reset_sort_column();
-        searched = null;
-        order = null;
-        sorted = null;
+        searched = "";
+        order = "ASC";
+        sorted = 0;
         inventory_card.update_table_pane(inventory_db.get_inventory_table());
+    }
+
+
+    private void update_table() {
+        inventory_card.update_table_pane(
+            inventory_db.get_searched_sorted_inventory_table(
+                searched, sorted, order
+            )
+        );
     }
 
 
     private void search_sort_table() {
         searched = inventory_card.get_search_input();
         sorted = inventory_card.get_sort_column_index();
-        order = "ASC";
-        switch (inventory_card.get_sort_order()) {
-            case ">": order = "ASC"; break;
-            case "<": order = "DESC"; break;
-            default: return;
-        }
-        inventory_card.update_table_pane(
-            inventory_db.get_searched_sorted_inventory_table(
-                searched, sorted, order
-            )
-        );
+        if (inventory_card.get_sort_order().equals("<")) order = "DESC";
+        else order = "ASC";
+        update_table();
     }
 }
