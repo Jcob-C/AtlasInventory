@@ -67,24 +67,43 @@ public class InventoryMain {
 
 
     private void restock_item(int item_id) {
-        Integer new_stock = Main.to_integer(Main.popup_input("Enter amount to add on stock:"));
-        if (new_stock != null && inventory_db.restock_item(item_id, new_stock)) {
+        String new_stock = Main.popup_input("Enter amount to add on stock:");
+
+        if (new_stock == null) return;
+        else if (Main.to_integer(new_stock) == null) {
+            Main.popup_error("Invalid Amount");
+            return;
+        }
+
+        if (inventory_db.restock_item(item_id, Main.to_integer(new_stock))) {
             update_table();
             Main.popup_message("Restock Successful!");
             return;
         }
-        Main.popup_message("Restock Failed");
+        else {
+            Main.popup_error("Restock Failed");
+        }
     }
 
 
     private void edit_item_attribute(int item_id, int column_index) {
         String new_value = Main.popup_input("Enter the new " + inventory_card.get_inventory_columns()[column_index] + ":");
-        if (new_value == null) return;
+        
+        if (new_value == null ) return;
+        else if (column_index >= 6 && Main.to_double(new_value) == null) {
+            Main.popup_error("Invalid for Column");
+            return;
+        }
+        else if (column_index >= 6) {
+            new_value = String.valueOf(Main.to_double(new_value));
+        }
+
         if (inventory_db.edit_item(item_id,column_index,new_value)) {
             update_table();
             Main.popup_message("Edit Successful!");
-        } else {
-            Main.popup_message("Edit Failed");
+        } 
+        else {
+            Main.popup_error("Edit Failed");
         }
     }
 
