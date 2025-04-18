@@ -53,7 +53,7 @@ public class InventoryMain {
                 "\n\n" + inventory_card.get_inventory_columns()[cell[1]] + ":\n" + 
                 inventory_card.get_value_at_xy(cell[0],cell[1]) + 
                 "\n\n", 
-                new String[]{"","Edit","Delete"}
+                new String[]{"Restock","Edit","Delete"}
             );
         switch (decision) {
             case 0: restock_item(selected_id);
@@ -67,7 +67,13 @@ public class InventoryMain {
 
 
     private void restock_item(int item_id) {
-        
+        Integer new_stock = Main.to_integer(Main.popup_input("Enter amount to add on stock:"));
+        if (new_stock != null && inventory_db.restock_item(item_id, new_stock)) {
+            update_table();
+            Main.popup_message("Restock Successful!");
+            return;
+        }
+        Main.popup_message("Restock Failed");
     }
 
 
@@ -75,24 +81,20 @@ public class InventoryMain {
         String new_value = Main.popup_input("Enter the new " + inventory_card.get_inventory_columns()[column_index] + ":");
         if (new_value == null) return;
         if (inventory_db.edit_item(item_id,column_index,new_value)) {
-            Main.popup_message("Edit Successful!");
             update_table();
-        }
-        else {
+            Main.popup_message("Edit Successful!");
+        } else {
             Main.popup_message("Edit Failed");
         }
     }
 
 
     private void delete_item(int item_id) {
-        if (Main.popup_confirm
-            ("Delete item with ID:\n\n                     "+item_id+"\n\n")) 
-        {
+        if (Main.popup_confirm("Delete item with ID:\n\n                     "+item_id+"\n\n")) {
             if (inventory_db.delete_item(item_id)) {
-                Main.popup_message("Delete Successful");
                 update_table();
-            }
-            else {
+                Main.popup_message("Delete Successful");
+            } else {
                 Main.popup_error("Delete Failed");
             }
         }

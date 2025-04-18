@@ -100,6 +100,24 @@ public class InventoryDB {
         }
         return false;
     }
+
+
+    public boolean restock_item(int id, int new_stock) {
+        String edit_query = "UPDATE inventory SET stock = stock + ? WHERE item_id = " + id + ";";
+        try (
+            Connection conn = Main.db_connection();
+            PreparedStatement stmt = conn.prepareStatement(edit_query) 
+            ) 
+        {
+            stmt.setInt(1, new_stock);
+            if (stmt.executeUpdate() > 0) return true;
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     
 
     private String get_searched_inventory_query(String keyword) {
