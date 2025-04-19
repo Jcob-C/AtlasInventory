@@ -21,11 +21,11 @@ public class AddItemPanel extends JPanel {
         new_item_inputs[4] = location_field.getText();
         new_item_inputs[5] = price_field.getText();
         new_item_inputs[6] = stock_field.getText();
-        return new_item_inputs;
+        return new_item_inputs; 
     }
 
 
-    public void clear_new_item_inputs() {
+    public void clear_new_item_fields() {
         barcode_field.setText("");
         name_field.setText("");
         type_field.setText("");
@@ -56,7 +56,8 @@ public class AddItemPanel extends JPanel {
         ;
         JButton 
             inventory_button = new JButton("<"),
-            add_button = new JButton("Create")
+            add_button = new JButton("Create"),
+            clear_button = new JButton("Clear")
         ;
 
         setBackground(Main.theme[2]);
@@ -74,6 +75,8 @@ public class AddItemPanel extends JPanel {
         inventory_button.setForeground(Main.theme[0]);
         add_button.setBackground(Main.theme[2]);
         add_button.setForeground(Main.theme[0]);
+        clear_button.setBackground(Main.theme[2]);
+        clear_button.setForeground(Main.theme[0]);
 
         price_label.setFont(Main.get_font(16));
         name_label.setFont(Main.get_font(16));
@@ -83,6 +86,7 @@ public class AddItemPanel extends JPanel {
         type_label.setFont(Main.get_font(16));
         desc_label.setFont(Main.get_font(16));
         add_button.setFont(Main.get_font(18));
+        clear_button.setFont(Main.get_font(15));
         price_field.setFont(Main.get_font(16));
         name_field.setFont(Main.get_font(16));
         barcode_field.setFont(Main.get_font(16));
@@ -109,6 +113,7 @@ public class AddItemPanel extends JPanel {
         bottom_bar.setBounds(0,630,880,30);
         ribbon_bar.setBounds(42,191,797,278);
         inventory_button.setBounds(0,0,45,30);
+        clear_button.setBounds(50,420,70,40);
         add_button.setBounds(399,401,92,40);
 
         desc_field.setLineWrap(true);
@@ -129,6 +134,7 @@ public class AddItemPanel extends JPanel {
         add(desc_label);
         add(desc_pane);
         add(inventory_button);
+        add(clear_button);
         add(add_button);
         add(top_bar);
         add(bottom_bar);
@@ -136,6 +142,7 @@ public class AddItemPanel extends JPanel {
 
         add_button.addActionListener(e -> parent.call_action("create item"));
         inventory_button.addActionListener(e -> parent.call_action("inventory"));
+        clear_button.addActionListener(e -> parent.call_action("clear new item"));
     }
     
     

@@ -35,7 +35,7 @@ public class InventoryPanel extends JPanel {
     
     
     public Integer get_sort_column_index() {
-        return column_sort_select.getSelectedIndex();
+        return sort_column_dropdown.getSelectedIndex();
     }
 
 
@@ -75,7 +75,7 @@ public class InventoryPanel extends JPanel {
     
     
     public void reset_sort_column() {
-        column_sort_select.setSelectedIndex(0);
+        sort_column_dropdown.setSelectedIndex(0);
     }
 
 
@@ -107,15 +107,15 @@ public class InventoryPanel extends JPanel {
         add_button.setForeground(Main.theme[0]);
         search_button.setBackground(Main.theme[2]);
         search_button.setForeground(Main.theme[0]);
-        column_sort_select.setBackground(Main.theme[2]);
-        column_sort_select.setForeground(Main.theme[0]);
+        sort_column_dropdown.setBackground(Main.theme[2]);
+        sort_column_dropdown.setForeground(Main.theme[0]);
         refresh_button.setBackground(Main.theme[2]);
         refresh_button.setForeground(Main.theme[0]);
 
         add_button.setFont(Main.get_font(18));
         search_button.setFont(Main.get_font(18));
         search_field.setFont(Main.get_font(16));
-        column_sort_select.setFont(Main.get_font(14));
+        sort_column_dropdown.setFont(Main.get_font(14));
         refresh_button.setFont(Main.get_font(16));
 
         sort_order_button.setBounds(556,53,45,30);
@@ -127,7 +127,7 @@ public class InventoryPanel extends JPanel {
         add_button.setBounds(66,49,92,40);
         search_button.setBounds(434,49,92,40);
         search_field.setBounds(178,52,257,32);
-        column_sort_select.setBounds(601,52,101,32);
+        sort_column_dropdown.setBounds(601,52,101,32);
         refresh_button.setBounds(722,49,92,40);
 
         add(sort_order_button);
@@ -135,7 +135,7 @@ public class InventoryPanel extends JPanel {
         add(add_button);
         add(search_button);
         add(search_field);
-        add(column_sort_select);
+        add(sort_column_dropdown);
         add(refresh_button);
         add(top_bar);
         add(bottom_bar);
@@ -145,7 +145,7 @@ public class InventoryPanel extends JPanel {
         sort_order_button.addActionListener(e -> parent.call_action("order sort"));
         search_button.addActionListener(e -> parent.call_action("search"));
         search_field.addActionListener(e -> parent.call_action("search"));
-        column_sort_select.addActionListener(e -> parent.call_action("sort"));
+        sort_column_dropdown.addActionListener(e -> parent.call_action("sort"));
         refresh_button.addActionListener(e -> parent.call_action("refresh"));
         add_button.addActionListener(e -> parent.call_action("new item"));
         inventory_table.getSelectionModel().addListSelectionListener
@@ -179,7 +179,7 @@ public class InventoryPanel extends JPanel {
     ;
     private final JTable inventory_table = new PresetJTable(inventory_table_columns);
     private final JTextField search_field = new JTextField();
-    private final JComboBox<String> column_sort_select = new JComboBox<>(inventory_table_columns);
+    private final JComboBox<String> sort_column_dropdown = new JComboBox<>(inventory_table_columns);
     private final JButton sort_order_button = new JButton(">");
     private Integer 
         selected_row = -1,

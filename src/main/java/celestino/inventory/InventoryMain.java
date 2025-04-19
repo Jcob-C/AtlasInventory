@@ -18,6 +18,8 @@ public class InventoryMain {
             break;
             case "new item": Main.change_card("add item");
             break;
+            case "clear new item": add_item_card.clear_new_item_fields();
+            break;
             case "create item": insert_new_item(add_item_card.get_new_item_inputs());
             break;
             case "select cell": select_cell();
@@ -131,7 +133,7 @@ public class InventoryMain {
         }
         if (inventory_db.insert_new_item(new_item_inputs)) {
             Main.popup_message("New item added");
-            add_item_card.clear_new_item_inputs();
+            add_item_card.clear_new_item_fields();
             call_action("inventory");
         }
     }
