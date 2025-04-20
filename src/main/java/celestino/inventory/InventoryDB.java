@@ -11,14 +11,36 @@ import java.sql.SQLException;
 
 public class InventoryDB {
 
-    public final String[] inventory_column_names = 
-        {"item_id","barcode","item_name","item_type","descr","location","price","stock"}
-    ;
+    private final String[] column_names = {"item_id","barcode","item_name","item_type","descr","location","price","stock"};
 
 
-    public boolean delete_item(int id) {
-        String delete_stmt = 
-        "DELETE FROM inventory WHERE item_id = " + id + ";";
+    public boolean insert(String[] new_item) {
+        String insert_stmt = """
+        INSERT INTO inventory 
+        (barcode, item_name, item_type, descr, location, price, stock)
+        VALUES 
+        (?, ?, ?, ?, ?, ?, ?);
+        """;
+        try (
+            Connection conn = Main.db_connection();
+            PreparedStatement stmt = conn.prepareStatement(insert_stmt);
+            ) 
+        {
+            for (int i = 0; i < new_item.length; i++) {
+                stmt.setString(i + 1, new_item[i]);
+            }
+            if (stmt.executeUpdate() > 0) return true;
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+    
+    
+    public boolean delete(int id) {
+        String delete_stmt = "DELETE FROM inventory WHERE item_id = " + id + ";";
         try (
             Connection conn = Main.db_connection();
             Statement stmt = conn.createStatement()
@@ -34,58 +56,8 @@ public class InventoryDB {
     }
 
 
-    public boolean insert_new_item(String[] new_item) {
-        String insert_stmt = 
-        """
-        INSERT INTO inventory 
-        (barcode, item_name, item_type, descr, location, price, stock)
-        VALUES 
-        (?, ?, ?, ?, ?, ?, ?);
-        """;
-        try (
-            Connection conn = Main.db_connection();
-            PreparedStatement stmt = conn.prepareStatement(insert_stmt);
-            ) 
-        {
-            for (int i = 0; i < new_item.length; i++) 
-                stmt.setString(i + 1, new_item[i]);
-            if (stmt.executeUpdate() > 0) return true;
-        } 
-        catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    
-    public ArrayList<ArrayList<String>> get_inventory_table() {
-        return get_inventory_table("SELECT * FROM inventory");
-    }
-    
-
-    public ArrayList<ArrayList<String>> get_sorted_inventory_table(int column_index, String order) {
-        return get_inventory_table(
-            "SELECT * FROM inventory ORDER BY " + inventory_column_names[column_index] + " " + order
-        );
-    }
-
-
-    public ArrayList<ArrayList<String>> get_searched_inventory_table(String keyword) {
-        return get_inventory_table(get_searched_inventory_query(keyword));
-    }
-
-
-    public ArrayList<ArrayList<String>> get_searched_sorted_inventory_table(String keyword,int column_index, String order) {
-        return get_inventory_table(
-            get_searched_inventory_query(keyword)
-            + " ORDER BY " + inventory_column_names[column_index] + " " + order
-        );
-    }
-
-
-    public boolean edit_item(int id, int column, String new_value) {
-        String edit_query = "UPDATE inventory SET " + inventory_column_names[column] + " = ? WHERE item_id = " + id + ";";
+    public boolean edit(int id, int column, String new_value) {
+        String edit_query = "UPDATE inventory SET " + column_names[column] + " = ? WHERE item_id = " + id + ";";
         try (
             Connection conn = Main.db_connection();
             PreparedStatement stmt = conn.prepareStatement(edit_query) 
@@ -102,7 +74,7 @@ public class InventoryDB {
     }
 
 
-    public boolean restock_item(int id, int new_stock) {
+    public boolean add_stock(int id, int new_stock) {
         String edit_query = "UPDATE inventory SET stock = stock + ? WHERE item_id = " + id + ";";
         try (
             Connection conn = Main.db_connection();
@@ -118,10 +90,16 @@ public class InventoryDB {
         }
         return false;
     }
-    
 
-    private String get_searched_inventory_query(String keyword) {
-        return "SELECT * FROM inventory WHERE "
+
+    public ArrayList<ArrayList<String>> get_table() {
+        return get_table("SELECT * FROM inventory");
+    }
+
+
+    public ArrayList<ArrayList<String>> get_searched_sorted_table(String keyword,int column_index, String order) {
+        return get_table(
+            "SELECT * FROM inventory WHERE "
             +"CAST(item_id AS CHAR) LIKE '%" + keyword
             +"%' OR barcode LIKE '%" + keyword
             +"%' OR item_name LIKE '%" + keyword
@@ -130,12 +108,12 @@ public class InventoryDB {
             +"%' OR location LIKE '%" + keyword
             +"%' OR CAST(price AS CHAR) LIKE '%" + keyword
             +"%' OR CAST(stock AS CHAR) LIKE '%" + keyword
-            +"%'"
-        ;
+            +"%' ORDER BY " + column_names[column_index] + " " + order
+        );
     }
 
     
-    private ArrayList<ArrayList<String>> get_inventory_table(String query) {
+    private ArrayList<ArrayList<String>> get_table(String query) {
         ArrayList<ArrayList<String>> inventory_table = new ArrayList<>();
         try (
             Connection conn = Main.db_connection();
@@ -145,14 +123,9 @@ public class InventoryDB {
         {
             while (rs.next()) {
                 ArrayList<String> new_row = new ArrayList<>();
-                new_row.add(rs.getString(1));
-                new_row.add(rs.getString(2));
-                new_row.add(rs.getString(3));
-                new_row.add(rs.getString(4));
-                new_row.add(rs.getString(5));
-                new_row.add(rs.getString(6));
-                new_row.add(rs.getString(7));
-                new_row.add(rs.getString(8));
+                for (int i = 1; i <= column_names.length; i++) {
+                    new_row.add(rs.getString(i));
+                }
                 inventory_table.add(new_row);
             }
         } 

@@ -1,8 +1,8 @@
-package celestino.inventory.ui;
+package celestino.orders.ui;
 
 import celestino.Main;
 import celestino.PresetJTable;
-import celestino.inventory.InventoryMain;
+import celestino.orders.OrdersMain;
 
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class InventoryPanel extends JPanel {
+public class OrdersPanel extends JPanel {
     
     private final PresetJTable preset_table;
     private final String column_names[];
@@ -23,29 +23,24 @@ public class InventoryPanel extends JPanel {
     public String get_value_at_xy(int x, int y) {
         return String.valueOf(preset_table.getValueAt(x,y));
     }
-
-
     public Integer get_sort_column_index() {
         return sort_column_dropdown.getSelectedIndex();
     }
-
-
     public String get_search_input() {
         return search_field.getText();
     }
-
-
     public String get_sort_order() {
-        String order = sort_order_button.getText();
-        if (order.equals("<")) order = "DESC";
-        else order = "ASC";
-        return order;
+        return sort_order_button.getText();
     }
     
     
-    public void reset_sort_n_filter() {
+    public void reset_search_field() {
         search_field.setText("");
-        sort_order_button.setText(">");
+    }
+    public void reset_sort_order() {
+        sort_order_button.setText("<");
+    }
+    public void reset_sort_column() {
         sort_column_dropdown.setSelectedIndex(0);
     }
     
@@ -55,27 +50,30 @@ public class InventoryPanel extends JPanel {
     }
 
 
-    public void flip_sort_order() {
+    public String flip_sort_order() {
         switch(sort_order_button.getText()) {
             case ">": sort_order_button.setText("<"); break;
             case "<": sort_order_button.setText(">"); break;
         }
+        return get_sort_order();
     }
 
 
-    private final InventoryMain parent;
-    
-    public InventoryPanel(String[] column_names, InventoryMain parent) {
+    private final OrdersMain parent;
+
+    public OrdersPanel(String[] column_names, OrdersMain parent) {
         setLayout(null);
         
         this.column_names = column_names;
         this.parent = parent;
 
-        sort_order_button = new JButton(">");
+        sort_order_button = new JButton("<");
         search_field = new JTextField();
         preset_table = new PresetJTable(this.column_names, this::select_cell);
         sort_column_dropdown = new JComboBox<>(column_names);
-        
+
+        JScrollPane 
+            table_pane = new JScrollPane(preset_table);
         JPanel 
             top_bar = new JPanel(),
             bottom_bar = new JPanel(),
@@ -84,8 +82,8 @@ public class InventoryPanel extends JPanel {
             dashboard_button = new JButton("<"),
             add_button = new JButton("New"),
             search_button = new JButton("Search"),
-            refresh_button = new JButton("Refresh");
-        JScrollPane table_pane = new JScrollPane(preset_table);
+            refresh_button = new JButton("Refresh")
+        ;
 
         setBackground(Main.get_dark_color());
         sort_order_button.setBackground(Main.get_dark_color());
@@ -134,36 +132,36 @@ public class InventoryPanel extends JPanel {
         add(ribbon_bar);
         add(table_pane);
 
-        dashboard_button.addActionListener(e -> System.exit(0));
-        add_button.addActionListener(e -> parent.goto_item_create());
-        search_field.addActionListener(e -> parent.update_jtable());
-        search_button.addActionListener(e -> parent.update_jtable());
-        sort_column_dropdown.addActionListener(e -> parent.update_jtable());
+        add_button.addActionListener(e -> parent.add_button());
+        search_button.addActionListener(e -> parent.update_table());
+        sort_order_button.addActionListener(e -> parent.update_table());
+        sort_column_dropdown.addActionListener(e -> parent.update_table());
         refresh_button.addActionListener(e -> parent.refresh_button());
-        sort_order_button.addActionListener(e -> {flip_sort_order(); parent.update_jtable();});
     }
 
 
     private void select_cell(int[] cell) {
         if (cell[0] == -1 || cell[1] == -1) return;
 
-        Integer selected_id = Main.to_integer(get_value_at_xy(cell[0],0));
+        String selected_id = get_value_at_xy(cell[0],0);
 
         int decision = Main.popup_option(
             "Selected Row ID: " + selected_id + "\n\n" + 
             column_names[cell[1]] + ":\n" + 
             get_value_at_xy(cell[0],cell[1]) + "\n\n", 
             new String[]{
-                "Add Stock",
-                "Edit Attribute",
-                "Delete Row"
+                "View Items",
+                "Cancel Order",
+                "Change Status",
+                "Edit Attribute"
             }
         );
 
         switch (decision) {
-            case 0: parent.add_stock(selected_id); break;
-            case 1: parent.edit_attribute(selected_id, cell[1]); break;
-            case 2: parent.delete(selected_id); break;
+            case 0: parent.view_selected(); break;
+            case 1: parent.cancel_selected(); break;
+            case 2: parent.change_status_selected(); break;
+            case 3: parent.edit_selected(); break;
         }
     }
 }

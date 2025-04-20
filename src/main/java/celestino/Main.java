@@ -1,6 +1,7 @@
 package celestino;
 
 import celestino.inventory.InventoryMain;
+import celestino.orders.OrdersMain;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,18 +15,20 @@ import java.sql.SQLException;
 
 public class Main {
 
-    public static final String initial_card = "add item",
+    private static final String initial_card = "inventory",
         db_name = "db0321",
         db_password = "",
         db_user = "root",
         db_port = "3306",
-        db_host = "localhost"
-    ;
-    public static final Color theme[] = {
-        new Color(255, 255, 255), // light color
-        new Color(252, 151, 51), // medium
-        new Color(1, 69, 24)  // dark
-    };
+        db_host = "localhost";
+    private static final Color theme[] = {
+        new Color(255, 255, 255), // light
+        new Color(252, 151, 51), // mid
+        new Color(1, 69, 24) }; // dark
+    private static final String default_font = "Segoe UI";
+    private static final JFrame window = new JFrame();
+    private static final CardLayout card_layout = new CardLayout();
+    private static final JPanel main_panel = new JPanel(card_layout); 
     
     
     public static Connection db_connection() throws SQLException {
@@ -34,6 +37,17 @@ public class Main {
             db_user,
             db_password
         );
+    }
+
+
+    public static Color get_dark_color() {
+        return theme[2];
+    }
+    public static Color get_mid_color() {
+        return theme[1];
+    }
+    public static Color get_light_color() {
+        return theme[0];
     }
 
 
@@ -107,19 +121,9 @@ public class Main {
     }
     
 
-    private static final String default_font = "Segoe UI";
-    private static final JFrame window = new JFrame();
-    private static final CardLayout card_layout = new CardLayout();
-    private static final JPanel main_panel = new JPanel(card_layout); 
-
-
-    private static void initiliaze_cards() {
+    private static void initiliaze_modules() {
         new InventoryMain();
-        /*  public InventoryMain() {
-                Main.add_card(inventory_card, "inventory");
-                Main.add_card(add_item_card, "add item");
-            }
-        */
+        new OrdersMain();
     }
     
     
@@ -136,7 +140,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         setup_window();
-        initiliaze_cards();
+        initiliaze_modules();
         change_card(initial_card);
         window.setVisible(true);
 

@@ -10,7 +10,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class AddItemPanel extends JPanel {
+public class ItemCreatePanel extends JPanel {
+
+    private final JTextField
+        name_field = new JTextField(),
+        barcode_field = new JTextField(),
+        location_field = new JTextField(),
+        stock_field = new JTextField(),
+        type_field = new JTextField(),
+        price_field = new JTextField();
+    private final JTextArea desc_field = new JTextArea();
+    
 
     public String[] get_new_item_inputs() {
         String new_item_inputs[] = new String[7];
@@ -36,15 +46,12 @@ public class AddItemPanel extends JPanel {
     }   
 
 
-    public AddItemPanel(InventoryMain parent) {
+    public ItemCreatePanel(InventoryMain parent) {
         setLayout(null);
-
-        JScrollPane desc_pane = new JScrollPane(desc_field);
         JPanel 
             top_bar = new JPanel(),
             bottom_bar = new JPanel(),
-            ribbon_bar = new JPanel()
-        ;
+            ribbon_bar = new JPanel();
         JLabel
             name_label = new JLabel("Name:"),
             barcode_label = new JLabel("Barcode:"),
@@ -52,31 +59,32 @@ public class AddItemPanel extends JPanel {
             stock_label = new JLabel("Stock:"),
             type_label = new JLabel("Type:"),
             desc_label = new JLabel("Description:"),
-            price_label = new JLabel("Price:")
-        ;
+            price_label = new JLabel("Price:");
         JButton 
             inventory_button = new JButton("<"),
             add_button = new JButton("Create"),
-            clear_button = new JButton("Clear")
-        ;
+            clear_button = new JButton("Clear");
+        JScrollPane desc_pane = new JScrollPane(desc_field);
 
-        setBackground(Main.theme[2]);
-        top_bar.setBackground(Main.theme[1]);
-        bottom_bar.setBackground(Main.theme[1]);
-        ribbon_bar.setBackground(Main.theme[1]);
-        name_label.setForeground(Main.theme[0]);
-        barcode_label.setForeground(Main.theme[0]);
-        location_label.setForeground(Main.theme[0]);
-        stock_label.setForeground(Main.theme[0]);
-        type_label.setForeground(Main.theme[0]);
-        desc_label.setForeground(Main.theme[0]);
-        price_label.setForeground(Main.theme[0]);
-        inventory_button.setBackground(Main.theme[2]);
-        inventory_button.setForeground(Main.theme[0]);
-        add_button.setBackground(Main.theme[2]);
-        add_button.setForeground(Main.theme[0]);
-        clear_button.setBackground(Main.theme[2]);
-        clear_button.setForeground(Main.theme[0]);
+        setBackground(Main.get_dark_color());
+        top_bar.setBackground(Main.get_mid_color());
+        bottom_bar.setBackground(Main.get_mid_color());
+        ribbon_bar.setBackground(Main.get_mid_color());
+
+        name_label.setForeground(Main.get_dark_color());
+        barcode_label.setForeground(Main.get_dark_color());
+        location_label.setForeground(Main.get_dark_color());
+        stock_label.setForeground(Main.get_dark_color());
+        type_label.setForeground(Main.get_dark_color());
+        desc_label.setForeground(Main.get_dark_color());
+        price_label.setForeground(Main.get_dark_color());
+
+        inventory_button.setBackground(Main.get_dark_color());
+        inventory_button.setForeground(Main.get_light_color());
+        add_button.setBackground(Main.get_dark_color());
+        add_button.setForeground(Main.get_light_color());
+        clear_button.setBackground(Main.get_dark_color());
+        clear_button.setForeground(Main.get_light_color());
 
         price_label.setFont(Main.get_font(16));
         name_label.setFont(Main.get_font(16));
@@ -140,19 +148,8 @@ public class AddItemPanel extends JPanel {
         add(bottom_bar);
         add(ribbon_bar);
 
-        add_button.addActionListener(e -> parent.call_action("create item"));
-        inventory_button.addActionListener(e -> parent.call_action("inventory"));
-        clear_button.addActionListener(e -> parent.call_action("clear new item"));
+        add_button.addActionListener(e -> parent.create_button());
+        inventory_button.addActionListener(e -> parent.goto_inventory());
+        clear_button.addActionListener(e -> clear_new_item_fields());
     }
-    
-    
-    private final JTextArea desc_field = new JTextArea();
-    private final JTextField
-        name_field = new JTextField(),
-        barcode_field = new JTextField(),
-        location_field = new JTextField(),
-        stock_field = new JTextField(),
-        type_field = new JTextField(),
-        price_field = new JTextField()
-    ;
 }
