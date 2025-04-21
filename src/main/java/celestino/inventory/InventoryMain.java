@@ -18,7 +18,7 @@ public class InventoryMain {
 
 
     public void goto_inventory() {
-        refresh_button();
+        refresh();
         Main.change_card("inventory");
     }
 
@@ -28,7 +28,7 @@ public class InventoryMain {
     }
 
 
-    public void refresh_button() {
+    public void refresh() {
         inventory_card.reset_sort_n_filter();
         inventory_card.update_table_pane(inventory_db.get_table());
     }
@@ -114,6 +114,30 @@ public class InventoryMain {
             Main.popup_message("New item added");
             item_create_card.clear_new_item_fields();
             goto_inventory();
+        }
+    }
+
+
+    public void select_cell(int[] xy) {
+        if (xy[0] == -1 || xy[1] == -1) return;
+
+        Integer selected_id = Main.to_integer(inventory_card.get_value_at_xy(xy[0],0));
+
+        int decision = Main.popup_option(
+            "Selected Row ID: " + selected_id + "\n\n" + 
+            column_names[xy[1]] + ":\n" + 
+            inventory_card.get_value_at_xy(xy[0],xy[1]) + "\n\n", 
+            new String[]{
+                "Add Stock",
+                "Edit Attribute",
+                "Delete Row"
+            }
+        );
+
+        switch (decision) {
+            case 0: add_stock(selected_id); break;
+            case 1: edit_attribute(selected_id, xy[1]); break;
+            case 2: delete(selected_id); break;
         }
     }
 }

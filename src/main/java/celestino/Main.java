@@ -1,7 +1,6 @@
 package celestino;
 
 import celestino.inventory.InventoryMain;
-import celestino.orders.OrdersMain;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -29,6 +28,21 @@ public class Main {
     private static final JFrame window = new JFrame();
     private static final CardLayout card_layout = new CardLayout();
     private static final JPanel main_panel = new JPanel(card_layout); 
+
+
+    public static void main(String[] args) throws Exception {
+        setup_window();
+        initiliaze_modules();
+        change_card(initial_card);
+        window.setVisible(true);
+        
+        try(Connection conn = db_connection()) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+            popup_error(e.getMessage());
+            System.exit(0);
+        }
+    }
     
     
     public static Connection db_connection() throws SQLException {
@@ -40,30 +54,33 @@ public class Main {
     }
 
 
+    public static Font get_font(int size) {
+        return new Font(default_font, Font.BOLD, size);
+    }
+
+
     public static Color get_dark_color() {
         return theme[2];
     }
+
+
     public static Color get_mid_color() {
         return theme[1];
     }
+
+
     public static Color get_light_color() {
         return theme[0];
     }
 
 
     public static boolean popup_confirm(String message) {
-        int choice = JOptionPane.showOptionDialog(
-            window, message, "Confirmation", 0, JOptionPane.QUESTION_MESSAGE, null, null, 1
-        );
-        return choice == 0;
+        return 0 == JOptionPane.showOptionDialog(window, message, "Confirmation", 0, JOptionPane.QUESTION_MESSAGE, null, null, 1);
     }
 
 
     public static int popup_option(String message, String[] options) {
-        int choice = JOptionPane.showOptionDialog(
-            window, message, "Choose", 0, JOptionPane.QUESTION_MESSAGE, null, options, 1
-        );
-        return choice;
+        return JOptionPane.showOptionDialog(window, message, "Choose", 0, JOptionPane.QUESTION_MESSAGE, null, options, 1);
     }
 
 
@@ -85,15 +102,10 @@ public class Main {
     public static void add_card(JPanel card, String card_name) {
         main_panel.add(card, card_name);
     }
-    
-    
+
+
     public static void change_card(String card_name) {
         card_layout.show(main_panel, card_name);
-    }
-
-
-    public static Font get_font(int size) {
-        return new Font(default_font, Font.BOLD, size);
     }
 
 
@@ -107,7 +119,7 @@ public class Main {
             return null;
         }
     }
-    
+
 
     public static Double to_double(String text) {
         try {
@@ -123,7 +135,6 @@ public class Main {
 
     private static void initiliaze_modules() {
         new InventoryMain();
-        new OrdersMain();
     }
     
     
@@ -135,20 +146,5 @@ public class Main {
         window.setResizable(false);
         window.setUndecorated(true);
         window.add(main_panel);
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        setup_window();
-        initiliaze_modules();
-        change_card(initial_card);
-        window.setVisible(true);
-
-        try(Connection conn = db_connection()) {
-        } catch (SQLException e) {
-            e.printStackTrace();
-            popup_error(e.getMessage());
-            System.exit(0);
-        }
     }
 }

@@ -10,9 +10,9 @@ import javax.swing.table.DefaultTableModel;
 public class PresetJTable extends JTable {
 
     private final DefaultTableModel table_model;
+    private final Consumer<int[]> action_method;
     private final int selected_xy[] = {-1,-1};
-    private Consumer<int[]> action_method;
-    
+
     
     public int[] get_selected_xy() {
         return selected_xy;

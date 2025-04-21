@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 public class InventoryPanel extends JPanel {
     
     private final PresetJTable preset_table;
-    private final String column_names[];
     private final JComboBox<String> sort_column_dropdown;
     private final JTextField search_field;
     private final JButton sort_order_button;
@@ -62,18 +61,13 @@ public class InventoryPanel extends JPanel {
         }
     }
 
-
-    private final InventoryMain parent;
     
     public InventoryPanel(String[] column_names, InventoryMain parent) {
         setLayout(null);
-        
-        this.column_names = column_names;
-        this.parent = parent;
 
         sort_order_button = new JButton(">");
         search_field = new JTextField();
-        preset_table = new PresetJTable(this.column_names, this::select_cell);
+        preset_table = new PresetJTable(column_names, parent::select_cell);
         sort_column_dropdown = new JComboBox<>(column_names);
         
         JPanel 
@@ -139,31 +133,7 @@ public class InventoryPanel extends JPanel {
         search_field.addActionListener(e -> parent.update_jtable());
         search_button.addActionListener(e -> parent.update_jtable());
         sort_column_dropdown.addActionListener(e -> parent.update_jtable());
-        refresh_button.addActionListener(e -> parent.refresh_button());
+        refresh_button.addActionListener(e -> parent.refresh());
         sort_order_button.addActionListener(e -> {flip_sort_order(); parent.update_jtable();});
-    }
-
-
-    private void select_cell(int[] cell) {
-        if (cell[0] == -1 || cell[1] == -1) return;
-
-        Integer selected_id = Main.to_integer(get_value_at_xy(cell[0],0));
-
-        int decision = Main.popup_option(
-            "Selected Row ID: " + selected_id + "\n\n" + 
-            column_names[cell[1]] + ":\n" + 
-            get_value_at_xy(cell[0],cell[1]) + "\n\n", 
-            new String[]{
-                "Add Stock",
-                "Edit Attribute",
-                "Delete Row"
-            }
-        );
-
-        switch (decision) {
-            case 0: parent.add_stock(selected_id); break;
-            case 1: parent.edit_attribute(selected_id, cell[1]); break;
-            case 2: parent.delete(selected_id); break;
-        }
     }
 }
