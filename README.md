@@ -17,6 +17,17 @@
         price DECIMAL(10,2) DEFAULT 0.00,
         stock INT DEFAULT 0
     );
+
+    CREATE TABLE orders (
+        order_id INT AUTO_INCREMENT PRIMARY KEY,
+        order_datetime DATETIME,
+        customer_name VARCHAR(100),
+        contact_no VARCHAR(20),
+        address TEXT,
+        order_status VARCHAR(50),
+        payment_id VARCHAR(100),
+        total_price DECIMAL(10,2)
+    );
     ```
 
 2. **Set your Database Credentials**
