@@ -1,19 +1,19 @@
 package celestino.inventory;
 
 import celestino.Main;
-import celestino.inventory.ui.*;
+import celestino.inventory.jpanels.*;
 
 public class InventoryMain {
 
     private final String column_names[] = {"ID","Barcode","Name","Type","Description","Location","Price","Stock"};
-    private final ItemCreatePanel item_create_card = new ItemCreatePanel(this);
-    private final InventoryPanel inventory_card = new InventoryPanel(column_names, this);
+    private final ItemCreatePanel item_create_panel = new ItemCreatePanel(this);
+    private final InventoryPanel inventory_panel = new InventoryPanel(column_names, this);
     private final InventoryDB inventory_db = new InventoryDB();
     
     
     public InventoryMain() {
-        Main.add_card(inventory_card, "inventory");
-        Main.add_card(item_create_card, "item create");
+        Main.add_card(inventory_panel, "inventory");
+        Main.add_card(item_create_panel, "item create");
     }
 
 
@@ -29,17 +29,17 @@ public class InventoryMain {
 
 
     public void refresh() {
-        inventory_card.reset_sort_n_filter();
-        inventory_card.update_table_pane(inventory_db.get_table());
+        inventory_panel.reset_sort_n_filter();
+        inventory_panel.update_table_pane(inventory_db.get_table());
     }
 
 
     public void update_jtable() {
-        inventory_card.update_table_pane(
+        inventory_panel.update_table_pane(
             inventory_db.get_searched_sorted_table(
-                inventory_card.get_search_input(), 
-                inventory_card.get_sort_column_index(), 
-                inventory_card.get_sort_order()
+                inventory_panel.get_search_input(), 
+                inventory_panel.get_sort_column_index(), 
+                inventory_panel.get_sort_order()
             )
         );
     }
@@ -101,7 +101,7 @@ public class InventoryMain {
     
     
     public void create_button() {
-        String new_item_inputs[] = item_create_card.get_new_item_inputs();
+        String new_item_inputs[] = item_create_panel.get_new_item_inputs();
         if (Main.to_integer(new_item_inputs[6]) == null) {
             Main.popup_error("Stock input is not a valid number"); 
             return;
@@ -112,7 +112,7 @@ public class InventoryMain {
         }
         if (inventory_db.insert(new_item_inputs)) {
             Main.popup_message("New item added");
-            item_create_card.clear_new_item_fields();
+            item_create_panel.clear_new_item_fields();
             goto_inventory();
         }
     }
@@ -121,12 +121,12 @@ public class InventoryMain {
     public void select_cell(int[] xy) {
         if (xy[0] == -1 || xy[1] == -1) return;
 
-        Integer selected_id = Main.to_integer(inventory_card.get_value_at_xy(xy[0],0));
+        Integer selected_id = Main.to_integer(inventory_panel.get_value_at_xy(xy[0],0));
 
         int decision = Main.popup_option(
             "Selected Row ID: " + selected_id + "\n\n" + 
             column_names[xy[1]] + ":\n" + 
-            inventory_card.get_value_at_xy(xy[0],xy[1]) + "\n\n", 
+            inventory_panel.get_value_at_xy(xy[0],xy[1]) + "\n\n", 
             new String[]{
                 "Add Stock",
                 "Edit Attribute",

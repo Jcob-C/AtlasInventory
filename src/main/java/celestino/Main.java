@@ -1,6 +1,7 @@
 package celestino;
 
 import celestino.inventory.InventoryMain;
+import celestino.orders.OrdersMain;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,17 +23,19 @@ public class Main {
         db_host = "localhost";
     private static final Color theme[] = {
         new Color(255, 255, 255), // light
-        new Color(252, 151, 51), // mid
-        new Color(1, 69, 24) }; // dark
+        new Color(108, 108, 108), // mid
+        new Color(40, 40, 40) }; // dark
     private static final String default_font = "Segoe UI";
     private static final JFrame window = new JFrame();
     private static final CardLayout card_layout = new CardLayout();
-    private static final JPanel main_panel = new JPanel(card_layout); 
+    private static final JPanel main_panel = new JPanel(card_layout);
+    
+    public static final InventoryMain inventory_module = new InventoryMain();
+    public static final OrdersMain orders_module = new OrdersMain();
 
 
     public static void main(String[] args) throws Exception {
         setup_window();
-        initiliaze_modules();
         change_card(initial_card);
         window.setVisible(true);
         
@@ -130,11 +133,6 @@ public class Main {
             System.out.println("\n" + text + " cannot be a Double");
             return null;
         }
-    }
-    
-
-    private static void initiliaze_modules() {
-        new InventoryMain();
     }
     
     

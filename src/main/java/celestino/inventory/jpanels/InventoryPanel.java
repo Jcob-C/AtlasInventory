@@ -1,4 +1,4 @@
-package celestino.inventory.ui;
+package celestino.inventory.jpanels;
 
 import celestino.Main;
 import celestino.PresetJTable;
@@ -76,7 +76,7 @@ public class InventoryPanel extends JPanel {
             ribbon_bar = new JPanel();
         JButton 
             dashboard_button = new JButton("<"),
-            add_button = new JButton("New"),
+            add_button = new JButton("New Item"),
             search_button = new JButton("Search"),
             refresh_button = new JButton("Refresh");
         JScrollPane table_pane = new JScrollPane(preset_table);
@@ -98,7 +98,7 @@ public class InventoryPanel extends JPanel {
         refresh_button.setBackground(Main.get_dark_color());
         refresh_button.setForeground(Main.get_light_color());
 
-        add_button.setFont(Main.get_font(18));
+        add_button.setFont(Main.get_font(12));
         search_button.setFont(Main.get_font(18));
         search_field.setFont(Main.get_font(16));
         sort_column_dropdown.setFont(Main.get_font(14));

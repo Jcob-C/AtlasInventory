@@ -14,7 +14,7 @@ public class InventoryDB {
     private final String[] column_names = {"item_id","barcode","item_name","item_type","descr","location","price","stock"};
 
 
-    public boolean insert(String[] new_item) {
+    boolean insert(String[] new_item) {
         String insert_stmt = """
         INSERT INTO inventory 
         (barcode, item_name, item_type, descr, location, price, stock)
@@ -39,7 +39,7 @@ public class InventoryDB {
     }
     
     
-    public boolean delete(int id) {
+    boolean delete(int id) {
         String delete_stmt = "DELETE FROM inventory WHERE item_id = " + id + ";";
         try (
             Connection conn = Main.db_connection();
@@ -56,7 +56,7 @@ public class InventoryDB {
     }
 
 
-    public boolean edit(int id, int column, String new_value) {
+    boolean edit(int id, int column, String new_value) {
         String edit_query = "UPDATE inventory SET " + column_names[column] + " = ? WHERE item_id = " + id + ";";
         try (
             Connection conn = Main.db_connection();
@@ -74,7 +74,7 @@ public class InventoryDB {
     }
 
 
-    public boolean add_stock(int id, int new_stock) {
+    boolean add_stock(int id, int new_stock) {
         String edit_query = "UPDATE inventory SET stock = stock + ? WHERE item_id = " + id + ";";
         try (
             Connection conn = Main.db_connection();
@@ -92,12 +92,12 @@ public class InventoryDB {
     }
 
 
-    public ArrayList<ArrayList<String>> get_table() {
+    ArrayList<ArrayList<String>> get_table() {
         return get_table("SELECT * FROM inventory");
     }
 
 
-    public ArrayList<ArrayList<String>> get_searched_sorted_table(String keyword,int column_index, String order) {
+    ArrayList<ArrayList<String>> get_searched_sorted_table(String keyword,int column_index, String order) {
         return get_table(
             "SELECT * FROM inventory WHERE "
             +"CAST(item_id AS CHAR) LIKE '%" + keyword
@@ -114,7 +114,7 @@ public class InventoryDB {
 
     
     private ArrayList<ArrayList<String>> get_table(String query) {
-        ArrayList<ArrayList<String>> inventory_table = new ArrayList<>();
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
         try (
             Connection conn = Main.db_connection();
             Statement stmt = conn.createStatement();
@@ -126,13 +126,13 @@ public class InventoryDB {
                 for (int i = 1; i <= column_names.length; i++) {
                     new_row.add(rs.getString(i));
                 }
-                inventory_table.add(new_row);
+                table.add(new_row);
             }
         } 
         catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-        return inventory_table;
+        return table;
     }
 }

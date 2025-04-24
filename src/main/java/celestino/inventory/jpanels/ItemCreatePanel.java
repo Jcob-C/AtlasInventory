@@ -1,4 +1,4 @@
-package celestino.inventory.ui;
+package celestino.inventory.jpanels;
 
 import celestino.Main;
 import celestino.inventory.InventoryMain;
