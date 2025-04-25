@@ -64,7 +64,7 @@
 
 2. **Set your Database Credentials**
     - Ensure the system is configured with the correct database access credentials.
-    - You can find the variables that need to be set in: `\src\main\java\celestino\Main.java`
+    - You can find the variables that need to be set in: `\src\main\java\celestino\DB.java`
  
 ## Maven
 

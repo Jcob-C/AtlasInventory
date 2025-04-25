@@ -2,7 +2,6 @@ package celestino;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;

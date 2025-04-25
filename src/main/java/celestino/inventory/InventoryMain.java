@@ -1,9 +1,9 @@
 package celestino.inventory;
 
-import javax.swing.JButton;
-
 import celestino.Main;
 import celestino.TableBrowserJPanel;
+
+import javax.swing.JButton;
 
 public class InventoryMain {
 

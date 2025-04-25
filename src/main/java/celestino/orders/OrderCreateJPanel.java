@@ -1,12 +1,12 @@
 package celestino.orders;
 
+import celestino.Main;
+import celestino.PresetJTable;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
-import celestino.Main;
-import celestino.PresetJTable;
 
 public class OrderCreateJPanel extends JPanel {
 
