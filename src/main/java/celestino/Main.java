@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "accounts",
+    private static final String initial_card = "inventory",
         db_name = "db0321",
         db_password = "",
         db_user = "root",

@@ -17,6 +17,7 @@ public class OrdersMain {
     public OrdersMain() {
         Main.add_card(orders_panel, "orders");
         Main.add_card(order_create_panel, "order create");
+        refresh();
     }
 
 
@@ -33,6 +34,16 @@ public class OrdersMain {
 
     public void goto_order_items(int order_id) {
 
+    }
+
+
+    public void change_order_status(int order_id) {
+
+    }
+
+
+    public void edit_order_attribute(int order_id, int column) {
+        
     }
 
 

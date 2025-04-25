@@ -14,6 +14,7 @@ public class InventoryMain {
     public InventoryMain() {
         Main.add_card(inventory_panel, "inventory");
         Main.add_card(item_create_panel, "item create");
+        refresh();
     }
 
 
