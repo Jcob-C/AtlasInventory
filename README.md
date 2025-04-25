@@ -28,6 +28,38 @@
         payment_id VARCHAR(100),
         total_price DECIMAL(10,2)
     );
+
+    CREATE TABLE order_items (
+        order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+        order_id INT,
+        item_id INT,
+        quantity INT,
+        price_each DECIMAL(10,2),
+        subtotal DECIMAL(10,2),
+        FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+        FOREIGN KEY (item_id) REFERENCES inventory(item_id) ON DELETE SET NULL
+    );
+
+    Create table Accounts(
+        Id int primary key auto_increment not null, 
+        Username varchar(50) not null unique, 
+        Password varchar(50) not null, 
+        Role varchar(50) not null, 
+        Full_Name varchar(50) not null, 
+        Email varchar(50) not null, Profile blob, 
+        Contact_no varchar(11) not null, 
+        Address varchar(50) not null
+    );
+
+    Create table Activity(
+        activity_id int primary key auto_increment,
+        Id int, 
+        Full_Name varchar(50) not null, 
+        Activity varchar(50) not null, 
+        Ddate date default (current_date), 
+        Ttime time default (current_time), 
+        foreign key(Id) references Accounts(Id)
+    );
     ```
 
 2. **Set your Database Credentials**

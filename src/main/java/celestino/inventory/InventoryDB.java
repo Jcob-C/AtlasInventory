@@ -1,12 +1,11 @@
 package celestino.inventory;
 
-import celestino.Main;
+import celestino.DB;
 
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InventoryDB {
@@ -22,7 +21,7 @@ public class InventoryDB {
         (?, ?, ?, ?, ?, ?, ?);
         """;
         try (
-            Connection conn = Main.db_connection();
+            Connection conn = DB.get_connection();
             PreparedStatement stmt = conn.prepareStatement(insert_stmt);
             ) 
         {
@@ -42,7 +41,7 @@ public class InventoryDB {
     boolean delete(int id) {
         String delete_stmt = "DELETE FROM inventory WHERE item_id = " + id + ";";
         try (
-            Connection conn = Main.db_connection();
+            Connection conn = DB.get_connection();
             Statement stmt = conn.createStatement()
             ) 
         {
@@ -59,7 +58,7 @@ public class InventoryDB {
     boolean edit(int id, int column, String new_value) {
         String edit_query = "UPDATE inventory SET " + column_names[column] + " = ? WHERE item_id = " + id + ";";
         try (
-            Connection conn = Main.db_connection();
+            Connection conn = DB.get_connection();
             PreparedStatement stmt = conn.prepareStatement(edit_query) 
             ) 
         {
@@ -77,7 +76,7 @@ public class InventoryDB {
     boolean add_stock(int id, int new_stock) {
         String edit_query = "UPDATE inventory SET stock = stock + ? WHERE item_id = " + id + ";";
         try (
-            Connection conn = Main.db_connection();
+            Connection conn = DB.get_connection();
             PreparedStatement stmt = conn.prepareStatement(edit_query) 
             ) 
         {
@@ -93,12 +92,12 @@ public class InventoryDB {
 
 
     ArrayList<ArrayList<String>> get_table() {
-        return get_table("SELECT * FROM inventory");
+        return DB.get_table("SELECT * FROM inventory", column_names.length);
     }
 
 
     ArrayList<ArrayList<String>> get_searched_sorted_table(String keyword,int column_index, String order) {
-        return get_table(
+        return DB.get_table(
             "SELECT * FROM inventory WHERE "
             +"CAST(item_id AS CHAR) LIKE '%" + keyword
             +"%' OR barcode LIKE '%" + keyword
@@ -108,31 +107,8 @@ public class InventoryDB {
             +"%' OR location LIKE '%" + keyword
             +"%' OR CAST(price AS CHAR) LIKE '%" + keyword
             +"%' OR CAST(stock AS CHAR) LIKE '%" + keyword
-            +"%' ORDER BY " + column_names[column_index] + " " + order
+            +"%' ORDER BY " + column_names[column_index] + " " + order,
+            column_names.length
         );
-    }
-
-    
-    private ArrayList<ArrayList<String>> get_table(String query) {
-        ArrayList<ArrayList<String>> table = new ArrayList<>();
-        try (
-            Connection conn = Main.db_connection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            ) 
-        {
-            while (rs.next()) {
-                ArrayList<String> new_row = new ArrayList<>();
-                for (int i = 1; i <= column_names.length; i++) {
-                    new_row.add(rs.getString(i));
-                }
-                table.add(new_row);
-            }
-        } 
-        catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-        return table;
     }
 }

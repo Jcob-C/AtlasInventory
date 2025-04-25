@@ -1,4 +1,4 @@
-package celestino.orders.jpanels;
+package celestino.orders;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -7,11 +7,10 @@ import javax.swing.JTextField;
 
 import celestino.Main;
 import celestino.PresetJTable;
-import celestino.orders.OrdersMain;
 
-public class OrderCreatePanel extends JPanel {
+public class OrderCreateJPanel extends JPanel {
 
-    public OrderCreatePanel(String[] columns, OrdersMain parent) {
+    public OrderCreateJPanel(String[] columns, OrdersMain parent) {
         setLayout(null);
 
         PresetJTable table = new PresetJTable(columns, parent::select_new_order_item);
@@ -45,6 +44,8 @@ public class OrderCreatePanel extends JPanel {
         table_pane.setBounds(35,47,467,565);
         bottom_bar.setBounds(0,630,880,30);
         ribbon_box.setBounds(524,47,334,565);
+        add_button.setBounds(541,66,113,39);
+        order_button.setBounds(645,507,92,39);
 
         add(order_button);
         add(clear_button);

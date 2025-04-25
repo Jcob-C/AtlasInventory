@@ -1,7 +1,6 @@
-package celestino.inventory.jpanels;
+package celestino.inventory;
 
 import celestino.Main;
-import celestino.inventory.InventoryMain;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ItemCreatePanel extends JPanel {
+public class ItemCreateJPanel extends JPanel {
 
     private final JTextField
         name_field = new JTextField(),
@@ -46,7 +45,7 @@ public class ItemCreatePanel extends JPanel {
     }   
 
 
-    public ItemCreatePanel(InventoryMain parent) {
+    public ItemCreateJPanel(InventoryMain parent) {
         setLayout(null);
         JPanel 
             top_bar = new JPanel(),

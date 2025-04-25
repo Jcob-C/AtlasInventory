@@ -1,17 +1,15 @@
-package celestino.inventory.jpanels;
-
-import celestino.Main;
-import celestino.PresetJTable;
-import celestino.inventory.InventoryMain;
+package celestino;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class InventoryPanel extends JPanel {
+public class TableBrowserJPanel extends JPanel {
     
     private final PresetJTable preset_table;
     private final JComboBox<String> sort_column_dropdown;
@@ -62,12 +60,12 @@ public class InventoryPanel extends JPanel {
     }
 
     
-    public InventoryPanel(String[] column_names, InventoryMain parent) {
+    public TableBrowserJPanel(String[] column_names, Consumer<int[]> select_cell, Runnable goto_prev, Runnable update_jtable) {
         setLayout(null);
-
+        
         sort_order_button = new JButton(">");
         search_field = new JTextField();
-        preset_table = new PresetJTable(column_names, parent::select_cell);
+        preset_table = new PresetJTable(column_names, select_cell);
         sort_column_dropdown = new JComboBox<>(column_names);
         
         JPanel 
@@ -75,8 +73,7 @@ public class InventoryPanel extends JPanel {
             bottom_bar = new JPanel(),
             ribbon_bar = new JPanel();
         JButton 
-            dashboard_button = new JButton("<"),
-            add_button = new JButton("New Item"),
+            back_button = new JButton("<"),
             search_button = new JButton("Search"),
             refresh_button = new JButton("Refresh");
         JScrollPane table_pane = new JScrollPane(preset_table);
@@ -87,10 +84,8 @@ public class InventoryPanel extends JPanel {
         top_bar.setBackground(Main.get_mid_color());
         bottom_bar.setBackground(Main.get_mid_color());
         ribbon_bar.setBackground(Main.get_mid_color());
-        dashboard_button.setBackground(Main.get_dark_color());
-        dashboard_button.setForeground(Main.get_light_color());
-        add_button.setBackground(Main.get_dark_color());
-        add_button.setForeground(Main.get_light_color());
+        back_button.setBackground(Main.get_dark_color());
+        back_button.setForeground(Main.get_light_color());
         search_button.setBackground(Main.get_dark_color());
         search_button.setForeground(Main.get_light_color());
         sort_column_dropdown.setBackground(Main.get_dark_color());
@@ -98,7 +93,6 @@ public class InventoryPanel extends JPanel {
         refresh_button.setBackground(Main.get_dark_color());
         refresh_button.setForeground(Main.get_light_color());
 
-        add_button.setFont(Main.get_font(12));
         search_button.setFont(Main.get_font(18));
         search_field.setFont(Main.get_font(16));
         sort_column_dropdown.setFont(Main.get_font(14));
@@ -109,16 +103,14 @@ public class InventoryPanel extends JPanel {
         bottom_bar.setBounds(0,630,880,30);
         ribbon_bar.setBounds(57,39,767,59);
         table_pane.setBounds(27,107,826,523);
-        dashboard_button.setBounds(0,0,45,30);
-        add_button.setBounds(66,49,92,40);
+        back_button.setBounds(0,0,45,30);
         search_button.setBounds(434,49,92,40);
         search_field.setBounds(178,52,257,32);
         sort_column_dropdown.setBounds(601,52,101,32);
         refresh_button.setBounds(722,49,92,40);
 
         add(sort_order_button);
-        add(dashboard_button);
-        add(add_button);
+        add(back_button);
         add(search_button);
         add(search_field);
         add(sort_column_dropdown);
@@ -128,12 +120,11 @@ public class InventoryPanel extends JPanel {
         add(ribbon_bar);
         add(table_pane);
 
-        dashboard_button.addActionListener(e -> System.exit(0));
-        add_button.addActionListener(e -> parent.goto_item_create());
-        search_field.addActionListener(e -> parent.update_jtable());
-        search_button.addActionListener(e -> parent.update_jtable());
-        sort_column_dropdown.addActionListener(e -> parent.update_jtable());
-        refresh_button.addActionListener(e -> parent.refresh());
-        sort_order_button.addActionListener(e -> {flip_sort_order(); parent.update_jtable();});
+        back_button.addActionListener(e -> goto_prev.run());
+        search_field.addActionListener(e -> update_jtable.run());
+        search_button.addActionListener(e -> update_jtable.run());
+        sort_column_dropdown.addActionListener(e -> update_jtable.run());
+        refresh_button.addActionListener(e -> {reset_sort_n_filter(); update_jtable.run();});
+        sort_order_button.addActionListener(e -> {flip_sort_order(); update_jtable.run();});
     }
 }

@@ -11,17 +11,11 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "inventory",
-        db_name = "db0321",
-        db_password = "",
-        db_user = "root",
-        db_port = "3306",
-        db_host = "localhost";
+    private static final String initial_card = "inventory";
     private static final Color theme[] = {
         new Color(255, 255, 255), // light
         new Color(108, 108, 108), // mid
@@ -41,21 +35,12 @@ public class Main {
         change_card(initial_card);
         window.setVisible(true);
         
-        try(Connection conn = db_connection()) {
+        try(Connection conn = DB.get_connection()) {
         } catch (SQLException e) {
             e.printStackTrace();
             popup_error(e.getMessage());
             System.exit(0);
         }
-    }
-    
-    
-    public static Connection db_connection() throws SQLException {
-        return DriverManager.getConnection(
-            "jdbc:mysql://" + db_host + ":" + db_port + "/" + db_name,
-            db_user,
-            db_password
-        );
     }
 
 

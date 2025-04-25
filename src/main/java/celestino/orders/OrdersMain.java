@@ -1,16 +1,15 @@
 package celestino.orders;
 
 import celestino.Main;
-import celestino.orders.jpanels.OrderCreatePanel;
-import celestino.orders.jpanels.OrdersPanel;
+import celestino.TableBrowserJPanel;
 
 public class OrdersMain {
 
     private final String[]
         orders_column_names = {"ID","Date&Time","Customer","Contact","Address","Status","PaymentID","Price"},
         order_create_column_names = {"ID","Name","Type","Price","Quantity"};
-    private final OrdersPanel orders_panel = new OrdersPanel(orders_column_names, this);
-    private final OrderCreatePanel order_create_panel = new OrderCreatePanel(order_create_column_names, this);
+    private final TableBrowserJPanel orders_panel = new TableBrowserJPanel(orders_column_names, this::select_order, this::goto_orders, this::update_jtable);
+    private final OrderCreateJPanel order_create_panel = new OrderCreateJPanel(order_create_column_names, this);
     private final OrdersDB orders_db = new OrdersDB();
 
 
@@ -87,7 +86,13 @@ public class OrdersMain {
         }          
     }
 
+
     public void select_new_order_item(int[] xy) {
+
+    }
+
+
+    public void add_new_order_item(int item_id, String name, String type) {
 
     }
 }

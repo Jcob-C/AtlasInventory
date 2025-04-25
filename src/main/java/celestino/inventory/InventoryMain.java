@@ -1,17 +1,28 @@
 package celestino.inventory;
 
+import javax.swing.JButton;
+
 import celestino.Main;
-import celestino.inventory.jpanels.*;
+import celestino.TableBrowserJPanel;
 
 public class InventoryMain {
 
     private final String column_names[] = {"ID","Barcode","Name","Type","Description","Location","Price","Stock"};
-    private final ItemCreatePanel item_create_panel = new ItemCreatePanel(this);
-    private final InventoryPanel inventory_panel = new InventoryPanel(column_names, this);
+    private final ItemCreateJPanel item_create_panel = new ItemCreateJPanel(this);
+    private final TableBrowserJPanel inventory_panel = new TableBrowserJPanel(column_names, this::select_cell, this::goto_inventory, this::update_jtable);
     private final InventoryDB inventory_db = new InventoryDB();
     
     
     public InventoryMain() {
+        JButton item_create_button = new JButton("Add");
+        item_create_button.setBackground(Main.get_dark_color());
+        item_create_button.setForeground(Main.get_light_color());
+        item_create_button.setFont(Main.get_font(16));
+        item_create_button.setBounds(66,49,92,40);
+        item_create_button.addActionListener(e -> goto_item_create());
+        inventory_panel.add(item_create_button);
+        inventory_panel.setComponentZOrder(item_create_button, 1);
+
         Main.add_card(inventory_panel, "inventory");
         Main.add_card(item_create_panel, "item create");
         refresh();

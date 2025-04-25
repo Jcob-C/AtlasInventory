@@ -4,6 +4,6 @@ import java.sql.*;
 
 public class DBC {
     public static Connection getConnection() throws SQLException {
-        return celestino.Main.db_connection();
+        return celestino.DB.get_connection();
     }
 }
