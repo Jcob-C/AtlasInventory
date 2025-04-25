@@ -11,12 +11,10 @@ public class PresetJTable extends JTable {
 
     private final DefaultTableModel table_model;
     private final Consumer<int[]> action_method;
-    private final int selected_xy[] = {-1,-1};
-
-    
-    public int[] get_selected_xy() {
-        return selected_xy;
-    }
+    private int
+        selected_x = -1,
+        selected_y = -1
+    ;
 
 
     public PresetJTable(String[] columns, Consumer<int[]> action_method) {
@@ -32,8 +30,8 @@ public class PresetJTable extends JTable {
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.getTableHeader().setReorderingAllowed(false);
 
-        getSelectionModel().addListSelectionListener(e -> select_cell(e));
-        getColumnModel().getSelectionModel().addListSelectionListener(e -> select_cell(e));
+        getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
+        getColumnModel().getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
     }
 
     
@@ -51,18 +49,18 @@ public class PresetJTable extends JTable {
     }
 
 
-    private void select_cell(ListSelectionEvent e) {
+    private void selected_a_cell(ListSelectionEvent e) {
         int 
             new_selected_row = getSelectedRow(),
             new_selected_col = getSelectedColumn();
         if (
             !e.getValueIsAdjusting() && 
-            (selected_xy[0] != new_selected_row || selected_xy[1] != new_selected_col)
+            (selected_x != new_selected_row || selected_y != new_selected_col)
             ) 
         {
-            selected_xy[0] = new_selected_row;
-            selected_xy[1] = new_selected_col;
-            action_method.accept(selected_xy);
+            selected_x = new_selected_row;
+            selected_y = new_selected_col;
+            action_method.accept(new int[]{selected_x, selected_y});
         }
     }
 }
