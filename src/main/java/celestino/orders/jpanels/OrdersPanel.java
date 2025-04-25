@@ -67,7 +67,7 @@ public class OrdersPanel extends JPanel {
 
         sort_order_button = new JButton("<");
         search_field = new JTextField();
-        preset_table = new PresetJTable(column_names, parent::select_cell);
+        preset_table = new PresetJTable(column_names, parent::select_order);
         sort_column_dropdown = new JComboBox<>(column_names);
         
         JPanel 

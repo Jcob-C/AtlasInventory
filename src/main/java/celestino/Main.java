@@ -2,6 +2,7 @@ package celestino;
 
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
+import delarama.AccountsMain;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "inventory",
+    private static final String initial_card = "accounts",
         db_name = "db0321",
         db_password = "",
         db_user = "root",
@@ -32,6 +33,7 @@ public class Main {
     
     public static final InventoryMain inventory_module = new InventoryMain();
     public static final OrdersMain orders_module = new OrdersMain();
+    public static final AccountsMain accounts_module = new AccountsMain();
 
 
     public static void main(String[] args) throws Exception {

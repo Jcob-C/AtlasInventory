@@ -61,7 +61,7 @@ public class ItemCreatePanel extends JPanel {
             desc_label = new JLabel("Description:"),
             price_label = new JLabel("Price:");
         JButton 
-            inventory_button = new JButton("<"),
+            back_button = new JButton("<"),
             add_button = new JButton("Create"),
             clear_button = new JButton("Clear");
         JScrollPane desc_pane = new JScrollPane(desc_field);
@@ -79,8 +79,8 @@ public class ItemCreatePanel extends JPanel {
         desc_label.setForeground(Main.get_dark_color());
         price_label.setForeground(Main.get_dark_color());
 
-        inventory_button.setBackground(Main.get_dark_color());
-        inventory_button.setForeground(Main.get_light_color());
+        back_button.setBackground(Main.get_dark_color());
+        back_button.setForeground(Main.get_light_color());
         add_button.setBackground(Main.get_dark_color());
         add_button.setForeground(Main.get_light_color());
         clear_button.setBackground(Main.get_dark_color());
@@ -120,7 +120,7 @@ public class ItemCreatePanel extends JPanel {
         top_bar.setBounds(0,0,880,30);
         bottom_bar.setBounds(0,630,880,30);
         ribbon_bar.setBounds(42,191,797,278);
-        inventory_button.setBounds(0,0,45,30);
+        back_button.setBounds(0,0,45,30);
         clear_button.setBounds(50,420,70,40);
         add_button.setBounds(399,401,92,40);
 
@@ -141,7 +141,7 @@ public class ItemCreatePanel extends JPanel {
         add(type_label);
         add(desc_label);
         add(desc_pane);
-        add(inventory_button);
+        add(back_button);
         add(clear_button);
         add(add_button);
         add(top_bar);
@@ -149,7 +149,7 @@ public class ItemCreatePanel extends JPanel {
         add(ribbon_bar);
 
         add_button.addActionListener(e -> parent.create_button());
-        inventory_button.addActionListener(e -> parent.goto_inventory());
+        back_button.addActionListener(e -> parent.goto_inventory());
         clear_button.addActionListener(e -> clear_new_item_fields());
     }
 }

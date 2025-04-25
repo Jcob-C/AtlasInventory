@@ -1,27 +1,33 @@
 package celestino.orders;
 
 import celestino.Main;
+import celestino.orders.jpanels.OrderCreatePanel;
 import celestino.orders.jpanels.OrdersPanel;
 
 public class OrdersMain {
 
-    private final String column_names[] = {"ID","Date&Time","Customer","Contact","Address","Status","PaymentID","Price"};
-    private final OrdersPanel orders_panel = new OrdersPanel(column_names, this);
+    private final String[]
+        orders_column_names = {"ID","Date&Time","Customer","Contact","Address","Status","PaymentID","Price"},
+        order_create_column_names = {"ID","Name","Type","Price","Quantity"};
+    private final OrdersPanel orders_panel = new OrdersPanel(orders_column_names, this);
+    private final OrderCreatePanel order_create_panel = new OrderCreatePanel(order_create_column_names, this);
     private final OrdersDB orders_db = new OrdersDB();
 
 
     public OrdersMain() {
         Main.add_card(orders_panel, "orders");
+        Main.add_card(order_create_panel, "order create");
     }
 
 
     public void goto_orders() {
-
+        refresh();
+        Main.change_card("orders");
     }
 
 
     public void goto_order_create() {
-
+        Main.change_card("order create");
     }
 
 
@@ -47,14 +53,14 @@ public class OrdersMain {
     }
 
 
-    public void select_cell(int[] xy) {
+    public void select_order(int[] xy) {
         if (xy[0] == -1 || xy[1] == -1) return;
 
         Integer selected_id = Main.to_integer(orders_panel.get_value_at_xy(xy[0],0));
 
         int decision = Main.popup_option(
             "Selected Row ID: " + selected_id + "\n\n" + 
-            column_names[xy[1]] + ":\n" + 
+            orders_column_names[xy[1]] + ":\n" + 
             orders_panel.get_value_at_xy(xy[0],xy[1]) + "\n\n", 
             new String[]{
                 "View Content",
@@ -68,5 +74,9 @@ public class OrdersMain {
             case 1: break;
             case 2:  break;
         }          
+    }
+
+    public void select_new_order_item(int[] xy) {
+
     }
 }
