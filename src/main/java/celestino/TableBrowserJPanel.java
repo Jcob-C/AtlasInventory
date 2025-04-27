@@ -1,5 +1,7 @@
 package celestino;
 
+import main.Main;
+
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import javax.swing.JButton;
@@ -59,7 +61,15 @@ public class TableBrowserJPanel extends JPanel {
     }
 
     
-    public TableBrowserJPanel(String[] column_names, Consumer<int[]> select_cell, Runnable goto_prev, Runnable update_jtable) {
+    public TableBrowserJPanel
+        (
+        String[] column_names, 
+        Consumer<int[]> select_cell, 
+        Runnable goto_prev, 
+        Runnable update_jtable, 
+        Runnable refresh 
+        ) 
+    {
         setLayout(null);
         
         sort_order_button = new JButton(">");
@@ -123,7 +133,7 @@ public class TableBrowserJPanel extends JPanel {
         search_field.addActionListener(e -> update_jtable.run());
         search_button.addActionListener(e -> update_jtable.run());
         sort_column_dropdown.addActionListener(e -> update_jtable.run());
-        refresh_button.addActionListener(e -> {reset_sort_n_filter(); update_jtable.run();});
+        refresh_button.addActionListener(e -> refresh.run());
         sort_order_button.addActionListener(e -> {flip_sort_order(); update_jtable.run();});
     }
 }

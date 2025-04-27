@@ -1,4 +1,4 @@
-package celestino;
+package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +14,9 @@ public class DB {
         db_password = "",
         db_user = "root",
         db_port = "3306",
-        db_host = "localhost"
-    ;
+        db_host = "localhost";
+    public static final String[] db_inventory_columns = 
+        {"item_id","barcode","item_name","item_type","descr","location","price","stock"};
       
     
     public static Connection get_connection() throws SQLException {
@@ -23,6 +24,28 @@ public class DB {
             "jdbc:mysql://" + db_host + ":" + db_port + "/" + db_name,
             db_user,
             db_password
+        );
+    }
+
+
+    public static ArrayList<ArrayList<String>> get_inventory_table() {
+        return DB.get_table("SELECT * FROM inventory", db_inventory_columns.length);
+    }
+
+
+    public static ArrayList<ArrayList<String>> get_searchedsorted_inventory_table(String keyword,int column_index, String order) {
+        return DB.get_table(
+            "SELECT * FROM inventory WHERE "
+            +"CAST(item_id AS CHAR) LIKE '%" + keyword
+            +"%' OR barcode LIKE '%" + keyword
+            +"%' OR item_name LIKE '%" + keyword
+            +"%' OR item_type LIKE '%" + keyword
+            +"%' OR descr LIKE '%" + keyword
+            +"%' OR location LIKE '%" + keyword
+            +"%' OR CAST(price AS CHAR) LIKE '%" + keyword
+            +"%' OR CAST(stock AS CHAR) LIKE '%" + keyword
+            +"%' ORDER BY " + db_inventory_columns[column_index] + " " + order,
+            db_inventory_columns.length
         );
     }
 

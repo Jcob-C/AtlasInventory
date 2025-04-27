@@ -1,6 +1,6 @@
 package delarama;
 
-import celestino.Main;
+import main.Main;
 
 public class AccountsMain {
     public AccountsMain() {

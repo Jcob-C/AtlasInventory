@@ -2,7 +2,7 @@ package celestino.orders;
 
 import java.util.ArrayList;
 
-import celestino.DB;
+import main.DB;
 
 public class OrdersDB {
     

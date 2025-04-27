@@ -1,6 +1,6 @@
 package celestino.inventory;
 
-import celestino.Main;
+import main.Main;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,19 +9,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ItemCreateJPanel extends JPanel {
+public class ItemCreateJPanel {
 
-    private final JTextField
+    private static final JTextField
         name_field = new JTextField(),
         barcode_field = new JTextField(),
         location_field = new JTextField(),
         stock_field = new JTextField(),
         type_field = new JTextField(),
         price_field = new JTextField();
-    private final JTextArea desc_field = new JTextArea();
+    private static final JTextArea desc_field = new JTextArea();
+    private static final JPanel panel = new JPanel();
     
 
-    public String[] get_new_item_inputs() {
+    static String[] get_new_item_inputs() {
         String new_item_inputs[] = new String[7];
         new_item_inputs[0] = barcode_field.getText();
         new_item_inputs[1] = name_field.getText();
@@ -34,7 +35,7 @@ public class ItemCreateJPanel extends JPanel {
     }
 
 
-    public void clear_new_item_fields() {
+    static void clear_new_item_fields() {
         barcode_field.setText("");
         name_field.setText("");
         type_field.setText("");
@@ -45,8 +46,8 @@ public class ItemCreateJPanel extends JPanel {
     }   
 
 
-    public ItemCreateJPanel(InventoryMain parent) {
-        setLayout(null);
+    static JPanel create_panel() {
+        panel.setLayout(null);
         JPanel 
             top_bar = new JPanel(),
             bottom_bar = new JPanel(),
@@ -65,7 +66,7 @@ public class ItemCreateJPanel extends JPanel {
             clear_button = new JButton("Clear");
         JScrollPane desc_pane = new JScrollPane(desc_field);
 
-        setBackground(Main.get_dark_color());
+        panel.setBackground(Main.get_dark_color());
         top_bar.setBackground(Main.get_mid_color());
         bottom_bar.setBackground(Main.get_mid_color());
         ribbon_bar.setBackground(Main.get_mid_color());
@@ -126,29 +127,31 @@ public class ItemCreateJPanel extends JPanel {
         desc_field.setLineWrap(true);
         desc_field.setWrapStyleWord(true);
 
-        add(price_field);
-        add(name_field);
-        add(barcode_field);
-        add(location_field);
-        add(stock_field);
-        add(type_field);
-        add(price_label);
-        add(name_label);
-        add(barcode_label);
-        add(location_label);
-        add(stock_label);
-        add(type_label);
-        add(desc_label);
-        add(desc_pane);
-        add(back_button);
-        add(clear_button);
-        add(add_button);
-        add(top_bar);
-        add(bottom_bar);
-        add(ribbon_bar);
+        panel.add(price_field);
+        panel.add(name_field);
+        panel.add(barcode_field);
+        panel.add(location_field);
+        panel.add(stock_field);
+        panel.add(type_field);
+        panel.add(price_label);
+        panel.add(name_label);
+        panel.add(barcode_label);
+        panel.add(location_label);
+        panel.add(stock_label);
+        panel.add(type_label);
+        panel.add(desc_label);
+        panel.add(desc_pane);
+        panel.add(back_button);
+        panel.add(clear_button);
+        panel.add(add_button);
+        panel.add(top_bar);
+        panel.add(bottom_bar);
+        panel.add(ribbon_bar);
 
-        add_button.addActionListener(e -> parent.create_button());
-        back_button.addActionListener(e -> parent.goto_inventory());
+        add_button.addActionListener(e -> InventoryMain.create_button());
+        back_button.addActionListener(e -> InventoryMain.goto_inventory());
         clear_button.addActionListener(e -> clear_new_item_fields());
+
+        return panel;
     }
 }

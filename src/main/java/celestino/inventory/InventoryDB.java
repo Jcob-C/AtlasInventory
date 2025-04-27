@@ -1,19 +1,15 @@
 package celestino.inventory;
 
-import celestino.DB;
+import main.DB;
 
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class InventoryDB {
 
-    private final String[] column_names = {"item_id","barcode","item_name","item_type","descr","location","price","stock"};
-
-
-    boolean insert(String[] new_item) {
+    static boolean insert(String[] new_item) {
         String insert_stmt = """
         INSERT INTO inventory 
         (barcode, item_name, item_type, descr, location, price, stock)
@@ -38,7 +34,7 @@ public class InventoryDB {
     }
     
     
-    boolean delete(int id) {
+    static boolean delete(int id) {
         String delete_stmt = "DELETE FROM inventory WHERE item_id = " + id + ";";
         try (
             Connection conn = DB.get_connection();
@@ -55,8 +51,8 @@ public class InventoryDB {
     }
 
 
-    boolean edit(int id, int column, String new_value) {
-        String edit_query = "UPDATE inventory SET " + column_names[column] + " = ? WHERE item_id = " + id + ";";
+    static boolean edit(int id, int column, String new_value) {
+        String edit_query = "UPDATE inventory SET " + DB.db_inventory_columns[column] + " = ? WHERE item_id = " + id + ";";
         try (
             Connection conn = DB.get_connection();
             PreparedStatement stmt = conn.prepareStatement(edit_query) 
@@ -73,7 +69,7 @@ public class InventoryDB {
     }
 
 
-    boolean add_stock(int id, int new_stock) {
+    static boolean add_stock(int id, int new_stock) {
         String edit_query = "UPDATE inventory SET stock = stock + ? WHERE item_id = " + id + ";";
         try (
             Connection conn = DB.get_connection();
@@ -88,27 +84,5 @@ public class InventoryDB {
             System.out.println(e.getMessage());
         }
         return false;
-    }
-
-
-    ArrayList<ArrayList<String>> get_table() {
-        return DB.get_table("SELECT * FROM inventory", column_names.length);
-    }
-
-
-    ArrayList<ArrayList<String>> get_searched_sorted_table(String keyword,int column_index, String order) {
-        return DB.get_table(
-            "SELECT * FROM inventory WHERE "
-            +"CAST(item_id AS CHAR) LIKE '%" + keyword
-            +"%' OR barcode LIKE '%" + keyword
-            +"%' OR item_name LIKE '%" + keyword
-            +"%' OR item_type LIKE '%" + keyword
-            +"%' OR descr LIKE '%" + keyword
-            +"%' OR location LIKE '%" + keyword
-            +"%' OR CAST(price AS CHAR) LIKE '%" + keyword
-            +"%' OR CAST(stock AS CHAR) LIKE '%" + keyword
-            +"%' ORDER BY " + column_names[column_index] + " " + order,
-            column_names.length
-        );
     }
 }

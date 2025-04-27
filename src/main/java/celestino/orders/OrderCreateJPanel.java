@@ -1,7 +1,7 @@
 package celestino.orders;
 
-import celestino.Main;
 import celestino.PresetJTable;
+import main.Main;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;

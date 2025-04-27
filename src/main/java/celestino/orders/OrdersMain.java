@@ -1,14 +1,19 @@
 package celestino.orders;
 
-import celestino.Main;
 import celestino.TableBrowserJPanel;
+import main.Main;
 
 public class OrdersMain {
 
     private final String[]
         orders_column_names = {"ID","Date&Time","Customer","Contact","Address","Status","PaymentID","Price"},
         order_create_column_names = {"ID","Name","Type","Price","Quantity"};
-    private final TableBrowserJPanel orders_panel = new TableBrowserJPanel(orders_column_names, this::select_order, this::goto_orders, this::update_jtable);
+    private final TableBrowserJPanel orders_panel = new TableBrowserJPanel(
+        orders_column_names, 
+        this::select_order, 
+        this::goto_orders, 
+        this::update_jtable,
+        this::refresh );
     private final OrderCreateJPanel order_create_panel = new OrderCreateJPanel(order_create_column_names, this);
     private final OrdersDB orders_db = new OrdersDB();
 

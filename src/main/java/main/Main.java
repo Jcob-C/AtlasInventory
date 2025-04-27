@@ -1,8 +1,6 @@
-package celestino;
+package main;
 
 import celestino.inventory.InventoryMain;
-import celestino.orders.OrdersMain;
-import delarama.AccountsMain;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,22 +14,23 @@ import java.sql.SQLException;
 public class Main {
 
     private static final String initial_card = "inventory";
+    
     private static final Color theme[] = {
         new Color(255, 255, 255), // light
         new Color(108, 108, 108), // mid
         new Color(40, 40, 40) }; // dark
-    private static final String default_font = "Segoe UI";
+    private static final String font = "Segoe UI";
+
     private static final JFrame window = new JFrame();
     private static final CardLayout card_layout = new CardLayout();
     private static final JPanel main_panel = new JPanel(card_layout);
+
+    public static final String[] inventory_columns = {"ID","Barcode","Name","Type","Description","Location","Price","Stock"};
+
     
-    public static final InventoryMain inventory_module = new InventoryMain();
-    public static final OrdersMain orders_module = new OrdersMain();
-    public static final AccountsMain accounts_module = new AccountsMain();
-
-
     public static void main(String[] args) throws Exception {
         setup_window();
+        initialize_modules();
         change_card(initial_card);
         window.setVisible(true);
         
@@ -45,7 +44,7 @@ public class Main {
 
 
     public static Font get_font(int size) {
-        return new Font(default_font, Font.BOLD, size);
+        return new Font(font, Font.BOLD, size);
     }
 
 
@@ -131,5 +130,11 @@ public class Main {
         window.setResizable(false);
         window.setUndecorated(true);
         window.add(main_panel);
+        window.setFocusable(true);
+    }
+
+
+    private static void initialize_modules() {
+        InventoryMain.create_inventory_module();
     }
 }

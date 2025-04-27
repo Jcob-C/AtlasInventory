@@ -2,7 +2,7 @@ package delarama;
 
 import javax.swing.*;
 
-import celestino.Main;
+import main.Main;
 
 import java.awt.*;
 import java.sql.*;

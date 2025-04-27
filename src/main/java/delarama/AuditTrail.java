@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import celestino.Main;
+import main.Main;
 
 public class AuditTrail extends JPanel {
     private final DefaultTableModel model = new DefaultTableModel();
