@@ -1,6 +1,8 @@
 package main;
 
 import celestino.inventory.InventoryMain;
+import celestino.orders.OrdersMain;
+import delarama.AccountsMain;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,7 +15,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "inventory";
+    private static final String initial_card = "order view";
     
     private static final Color theme[] = {
         new Color(255, 255, 255), // light
@@ -136,5 +138,7 @@ public class Main {
 
     private static void initialize_modules() {
         InventoryMain.create_inventory_module();
+        OrdersMain.create_orders_module();
+        AccountsMain.add_accounts_module();
     }
 }

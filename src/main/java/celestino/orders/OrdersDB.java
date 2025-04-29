@@ -1,20 +1,41 @@
 package celestino.orders;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import main.DB;
 
 public class OrdersDB {
     
-    private final String column_names[] = {"order_id","order_datetime","customer_name","contact_no","address","order_status","payment_id","total_price"};
+    private static final String column_names[] = {"order_id","order_datetime","customer_name","contact_no","address","order_status","payment_id","total_price"};
 
 
-    ArrayList<ArrayList<String>> get_table() {
+    static ArrayList<ArrayList<String>> get_table() {
         return DB.get_table("SELECT * FROM orders ORDER BY order_id DESC", column_names.length);
     }
 
 
-    ArrayList<ArrayList<String>> get_searched_sorted_table(String keyword,int column_index, String order) {
+    static boolean edit(int id, int column, String new_value) {
+        String edit_query = "UPDATE orders SET " + column_names[column] + " = ? WHERE order_id = " + id + ";";
+        try (
+            Connection conn = DB.get_connection();
+            PreparedStatement stmt = conn.prepareStatement(edit_query) 
+            ) 
+        {
+            stmt.setString(1, new_value);
+            if (stmt.executeUpdate() > 0) return true;
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+
+    static ArrayList<ArrayList<String>> get_searchedsorted_table(String keyword,int column_index, String order) {
         return DB.get_table(
             "SELECT * FROM orders WHERE "
             +"CAST(order_id AS CHAR) LIKE '%" + keyword

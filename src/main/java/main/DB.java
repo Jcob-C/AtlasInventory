@@ -16,7 +16,8 @@ public class DB {
         db_port = "3306",
         db_host = "localhost";
     public static final String[] db_inventory_columns = 
-        {"item_id","barcode","item_name","item_type","descr","location","price","stock"};
+        {"item_id","barcode","item_name","item_type","descr","location","price","stock"}
+    ;
       
     
     public static Connection get_connection() throws SQLException {

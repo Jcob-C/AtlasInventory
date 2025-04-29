@@ -19,9 +19,9 @@ public class InventoryMain {
     
     public static void create_inventory_module() {
         Main.add_card(inventory_panel, "inventory");
-        Main.add_card(ItemCreateJPanel.create_panel(), "item create");
+        Main.add_card(ItemCreatePage.create_panel(), "item create");
         
-        JButton item_create_button = new JButton("Add");
+        JButton item_create_button = new JButton("Create");
         item_create_button.setBackground(Main.get_dark_color());
         item_create_button.setForeground(Main.get_light_color());
         item_create_button.setFont(Main.get_font(16));
@@ -118,7 +118,7 @@ public class InventoryMain {
     
     
     static void create_button() {
-        String new_item_inputs[] = ItemCreateJPanel.get_new_item_inputs();
+        String new_item_inputs[] = ItemCreatePage.get_new_item_inputs();
         if (Main.to_integer(new_item_inputs[6]) == null) {
             Main.popup_error("Stock input is not a valid number"); 
             return;
@@ -129,7 +129,7 @@ public class InventoryMain {
         }
         if (InventoryDB.insert(new_item_inputs)) {
             Main.popup_message("New item added");
-            ItemCreateJPanel.clear_new_item_fields();
+            ItemCreatePage.clear_new_item_fields();
             goto_inventory();
         }
     }
@@ -145,9 +145,9 @@ public class InventoryMain {
             Main.inventory_columns[xy[1]] + ":\n" + 
             inventory_panel.get_value_at_xy(xy[0],xy[1]) + "\n\n", 
             new String[]{
-                "Add Stock",
-                "Edit Attribute",
-                "Delete Row"
+                "Restock Selected Item",
+                "Edit Selected Attribute",
+                "Delete Selected Item"
             }
         );
 

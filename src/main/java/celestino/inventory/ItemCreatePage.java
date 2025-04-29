@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ItemCreateJPanel {
+public class ItemCreatePage {
 
     private static final JTextField
         name_field = new JTextField(),
@@ -70,7 +70,6 @@ public class ItemCreateJPanel {
         top_bar.setBackground(Main.get_mid_color());
         bottom_bar.setBackground(Main.get_mid_color());
         ribbon_bar.setBackground(Main.get_mid_color());
-
         name_label.setForeground(Main.get_dark_color());
         barcode_label.setForeground(Main.get_dark_color());
         location_label.setForeground(Main.get_dark_color());
@@ -78,7 +77,6 @@ public class ItemCreateJPanel {
         type_label.setForeground(Main.get_dark_color());
         desc_label.setForeground(Main.get_dark_color());
         price_label.setForeground(Main.get_dark_color());
-
         back_button.setBackground(Main.get_dark_color());
         back_button.setForeground(Main.get_light_color());
         add_button.setBackground(Main.get_dark_color());

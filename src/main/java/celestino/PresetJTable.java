@@ -29,6 +29,7 @@ public class PresetJTable extends JTable {
         this.setCellSelectionEnabled(true);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.getTableHeader().setReorderingAllowed(false);
+        this.getColumnModel().getColumn(0).setPreferredWidth(10);
 
         getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
         getColumnModel().getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
@@ -47,6 +48,11 @@ public class PresetJTable extends JTable {
             table_model.addRow(new_row);
         }
     }
+
+
+    public void add_row(String[] row) { table_model.addRow(row); }
+    public void add_row(Object[] row) { table_model.addRow(row); }
+    public void delete_row(int index) { table_model.removeRow(index); }
 
 
     private void selected_a_cell(ListSelectionEvent e) {
