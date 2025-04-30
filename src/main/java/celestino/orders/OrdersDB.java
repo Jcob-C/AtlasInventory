@@ -17,6 +17,27 @@ public class OrdersDB {
     }
 
 
+    static ArrayList<ArrayList<String>> get_order_items(int order_id) {
+        String query = 
+        """
+        SELECT 
+            i.item_id,
+            i.item_name,
+            i.item_type,
+            oi.price_each,
+            oi.quantity
+        FROM 
+            order_items oi
+        JOIN 
+            inventory i ON oi.item_id = i.item_id
+        WHERE 
+            oi.order_id = 
+        """ 
+        + order_id + ';';
+        return DB.get_table(query, 5);
+    }
+
+
     static boolean edit(int id, int column, String new_value) {
         String edit_query = "UPDATE orders SET " + column_names[column] + " = ? WHERE order_id = " + id + ";";
         try (

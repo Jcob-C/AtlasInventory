@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import celestino.PresetJTable;
@@ -19,9 +20,11 @@ public class OrderViewPage {
         order_id = new JTextField(),
         order_date = new JTextField(),
         order_price = new JTextField(),
+        order_status = new JTextField(),
         customer_name = new JTextField(),
         customer_no = new JTextField(),
-        customer_addr = new JTextField()
+        customer_addr = new JTextField(),
+        transac_id = new JTextField()
     ;
 
 
@@ -44,58 +47,81 @@ public class OrderViewPage {
         JScrollPane table_pane = new JScrollPane(table);
 
         panel.setBackground(Main.get_dark_color());
-        top_bar.setBackground(Main.get_mid_color());
-        bottom_bar.setBackground(Main.get_mid_color());
-        back_button.setBackground(Main.get_dark_color());
-        back_button.setForeground(Main.get_light_color());
-        order_id.setBackground(Main.get_mid_color());
-        order_id.setForeground(Main.get_dark_color());
-        order_date.setBackground(Main.get_mid_color());
-        order_date.setForeground(Main.get_dark_color());
-        order_price.setBackground(Main.get_mid_color());
-        order_price.setForeground(Main.get_dark_color());
-        customer_name.setBackground(Main.get_mid_color());
-        customer_name.setForeground(Main.get_dark_color());
-        customer_no.setBackground(Main.get_mid_color());
-        customer_no.setForeground(Main.get_dark_color());
-        customer_addr.setBackground(Main.get_mid_color());
-        customer_addr.setForeground(Main.get_dark_color());
+        top_bar.setBackground(Main.get_light_color());
+        bottom_bar.setBackground(Main.get_light_color());
+        back_button.setBackground(Main.get_mid_color());
+        back_button.setForeground(Color.WHITE);
+        order_id.setBackground(Main.get_light_color());
+        order_id.setForeground(Color.BLACK);
+        order_date.setBackground(Main.get_light_color());
+        order_date.setForeground(Color.BLACK);
+        order_price.setBackground(Main.get_light_color());
+        order_price.setForeground(Color.BLACK);
+        order_status.setBackground(Main.get_light_color());
+        order_status.setForeground(Color.BLACK);
+        customer_name.setBackground(Main.get_light_color());
+        customer_name.setForeground(Color.BLACK);
+        customer_no.setBackground(Main.get_light_color());
+        customer_no.setForeground(Color.BLACK);
+        customer_addr.setBackground(Main.get_light_color());
+        customer_addr.setForeground(Color.BLACK);
+        transac_id.setBackground(Main.get_light_color());
+        transac_id.setForeground(Color.BLACK);
 
         back_button.setBounds(0,0,45,30);
         top_bar.setBounds(0,0,880,30);
-        table_pane.setBounds(183,155,514,475);
+        table_pane.setBounds(324,28,520,537);
         bottom_bar.setBounds(0,630,880,30);
-        order_id.setBounds(105,39,199,28);
-        order_date.setBounds(313,39,227,28);  
-        order_price.setBounds(549,39,226,28);
-        customer_name.setBounds(105,78,475,28);
-        customer_no.setBounds(587,78,188,28);
-        customer_addr.setBounds(105,116,671,28);
+        order_id.setBounds(24,281,95,31);
+        order_date.setBounds(24,318,230,31);  
+        order_price.setBounds(24,392,137,31);
+        order_status.setBounds(24,355,218,31);
+        customer_name.setBounds(24,504,287,31);
+        customer_no.setBounds(24,541,170,31);
+        customer_addr.setBounds(24,578,600,31);
+        transac_id.setBounds(24,430,250,31);
 
-        order_id.setFont(Main.get_font(21));
-        order_date.setFont(Main.get_font(21));
-        order_price.setFont(Main.get_font(21));
-        customer_name.setFont(Main.get_font(21));
-        customer_addr.setFont(Main.get_font(21));
-        customer_no.setFont(Main.get_font(21));
+        order_id.setFont(Main.get_font(14));
+        order_date.setFont(Main.get_font(14));
+        order_price.setFont(Main.get_font(14));
+        order_status.setFont(Main.get_font(14));
+        customer_name.setFont(Main.get_font(14));
+        customer_addr.setFont(Main.get_font(14));
+        customer_no.setFont(Main.get_font(14));
+        transac_id.setFont(Main.get_font(14));
 
         order_id.setEditable(false);
         order_date.setEditable(false);
         order_price.setEditable(false);
+        order_status.setEditable(false);
         customer_name.setEditable(false);
         customer_addr.setEditable(false);
         customer_no.setEditable(false);
+        transac_id.setEditable(false);
 
-        order_id.setCaretColor(Main.get_mid_color());
-        order_date.setCaretColor(Main.get_mid_color());
-        order_price.setCaretColor(Main.get_mid_color());
-        customer_name.setCaretColor(Main.get_mid_color());
-        customer_addr.setCaretColor(Main.get_mid_color());
-        customer_no.setCaretColor(Main.get_mid_color());
+        order_id.setCaretColor(Main.get_light_color());
+        order_date.setCaretColor(Main.get_light_color());
+        order_price.setCaretColor(Main.get_light_color());
+        order_status.setCaretColor(Main.get_light_color());
+        customer_name.setCaretColor(Main.get_light_color());
+        customer_addr.setCaretColor(Main.get_light_color());
+        customer_no.setCaretColor(Main.get_light_color());
+        transac_id.setCaretColor(Main.get_light_color());
+        
+        order_id.setText("Order: 100");
+        order_price.setText("Price: 1000000");
+        order_status.setText("Status: Pending Payment");
+        order_date.setText("Date&Time: 0000-00-00 00:00:00");
+        customer_name.setText("Customer: Celestino, Ralph Jacob Capili");
+        customer_no.setText("Contact: 09123456789");
+        customer_addr.setText("Address: 1396, Purok 5, A. Luna Street, Bambang, Bocaue, Bulacan");
+        transac_id.setText("Transaction ID: 123456789012345");
 
+        panel.add(transac_id);
         panel.add(customer_addr);
         panel.add(customer_no);
         panel.add(customer_name);
+        panel.add(order_status);
         panel.add(order_price);
         panel.add(order_date);
         panel.add(order_id);

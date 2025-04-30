@@ -7,6 +7,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
+import main.Main;
+
 public class PresetJTable extends JTable {
 
     private final DefaultTableModel table_model;
@@ -25,11 +27,13 @@ public class PresetJTable extends JTable {
                 return false;
             }
         };
-        this.setModel(table_model);
-        this.setCellSelectionEnabled(true);
-        this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.getTableHeader().setReorderingAllowed(false);
-        this.getColumnModel().getColumn(0).setPreferredWidth(10);
+        setModel(table_model);
+        setCellSelectionEnabled(true);
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        getTableHeader().setReorderingAllowed(false);
+        getColumnModel().getColumn(0).setPreferredWidth(5);
+        setFont(Main.get_font(12));
+        setRowHeight(24);
 
         getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
         getColumnModel().getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
@@ -38,6 +42,7 @@ public class PresetJTable extends JTable {
     
     public void update_table(ArrayList<ArrayList<String>> data) {
         table_model.setRowCount(0);
+        if (data == null) return;
         for (int x = 0; x < data.size(); x++) {
             String[] new_row = new String[data.get(x).size()];
 

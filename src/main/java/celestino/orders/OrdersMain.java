@@ -2,6 +2,7 @@ package celestino.orders;
 
 import javax.swing.JButton;
 
+import java.awt.Color;
 import celestino.TableBrowserJPanel;
 import main.DB;
 import main.Main;
@@ -21,11 +22,11 @@ public class OrdersMain {
         order_item_select_panel = new TableBrowserJPanel(
             Main.inventory_columns,
             OrdersMain::add_to_order,
-            OrdersMain::goto_orders,
+            OrdersMain::goto_order_create,
             OrdersMain::update_item_select_jtable,
             OrdersMain::refresh_item_select
-        );
-
+        )
+    ;
     
 
     public static void create_orders_module() {
@@ -34,15 +35,18 @@ public class OrdersMain {
         Main.add_card(OrderCreatePage.create_panel(), "order create");
         Main.add_card(order_item_select_panel, "order item select");
 
+        orders_panel.set_title("ORDERS");
+        order_item_select_panel.set_title("Select an item");
+
         JButton order_create_button = new JButton("Order");
-        order_create_button.setBackground(Main.get_dark_color());
-        order_create_button.setForeground(Main.get_light_color());
+        order_create_button.setBackground(Main.get_mid_color());
+        order_create_button.setForeground(Color.WHITE);
         order_create_button.setFont(Main.get_font(16));
         order_create_button.setBounds(66,49,92,40);
         order_create_button.addActionListener(e -> goto_order_create());
         orders_panel.add(order_create_button);
         orders_panel.setComponentZOrder(order_create_button, 1);
-        
+
         refresh_orders();
     }
 
@@ -59,7 +63,7 @@ public class OrdersMain {
 
 
     static void goto_order_items(int order_id) {
-        
+        OrderViewPage.set_table(OrdersDB.get_order_items(order_id));
         Main.change_card("order view");
     }
 
@@ -120,6 +124,7 @@ public class OrdersMain {
 
     static void refresh_orders() {
         orders_panel.reset_sort_n_filter();
+        orders_panel.flip_sort_order();
         orders_panel.update_table_pane(OrdersDB.get_table());
     }
 
@@ -130,13 +135,13 @@ public class OrdersMain {
         Integer selected_id = Main.to_integer(orders_panel.get_value_at_xy(xy[0],0));
 
         int decision = Main.popup_option(
-            "Selected Row ID: " + selected_id + "\n\n" + 
+            "Selected Order ID: " + selected_id + "\n\n" + 
             column_names[xy[1]] + ":\n" + 
             orders_panel.get_value_at_xy(xy[0],xy[1]) + "\n\n", 
             new String[]{
-                "View Order Items",
-                "Edit Selected Attribute",
-                "Update Order Status"
+                "View Order",
+                "Edit Attribute",
+                "Update Status"
             }
         );
 
@@ -157,28 +162,30 @@ public class OrdersMain {
             price = order_item_select_panel.get_value_at_xy(xy[0], 6);
         OrderCreatePage.add_item(new String[]{item_id,name,type,price,"1"});
         goto_order_create();
-        merge_item_repeats();
+        if(merge_new_item()) {
+            Main.popup_message("Added 1 to item's Quantity");
+        }
+        else {
+            Main.popup_message("New item Added");
+        }
     }
 
 
-    static void merge_item_repeats() {
-        int row_count = OrderCreatePage.get_row_count();
-        for (int i = 0; i < row_count; i++) {
-            for (int o = 0; o < row_count; o++) {
-                if (i != o && OrderCreatePage.get_value(i, 0).equals(OrderCreatePage.get_value(o, 0))) {
-                    OrderCreatePage.set_value(
-                        i, 
-                        4, 
-                        String.valueOf(
-                            Main.to_integer(OrderCreatePage.get_value(i,4)) 
-                            +
-                            Main.to_integer(OrderCreatePage.get_value(o,4))
-                        )
-                    );
-                    OrderCreatePage.remove_item(o);
-                }
+    static boolean merge_new_item() {
+        int new_item_index = OrderCreatePage.get_row_count()-1;
+        for(int i = new_item_index-1; i >= 0; i--) {
+            if(OrderCreatePage.get_value(i, 0).equals(OrderCreatePage.get_value(new_item_index, 0))) {
+                OrderCreatePage.set_value(i, 4, String.valueOf(
+                        Main.to_integer(OrderCreatePage.get_value(i, 4))
+                        +
+                        Main.to_integer(OrderCreatePage.get_value(new_item_index, 4))
+                    )
+                );
+                OrderCreatePage.remove_item(new_item_index);
+                return true;
             }
         }
+        return false;
     }
 
 
@@ -193,6 +200,6 @@ public class OrdersMain {
 
 
     static void clear_order_create() {
-        
+        OrderCreatePage.clear_table();
     }
 }

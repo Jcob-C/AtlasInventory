@@ -4,6 +4,7 @@ import celestino.TableBrowserJPanel;
 import main.DB;
 import main.Main;
 
+import java.awt.Color;
 import javax.swing.JButton;
 
 public class InventoryMain {
@@ -22,8 +23,8 @@ public class InventoryMain {
         Main.add_card(ItemCreatePage.create_panel(), "item create");
         
         JButton item_create_button = new JButton("Create");
-        item_create_button.setBackground(Main.get_dark_color());
-        item_create_button.setForeground(Main.get_light_color());
+        item_create_button.setBackground(Main.get_mid_color());
+        item_create_button.setForeground(Color.WHITE);
         item_create_button.setFont(Main.get_font(16));
         item_create_button.setBounds(66,49,92,40);
         item_create_button.addActionListener(e -> goto_item_create());
@@ -141,13 +142,13 @@ public class InventoryMain {
         Integer selected_id = Main.to_integer(inventory_panel.get_value_at_xy(xy[0],0));
 
         int decision = Main.popup_option(
-            "Selected Row ID: " + selected_id + "\n\n" + 
+            "Selected Item ID: " + selected_id + "\n\n" + 
             Main.inventory_columns[xy[1]] + ":\n" + 
             inventory_panel.get_value_at_xy(xy[0],xy[1]) + "\n\n", 
             new String[]{
-                "Restock Selected Item",
-                "Edit Selected Attribute",
-                "Delete Selected Item"
+                "Restock Item",
+                "Edit Attribute",
+                "Delete Item"
             }
         );
 

@@ -2,6 +2,7 @@ package celestino.inventory;
 
 import main.Main;
 
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -67,22 +68,22 @@ public class ItemCreatePage {
         JScrollPane desc_pane = new JScrollPane(desc_field);
 
         panel.setBackground(Main.get_dark_color());
-        top_bar.setBackground(Main.get_mid_color());
-        bottom_bar.setBackground(Main.get_mid_color());
-        ribbon_bar.setBackground(Main.get_mid_color());
-        name_label.setForeground(Main.get_dark_color());
-        barcode_label.setForeground(Main.get_dark_color());
-        location_label.setForeground(Main.get_dark_color());
-        stock_label.setForeground(Main.get_dark_color());
-        type_label.setForeground(Main.get_dark_color());
-        desc_label.setForeground(Main.get_dark_color());
-        price_label.setForeground(Main.get_dark_color());
-        back_button.setBackground(Main.get_dark_color());
-        back_button.setForeground(Main.get_light_color());
-        add_button.setBackground(Main.get_dark_color());
-        add_button.setForeground(Main.get_light_color());
-        clear_button.setBackground(Main.get_dark_color());
-        clear_button.setForeground(Main.get_light_color());
+        top_bar.setBackground(Main.get_light_color());
+        bottom_bar.setBackground(Main.get_light_color());
+        ribbon_bar.setBackground(Main.get_light_color());
+        name_label.setForeground(Color.BLACK);
+        barcode_label.setForeground(Color.BLACK);
+        location_label.setForeground(Color.BLACK);
+        stock_label.setForeground(Color.BLACK);
+        type_label.setForeground(Color.BLACK);
+        desc_label.setForeground(Color.BLACK);
+        price_label.setForeground(Color.BLACK);
+        back_button.setBackground(Main.get_mid_color());
+        back_button.setForeground(Color.WHITE);
+        add_button.setBackground(Main.get_mid_color());
+        add_button.setForeground(Color.WHITE);
+        clear_button.setBackground(Main.get_mid_color());
+        clear_button.setForeground(Color.WHITE);
 
         price_label.setFont(Main.get_font(16));
         name_label.setFont(Main.get_font(16));

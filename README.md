@@ -46,7 +46,8 @@
         Password varchar(50) not null, 
         Role varchar(50) not null, 
         Full_Name varchar(50) not null, 
-        Email varchar(50) not null, Profile blob, 
+        Email varchar(50) not null, 
+        Profile blob, 
         Contact_no varchar(11) not null, 
         Address varchar(50) not null
     );

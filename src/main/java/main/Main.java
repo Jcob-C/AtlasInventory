@@ -15,12 +15,12 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "order view";
+    private static final String initial_card = "orders";
     
     private static final Color theme[] = {
-        new Color(255, 255, 255), // light
-        new Color(108, 108, 108), // mid
-        new Color(40, 40, 40) }; // dark
+        new Color(252, 153, 51), // light (decoration)
+        new Color(0, 80, 160), // mid (buttons)
+        new Color(1, 69, 24) }; // dark (background)
     private static final String font = "Segoe UI";
 
     private static final JFrame window = new JFrame();

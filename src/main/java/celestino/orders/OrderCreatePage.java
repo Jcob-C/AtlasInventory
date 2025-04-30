@@ -3,6 +3,7 @@ package celestino.orders;
 import celestino.PresetJTable;
 import main.Main;
 
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,6 +23,11 @@ public class OrderCreatePage {
 
     static void remove_item(int index) {
         table.delete_row(index);
+    }
+
+
+    static void clear_table() {
+        table.update_table(null);
     }
 
 
@@ -58,16 +64,16 @@ public class OrderCreatePage {
         JScrollPane table_pane = new JScrollPane(table);
 
         panel.setBackground(Main.get_dark_color());
-        top_bar.setBackground(Main.get_mid_color());
-        bottom_bar.setBackground(Main.get_mid_color());
-        ribbon_box.setBackground(Main.get_mid_color());
-        order_button.setBackground(Main.get_dark_color());
-        order_button.setForeground(Main.get_light_color());
-        clear_button.setBackground(Main.get_dark_color());
-        add_button.setBackground(Main.get_dark_color());
-        add_button.setForeground(Main.get_light_color());
-        back_button.setBackground(Main.get_dark_color());
-        back_button.setForeground(Main.get_light_color());
+        top_bar.setBackground(Main.get_light_color());
+        bottom_bar.setBackground(Main.get_light_color());
+        ribbon_box.setBackground(Main.get_light_color());
+        order_button.setBackground(Main.get_mid_color());
+        order_button.setForeground(Color.WHITE);
+        clear_button.setBackground(Main.get_mid_color());
+        add_button.setBackground(Main.get_mid_color());
+        add_button.setForeground(Color.WHITE);
+        back_button.setBackground(Main.get_mid_color());
+        back_button.setForeground(Color.WHITE);
 
         back_button.setBounds(0,0,45,30);
         top_bar.setBounds(0,0,880,30);

@@ -2,13 +2,16 @@ package celestino;
 
 import main.Main;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class TableBrowserJPanel extends JPanel {
     
@@ -60,6 +63,16 @@ public class TableBrowserJPanel extends JPanel {
         }
     }
 
+
+    public void set_title(String title) {
+        JLabel title_label = new JLabel(title, SwingConstants.CENTER);
+        title_label.setFont(Main.get_font(24));
+        title_label.setForeground(Color.WHITE);
+        title_label.setBounds(0,0,880,30);
+        add(title_label);
+        this.setComponentZOrder(title_label, 1);
+    }
+
     
     public TableBrowserJPanel
         (
@@ -88,19 +101,19 @@ public class TableBrowserJPanel extends JPanel {
         JScrollPane table_pane = new JScrollPane(preset_table);
 
         setBackground(Main.get_dark_color());
-        sort_order_button.setBackground(Main.get_dark_color());
-        sort_order_button.setForeground(Main.get_light_color());
-        top_bar.setBackground(Main.get_mid_color());
-        bottom_bar.setBackground(Main.get_mid_color());
-        ribbon_bar.setBackground(Main.get_mid_color());
-        back_button.setBackground(Main.get_dark_color());
-        back_button.setForeground(Main.get_light_color());
-        search_button.setBackground(Main.get_dark_color());
-        search_button.setForeground(Main.get_light_color());
-        sort_column_dropdown.setBackground(Main.get_dark_color());
-        sort_column_dropdown.setForeground(Main.get_light_color());
-        refresh_button.setBackground(Main.get_dark_color());
-        refresh_button.setForeground(Main.get_light_color());
+        sort_order_button.setBackground(Main.get_mid_color());
+        sort_order_button.setForeground(Color.WHITE);
+        top_bar.setBackground(Main.get_light_color());
+        bottom_bar.setBackground(Main.get_light_color());
+        ribbon_bar.setBackground(Main.get_light_color());
+        back_button.setBackground(Main.get_mid_color());
+        back_button.setForeground(Color.WHITE);
+        search_button.setBackground(Main.get_mid_color());
+        search_button.setForeground(Color.WHITE);
+        sort_column_dropdown.setBackground(Main.get_mid_color());
+        sort_column_dropdown.setForeground(Color.WHITE);
+        refresh_button.setBackground(Main.get_mid_color());
+        refresh_button.setForeground(Color.WHITE);
 
         search_button.setFont(Main.get_font(18));
         search_field.setFont(Main.get_font(16));
