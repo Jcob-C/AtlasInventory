@@ -17,7 +17,7 @@ public class InventoryDB {
         (?, ?, ?, ?, ?, ?, ?);
         """;
         try (
-            Connection conn = DB.get_connection();
+            Connection conn = DB.getConnection();
             PreparedStatement stmt = conn.prepareStatement(insert_stmt);
             ) 
         {
@@ -37,7 +37,7 @@ public class InventoryDB {
     static boolean delete(int id) {
         String delete_stmt = "DELETE FROM inventory WHERE item_id = " + id + ";";
         try (
-            Connection conn = DB.get_connection();
+            Connection conn = DB.getConnection();
             Statement stmt = conn.createStatement()
             ) 
         {
@@ -54,7 +54,7 @@ public class InventoryDB {
     static boolean edit(int id, int column, String new_value) {
         String edit_query = "UPDATE inventory SET " + DB.db_inventory_columns[column] + " = ? WHERE item_id = " + id + ";";
         try (
-            Connection conn = DB.get_connection();
+            Connection conn = DB.getConnection();
             PreparedStatement stmt = conn.prepareStatement(edit_query) 
             ) 
         {
@@ -69,10 +69,10 @@ public class InventoryDB {
     }
 
 
-    static boolean add_stock(int id, int new_stock) {
+    static boolean addStock(int id, int new_stock) {
         String edit_query = "UPDATE inventory SET stock = stock + ? WHERE item_id = " + id + ";";
         try (
-            Connection conn = DB.get_connection();
+            Connection conn = DB.getConnection();
             PreparedStatement stmt = conn.prepareStatement(edit_query) 
             ) 
         {

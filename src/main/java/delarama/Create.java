@@ -132,7 +132,7 @@ public class Create extends JPanel {
 
         createButton.addActionListener(e -> AddAccounts());
 
-        backButton.addActionListener(e -> Main.change_card("accounts"));
+        backButton.addActionListener(e -> Main.changeCard("accounts"));
     }
 
     private static void popupWarning(String message) {

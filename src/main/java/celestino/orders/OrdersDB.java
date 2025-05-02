@@ -12,8 +12,8 @@ public class OrdersDB {
     private static final String column_names[] = {"order_id","order_datetime","customer_name","contact_no","address","order_status","payment_id","total_price"};
 
 
-    static ArrayList<ArrayList<String>> get_table() {
-        return DB.get_table("SELECT * FROM orders ORDER BY order_id DESC", column_names.length);
+    static ArrayList<ArrayList<String>> getTable() {
+        return DB.getTable("SELECT * FROM orders ORDER BY order_id DESC", column_names.length);
     }
 
 
@@ -34,14 +34,14 @@ public class OrdersDB {
             oi.order_id = 
         """ 
         + order_id + ';';
-        return DB.get_table(query, 5);
+        return DB.getTable(query, 5);
     }
 
 
     static boolean edit(int id, int column, String new_value) {
         String edit_query = "UPDATE orders SET " + column_names[column] + " = ? WHERE order_id = " + id + ";";
         try (
-            Connection conn = DB.get_connection();
+            Connection conn = DB.getConnection();
             PreparedStatement stmt = conn.prepareStatement(edit_query) 
             ) 
         {
@@ -57,7 +57,7 @@ public class OrdersDB {
 
 
     static ArrayList<ArrayList<String>> get_searchedsorted_table(String keyword,int column_index, String order) {
-        return DB.get_table(
+        return DB.getTable(
             "SELECT * FROM orders WHERE "
             +"CAST(order_id AS CHAR) LIKE '%" + keyword
             +"%' OR CAST(order_datetime AS CHAR) LIKE '%" + keyword

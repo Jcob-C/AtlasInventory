@@ -101,11 +101,11 @@ public class AuditTrail extends JPanel {
             }
         });
         
-        createButton.addActionListener(e -> Main.change_card("account create"));
+        createButton.addActionListener(e -> Main.changeCard("account create"));
 
-        updeleteButton.addActionListener(e ->  Main.change_card("updelete"));
+        updeleteButton.addActionListener(e ->  Main.changeCard("updelete"));
 
-        accountButton.addActionListener(e -> Main.change_card("accounts"));
+        accountButton.addActionListener(e -> Main.changeCard("accounts"));
 
         closeButton.addActionListener(e -> System.exit(0));
     }

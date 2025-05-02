@@ -23,7 +23,7 @@ public class ItemCreatePage {
     private static final JPanel panel = new JPanel();
     
 
-    static String[] get_new_item_inputs() {
+    static String[] getNewItemInput() {
         String new_item_inputs[] = new String[7];
         new_item_inputs[0] = barcode_field.getText();
         new_item_inputs[1] = name_field.getText();
@@ -36,7 +36,7 @@ public class ItemCreatePage {
     }
 
 
-    static void clear_new_item_fields() {
+    static void clearNewItemFields() {
         barcode_field.setText("");
         name_field.setText("");
         type_field.setText("");
@@ -47,7 +47,7 @@ public class ItemCreatePage {
     }   
 
 
-    static JPanel create_panel() {
+    static JPanel createPanel() {
         panel.setLayout(null);
         JPanel 
             top_bar = new JPanel(),
@@ -67,10 +67,10 @@ public class ItemCreatePage {
             clear_button = new JButton("Clear");
         JScrollPane desc_pane = new JScrollPane(desc_field);
 
-        panel.setBackground(Main.get_dark_color());
-        top_bar.setBackground(Main.get_light_color());
-        bottom_bar.setBackground(Main.get_light_color());
-        ribbon_bar.setBackground(Main.get_light_color());
+        panel.setBackground(Main.getDarkColor());
+        top_bar.setBackground(Main.getLightColor());
+        bottom_bar.setBackground(Main.getLightColor());
+        ribbon_bar.setBackground(Main.getLightColor());
         name_label.setForeground(Color.BLACK);
         barcode_label.setForeground(Color.BLACK);
         location_label.setForeground(Color.BLACK);
@@ -78,29 +78,29 @@ public class ItemCreatePage {
         type_label.setForeground(Color.BLACK);
         desc_label.setForeground(Color.BLACK);
         price_label.setForeground(Color.BLACK);
-        back_button.setBackground(Main.get_mid_color());
+        back_button.setBackground(Main.getMidColor());
         back_button.setForeground(Color.WHITE);
-        add_button.setBackground(Main.get_mid_color());
+        add_button.setBackground(Main.getMidColor());
         add_button.setForeground(Color.WHITE);
-        clear_button.setBackground(Main.get_mid_color());
+        clear_button.setBackground(Main.getMidColor());
         clear_button.setForeground(Color.WHITE);
 
-        price_label.setFont(Main.get_font(16));
-        name_label.setFont(Main.get_font(16));
-        barcode_label.setFont(Main.get_font(16));
-        location_label.setFont(Main.get_font(16));
-        stock_label.setFont(Main.get_font(16));
-        type_label.setFont(Main.get_font(16));
-        desc_label.setFont(Main.get_font(16));
-        add_button.setFont(Main.get_font(18));
-        clear_button.setFont(Main.get_font(15));
-        price_field.setFont(Main.get_font(16));
-        name_field.setFont(Main.get_font(16));
-        barcode_field.setFont(Main.get_font(16));
-        location_field.setFont(Main.get_font(16));
-        stock_field.setFont(Main.get_font(16));
-        type_field.setFont(Main.get_font(16));
-        desc_field.setFont(Main.get_font(16));
+        price_label.setFont(Main.getFont(16));
+        name_label.setFont(Main.getFont(16));
+        barcode_label.setFont(Main.getFont(16));
+        location_label.setFont(Main.getFont(16));
+        stock_label.setFont(Main.getFont(16));
+        type_label.setFont(Main.getFont(16));
+        desc_label.setFont(Main.getFont(16));
+        add_button.setFont(Main.getFont(18));
+        clear_button.setFont(Main.getFont(15));
+        price_field.setFont(Main.getFont(16));
+        name_field.setFont(Main.getFont(16));
+        barcode_field.setFont(Main.getFont(16));
+        location_field.setFont(Main.getFont(16));
+        stock_field.setFont(Main.getFont(16));
+        type_field.setFont(Main.getFont(16));
+        desc_field.setFont(Main.getFont(16));
         
         name_label.setBounds(84,230,71,21);
         barcode_label.setBounds(63,278,93,21);
@@ -147,9 +147,9 @@ public class ItemCreatePage {
         panel.add(bottom_bar);
         panel.add(ribbon_bar);
 
-        add_button.addActionListener(e -> InventoryMain.create_button());
-        back_button.addActionListener(e -> InventoryMain.goto_inventory());
-        clear_button.addActionListener(e -> clear_new_item_fields());
+        add_button.addActionListener(e -> InventoryMain.createItem());
+        back_button.addActionListener(e -> InventoryMain.gotoInventory());
+        clear_button.addActionListener(e -> clearNewItemFields());
 
         return panel;
     }

@@ -138,7 +138,7 @@ public class UpDelete extends JPanel {
         searchButton.addActionListener(e -> searchAccount());
         updateButton.addActionListener(e -> updateAccount());
         deleteButton.addActionListener(e -> deleteAccount());
-        backButton.addActionListener(e -> Main.change_card("accounts"));
+        backButton.addActionListener(e -> Main.changeCard("accounts"));
     }
 
     private void popupWarning(String message) {

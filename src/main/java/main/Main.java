@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "orders";
+    private static final String initial_card = "inventory";
     
     private static final Color theme[] = {
         new Color(252, 153, 51), // light (decoration)
@@ -31,76 +31,76 @@ public class Main {
 
     
     public static void main(String[] args) throws Exception {
-        setup_window();
-        initialize_modules();
-        change_card(initial_card);
+        setupWindow();
+        initializeModules();
+        changeCard(initial_card);
         window.setVisible(true);
         
-        try(Connection conn = DB.get_connection()) {
+        try(Connection conn = DB.getConnection()) {
         } catch (SQLException e) {
             e.printStackTrace();
-            popup_error(e.getMessage());
+            popupError(e.getMessage());
             System.exit(0);
         }
     }
 
 
-    public static Font get_font(int size) {
+    public static Font getFont(int size) {
         return new Font(font, Font.BOLD, size);
     }
 
 
-    public static Color get_dark_color() {
+    public static Color getDarkColor() {
         return theme[2];
     }
 
 
-    public static Color get_mid_color() {
+    public static Color getMidColor() {
         return theme[1];
     }
 
 
-    public static Color get_light_color() {
+    public static Color getLightColor() {
         return theme[0];
     }
 
 
-    public static boolean popup_confirm(String message) {
+    public static boolean popupConfirm(String message) {
         return 0 == JOptionPane.showOptionDialog(window, message, "Confirmation", 0, JOptionPane.QUESTION_MESSAGE, null, null, 1);
     }
 
 
-    public static int popup_option(String message, String[] options) {
+    public static int popupOption(String message, String[] options) {
         return JOptionPane.showOptionDialog(window, message, "Choose", 0, JOptionPane.QUESTION_MESSAGE, null, options, 1);
     }
 
 
-    public static void popup_error(String message) {
+    public static void popupError(String message) {
         JOptionPane.showMessageDialog(window, message, "Error Message", JOptionPane.ERROR_MESSAGE);
     }
 
 
-    public static void popup_message(String message) {
+    public static void popupMessage(String message) {
         JOptionPane.showMessageDialog(window, message, "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
 
-    public static String popup_input(String message) {
+    public static String popupInput(String message) {
         return JOptionPane.showInputDialog(message);
     }
 
 
-    public static void add_card(JPanel card, String card_name) {
+    public static void addCard(JPanel card, String card_name) {
         main_panel.add(card, card_name);
     }
 
 
-    public static void change_card(String card_name) {
+    public static void changeCard(String card_name) {
         card_layout.show(main_panel, card_name);
     }
 
 
-    public static Integer to_integer(String text) {
+    public static Integer toInteger(String text) {
         try {
             return Integer.parseInt(text);
         } 
@@ -112,7 +112,7 @@ public class Main {
     }
 
 
-    public static Double to_double(String text) {
+    public static Double toDouble(String text) {
         try {
             return Double.parseDouble(text);
         } 
@@ -124,7 +124,7 @@ public class Main {
     }
     
     
-    private static void setup_window() {
+    private static void setupWindow() {
         window.setSize(880, 660);
         window.setTitle("AtlasInventory");
         window.setLocationRelativeTo(null);
@@ -136,8 +136,8 @@ public class Main {
     }
 
 
-    private static void initialize_modules() {
-        InventoryMain.create_inventory_module();
+    private static void initializeModules() {
+        InventoryMain.createModule();
         OrdersMain.create_orders_module();
         AccountsMain.add_accounts_module();
     }

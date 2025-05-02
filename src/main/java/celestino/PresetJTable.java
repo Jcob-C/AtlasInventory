@@ -32,15 +32,15 @@ public class PresetJTable extends JTable {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         getTableHeader().setReorderingAllowed(false);
         getColumnModel().getColumn(0).setPreferredWidth(5);
-        setFont(Main.get_font(12));
+        setFont(Main.getFont(12));
         setRowHeight(24);
 
-        getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
-        getColumnModel().getSelectionModel().addListSelectionListener(e -> selected_a_cell(e));
+        getSelectionModel().addListSelectionListener(e -> cellSelected(e));
+        getColumnModel().getSelectionModel().addListSelectionListener(e ->cellSelected(e));
     }
 
     
-    public void update_table(ArrayList<ArrayList<String>> data) {
+    public void updateTable(ArrayList<ArrayList<String>> data) {
         table_model.setRowCount(0);
         if (data == null) return;
         for (int x = 0; x < data.size(); x++) {
@@ -55,12 +55,12 @@ public class PresetJTable extends JTable {
     }
 
 
-    public void add_row(String[] row) { table_model.addRow(row); }
-    public void add_row(Object[] row) { table_model.addRow(row); }
-    public void delete_row(int index) { table_model.removeRow(index); }
+    public void addRow(String[] row) { table_model.addRow(row); }
+    public void addRow(Object[] row) { table_model.addRow(row); }
+    public void deleteRow(int index) { table_model.removeRow(index); }
 
 
-    private void selected_a_cell(ListSelectionEvent e) {
+    private void cellSelected(ListSelectionEvent e) {
         int 
             new_selected_row = getSelectedRow(),
             new_selected_col = getSelectedColumn();

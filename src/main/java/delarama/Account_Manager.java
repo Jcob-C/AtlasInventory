@@ -102,9 +102,9 @@ public class Account_Manager extends JPanel {
             }
         });
         
-        createButton.addActionListener(e -> Main.change_card("account create"));
-        updeleteButton.addActionListener(e -> Main.change_card("updelete"));
-        auditButton.addActionListener(e -> Main.change_card("audit trail"));
+        createButton.addActionListener(e -> Main.changeCard("account create"));
+        updeleteButton.addActionListener(e -> Main.changeCard("updelete"));
+        auditButton.addActionListener(e -> Main.changeCard("audit trail"));
         
         closeButton.addActionListener(e -> System.exit(0));
     }

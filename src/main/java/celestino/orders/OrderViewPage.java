@@ -29,7 +29,7 @@ public class OrderViewPage {
 
 
     static void set_table(ArrayList<ArrayList<String>> data) {
-        table.update_table(data);
+        table.updateTable(data);
     }
 
 
@@ -46,26 +46,26 @@ public class OrderViewPage {
         JButton back_button = new JButton("<");
         JScrollPane table_pane = new JScrollPane(table);
 
-        panel.setBackground(Main.get_dark_color());
-        top_bar.setBackground(Main.get_light_color());
-        bottom_bar.setBackground(Main.get_light_color());
-        back_button.setBackground(Main.get_mid_color());
+        panel.setBackground(Main.getDarkColor());
+        top_bar.setBackground(Main.getLightColor());
+        bottom_bar.setBackground(Main.getLightColor());
+        back_button.setBackground(Main.getMidColor());
         back_button.setForeground(Color.WHITE);
-        order_id.setBackground(Main.get_light_color());
+        order_id.setBackground(Main.getLightColor());
         order_id.setForeground(Color.BLACK);
-        order_date.setBackground(Main.get_light_color());
+        order_date.setBackground(Main.getLightColor());
         order_date.setForeground(Color.BLACK);
-        order_price.setBackground(Main.get_light_color());
+        order_price.setBackground(Main.getLightColor());
         order_price.setForeground(Color.BLACK);
-        order_status.setBackground(Main.get_light_color());
+        order_status.setBackground(Main.getLightColor());
         order_status.setForeground(Color.BLACK);
-        customer_name.setBackground(Main.get_light_color());
+        customer_name.setBackground(Main.getLightColor());
         customer_name.setForeground(Color.BLACK);
-        customer_no.setBackground(Main.get_light_color());
+        customer_no.setBackground(Main.getLightColor());
         customer_no.setForeground(Color.BLACK);
-        customer_addr.setBackground(Main.get_light_color());
+        customer_addr.setBackground(Main.getLightColor());
         customer_addr.setForeground(Color.BLACK);
-        transac_id.setBackground(Main.get_light_color());
+        transac_id.setBackground(Main.getLightColor());
         transac_id.setForeground(Color.BLACK);
 
         back_button.setBounds(0,0,45,30);
@@ -81,14 +81,14 @@ public class OrderViewPage {
         customer_addr.setBounds(24,578,600,31);
         transac_id.setBounds(24,430,250,31);
 
-        order_id.setFont(Main.get_font(14));
-        order_date.setFont(Main.get_font(14));
-        order_price.setFont(Main.get_font(14));
-        order_status.setFont(Main.get_font(14));
-        customer_name.setFont(Main.get_font(14));
-        customer_addr.setFont(Main.get_font(14));
-        customer_no.setFont(Main.get_font(14));
-        transac_id.setFont(Main.get_font(14));
+        order_id.setFont(Main.getFont(14));
+        order_date.setFont(Main.getFont(14));
+        order_price.setFont(Main.getFont(14));
+        order_status.setFont(Main.getFont(14));
+        customer_name.setFont(Main.getFont(14));
+        customer_addr.setFont(Main.getFont(14));
+        customer_no.setFont(Main.getFont(14));
+        transac_id.setFont(Main.getFont(14));
 
         order_id.setEditable(false);
         order_date.setEditable(false);
@@ -99,14 +99,14 @@ public class OrderViewPage {
         customer_no.setEditable(false);
         transac_id.setEditable(false);
 
-        order_id.setCaretColor(Main.get_light_color());
-        order_date.setCaretColor(Main.get_light_color());
-        order_price.setCaretColor(Main.get_light_color());
-        order_status.setCaretColor(Main.get_light_color());
-        customer_name.setCaretColor(Main.get_light_color());
-        customer_addr.setCaretColor(Main.get_light_color());
-        customer_no.setCaretColor(Main.get_light_color());
-        transac_id.setCaretColor(Main.get_light_color());
+        order_id.setCaretColor(Main.getLightColor());
+        order_date.setCaretColor(Main.getLightColor());
+        order_price.setCaretColor(Main.getLightColor());
+        order_status.setCaretColor(Main.getLightColor());
+        customer_name.setCaretColor(Main.getLightColor());
+        customer_addr.setCaretColor(Main.getLightColor());
+        customer_no.setCaretColor(Main.getLightColor());
+        transac_id.setCaretColor(Main.getLightColor());
         
         order_id.setText("Order: 100");
         order_price.setText("Price: 1000000");

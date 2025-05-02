@@ -17,17 +17,17 @@ public class OrderCreatePage {
 
 
     static void add_item(String[] item) {
-        table.add_row(item);
+        table.addRow(item);
     }
 
 
     static void remove_item(int index) {
-        table.delete_row(index);
+        table.deleteRow(index);
     }
 
 
     static void clear_table() {
-        table.update_table(null);
+        table.updateTable(null);
     }
 
 
@@ -63,16 +63,16 @@ public class OrderCreatePage {
             contact_field = new JTextField();
         JScrollPane table_pane = new JScrollPane(table);
 
-        panel.setBackground(Main.get_dark_color());
-        top_bar.setBackground(Main.get_light_color());
-        bottom_bar.setBackground(Main.get_light_color());
-        ribbon_box.setBackground(Main.get_light_color());
-        order_button.setBackground(Main.get_mid_color());
+        panel.setBackground(Main.getDarkColor());
+        top_bar.setBackground(Main.getLightColor());
+        bottom_bar.setBackground(Main.getLightColor());
+        ribbon_box.setBackground(Main.getLightColor());
+        order_button.setBackground(Main.getMidColor());
         order_button.setForeground(Color.WHITE);
-        clear_button.setBackground(Main.get_mid_color());
-        add_button.setBackground(Main.get_mid_color());
+        clear_button.setBackground(Main.getMidColor());
+        add_button.setBackground(Main.getMidColor());
         add_button.setForeground(Color.WHITE);
-        back_button.setBackground(Main.get_mid_color());
+        back_button.setBackground(Main.getMidColor());
         back_button.setForeground(Color.WHITE);
 
         back_button.setBounds(0,0,45,30);

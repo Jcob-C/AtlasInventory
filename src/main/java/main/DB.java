@@ -20,7 +20,7 @@ public class DB {
     ;
       
     
-    public static Connection get_connection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
             "jdbc:mysql://" + db_host + ":" + db_port + "/" + db_name,
             db_user,
@@ -29,13 +29,13 @@ public class DB {
     }
 
 
-    public static ArrayList<ArrayList<String>> get_inventory_table() {
-        return DB.get_table("SELECT * FROM inventory", db_inventory_columns.length);
+    public static ArrayList<ArrayList<String>> getInventoryTable() {
+        return DB.getTable("SELECT * FROM inventory", db_inventory_columns.length);
     }
 
 
-    public static ArrayList<ArrayList<String>> get_searchedsorted_inventory_table(String keyword,int column_index, String order) {
-        return DB.get_table(
+    public static ArrayList<ArrayList<String>> getSearchSortedInventoryTable(String keyword,int column_index, String order) {
+        return DB.getTable(
             "SELECT * FROM inventory WHERE "
             +"CAST(item_id AS CHAR) LIKE '%" + keyword
             +"%' OR barcode LIKE '%" + keyword
@@ -51,10 +51,10 @@ public class DB {
     }
 
 
-    public static ArrayList<ArrayList<String>> get_table(String query, int columns) {
+    public static ArrayList<ArrayList<String>> getTable(String query, int columns) {
         ArrayList<ArrayList<String>> table = new ArrayList<>();
         try (
-            Connection conn = get_connection();
+            Connection conn = getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             ) 
