@@ -138,7 +138,7 @@ public class Main {
 
     private static void initializeModules() {
         InventoryMain.createModule();
-        OrdersMain.create_orders_module();
-        AccountsMain.add_accounts_module();
+        OrdersMain.createOrdersModule();
+        AccountsMain.addAccountsModule();
     }
 }

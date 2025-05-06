@@ -9,7 +9,7 @@
     
     CREATE TABLE inventory (
         item_id INT AUTO_INCREMENT PRIMARY KEY,
-        barcode VARCHAR(50),
+        barcode VARCHAR(50) UNIQUE,
         item_name VARCHAR(100),
         item_type VARCHAR(50),
         descr TEXT,

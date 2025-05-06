@@ -4,7 +4,7 @@ import celestino.TableBrowserJPanel;
 import main.DB;
 import main.Main;
 
-import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class InventoryMain {
@@ -16,21 +16,29 @@ public class InventoryMain {
         InventoryMain::updateTable,
         InventoryMain::refresh
     );
+    private static final ScannerJPanel scanner_panel = new ScannerJPanel(InventoryMain::scanned);
 
     
     public static void createModule() {
         Main.addCard(inventory_panel, "inventory");
         Main.addCard(ItemCreatePage.createPanel(), "item create");
+        Main.addCard(scanner_panel, "scanner");
         
-        JButton item_create_button = new JButton("+");
+        JButton item_create_button = new JButton(new ImageIcon("src/main/resources/add.png"));
         item_create_button.setBackground(Main.getMidColor());
-        item_create_button.setForeground(Color.WHITE);
-        item_create_button.setFont(Main.getFont(8));
         item_create_button.setBounds(29,116,40,40);
         item_create_button.addActionListener(e -> gotoItemCreate());
         inventory_panel.add(item_create_button);
         inventory_panel.setComponentZOrder(item_create_button, 1);
-        inventory_panel.setTitle("INVENTORY TABLE");
+
+        JButton scan_button = new JButton(new ImageIcon("src/main/resources/scanner.png"));
+        scan_button.setBackground(Main.getMidColor());
+        scan_button.setBounds(80,116,40,40);
+        scan_button.addActionListener(e -> gotoScanner());
+        inventory_panel.add(scan_button);
+        inventory_panel.setComponentZOrder(scan_button, 1);
+
+        inventory_panel.setTitle("INVENTORY");
        
         refresh();
     }
@@ -44,6 +52,31 @@ public class InventoryMain {
 
     static void gotoItemCreate() {
         Main.changeCard("item create");
+    }
+
+
+    static void gotoScanner() {
+        scanner_panel.clearBuffer();
+        Main.changeCard("scanner");
+        scanner_panel.requestFocusInWindow();
+    }
+
+
+    static void scanned(String input) {
+        if (DB.findBarcode(input)) {
+            gotoInventory();
+            inventory_panel.setSearchInput(input);
+            updateTable();
+            selectCell(new int[]{0,0});
+            gotoScanner();
+        }
+        else {
+            int x = Main.popupOption("Barcode not found", new String[]{"Create Item","Retry Scan"});
+            if (x == 0) {
+                gotoItemCreate();
+                ItemCreatePage.setBarcodeInput(input);
+            }
+        }
     }
 
 

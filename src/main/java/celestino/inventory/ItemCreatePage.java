@@ -3,6 +3,8 @@ package celestino.inventory;
 import main.Main;
 
 import java.awt.Color;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +23,11 @@ public class ItemCreatePage {
         price_field = new JTextField();
     private static final JTextArea desc_field = new JTextArea();
     private static final JPanel panel = new JPanel();
-    
+
+
+    static void setBarcodeInput(String barcode) {
+        barcode_field.setText(barcode);
+    } 
 
     static String[] getNewItemInput() {
         String new_item_inputs[] = new String[7];
@@ -64,7 +70,7 @@ public class ItemCreatePage {
         JButton 
             back_button = new JButton("<"),
             add_button = new JButton("Create"),
-            clear_button = new JButton("Clear");
+            clear_button = new JButton(new ImageIcon("src/main/resources/refresh.png"));
         JScrollPane desc_pane = new JScrollPane(desc_field);
 
         panel.setBackground(Main.getDarkColor());
@@ -83,7 +89,6 @@ public class ItemCreatePage {
         add_button.setBackground(Main.getMidColor());
         add_button.setForeground(Color.WHITE);
         clear_button.setBackground(Main.getMidColor());
-        clear_button.setForeground(Color.WHITE);
 
         price_label.setFont(Main.getFont(16));
         name_label.setFont(Main.getFont(16));
@@ -93,7 +98,6 @@ public class ItemCreatePage {
         type_label.setFont(Main.getFont(16));
         desc_label.setFont(Main.getFont(16));
         add_button.setFont(Main.getFont(18));
-        clear_button.setFont(Main.getFont(15));
         price_field.setFont(Main.getFont(16));
         name_field.setFont(Main.getFont(16));
         barcode_field.setFont(Main.getFont(16));
@@ -118,10 +122,10 @@ public class ItemCreatePage {
         desc_pane.setBounds(540,272,257,81);
         top_bar.setBounds(0,0,880,30);
         bottom_bar.setBounds(0,630,880,30);
-        ribbon_bar.setBounds(42,191,797,278);
+        ribbon_bar.setBounds(42,166,797,328);
         back_button.setBounds(0,0,45,30);
-        clear_button.setBounds(50,420,70,40);
-        add_button.setBounds(399,401,92,40);
+        clear_button.setBounds(65,430,40,40);
+        add_button.setBounds(400,430,92,40);
 
         desc_field.setLineWrap(true);
         desc_field.setWrapStyleWord(true);

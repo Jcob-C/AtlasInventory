@@ -73,4 +73,21 @@ public class DB {
         }
         return table;
     }
+
+
+    public static boolean findBarcode(String barcode) {
+        try (
+            Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM inventory WHERE barcode LIKE '%" + barcode + "%';");
+            ) 
+        {
+            if (rs.next()) return true;
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 }

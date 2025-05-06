@@ -17,7 +17,7 @@ public class OrdersDB {
     }
 
 
-    static ArrayList<ArrayList<String>> get_order_items(int order_id) {
+    static ArrayList<ArrayList<String>> getOrderItems(int order_id) {
         String query = 
         """
         SELECT 
@@ -56,7 +56,7 @@ public class OrdersDB {
     }
 
 
-    static ArrayList<ArrayList<String>> get_searchedsorted_table(String keyword,int column_index, String order) {
+    static ArrayList<ArrayList<String>> getSearchedSortedTable(String keyword,int column_index, String order) {
         return DB.getTable(
             "SELECT * FROM orders WHERE "
             +"CAST(order_id AS CHAR) LIKE '%" + keyword

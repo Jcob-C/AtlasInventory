@@ -15,7 +15,7 @@ public class OrderViewPage {
 
     private static final JPanel panel = new JPanel();
     private static final String[] columns = {"ID","Name","Type","Price","Quantity"};
-    private static final PresetJTable table = new PresetJTable(columns, OrdersMain::select_order_item); 
+    private static final PresetJTable table = new PresetJTable(columns, OrdersMain::selectOrderItem); 
     private static final JTextField 
         order_id = new JTextField(),
         order_date = new JTextField(),
@@ -28,17 +28,17 @@ public class OrderViewPage {
     ;
 
 
-    static void set_table(ArrayList<ArrayList<String>> data) {
+    static void setTable(ArrayList<ArrayList<String>> data) {
         table.updateTable(data);
     }
 
 
-    static void set_order_info(ArrayList<ArrayList<String>> data) {
+    static void setOrderInfo(ArrayList<ArrayList<String>> data) {
         
     }
 
 
-    static JPanel create_panel() {
+    static JPanel createPanel() {
         panel.setLayout(null);
         JPanel
             top_bar = new JPanel(),
@@ -130,7 +130,7 @@ public class OrderViewPage {
         panel.add(bottom_bar);
         panel.add(top_bar);
 
-        back_button.addActionListener(e -> OrdersMain.goto_orders());
+        back_button.addActionListener(e -> OrdersMain.gotoOrders());
 
         return panel;
     }

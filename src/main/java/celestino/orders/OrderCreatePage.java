@@ -13,40 +13,40 @@ public class OrderCreatePage {
 
     private static final JPanel panel = new JPanel();
     private static final String[] columns = {"ID","Name","Type","Price","Quantity"};
-    private static final PresetJTable table = new PresetJTable(columns, OrdersMain::select_order_item); 
+    private static final PresetJTable table = new PresetJTable(columns, OrdersMain::selectOrderItem); 
 
 
-    static void add_item(String[] item) {
+    static void addItem(String[] item) {
         table.addRow(item);
     }
 
 
-    static void remove_item(int index) {
+    static void removeItem(int index) {
         table.deleteRow(index);
     }
 
 
-    static void clear_table() {
+    static void clearTable() {
         table.updateTable(null);
     }
 
 
-    static int get_row_count() {
+    static int getRowCount() {
         return table.getRowCount();
     }
 
 
-    static void set_value(int x, int y, String new_value) {
+    static void setValue(int x, int y, String new_value) {
         table.setValueAt(new_value, x, y);
     }
 
 
-    static String get_value(int x, int y) {
+    static String getValue(int x, int y) {
         return String.valueOf(table.getValueAt(x,y));
     }
 
 
-    static JPanel create_panel() {
+    static JPanel createPanel() {
         panel.setLayout(null);
         JPanel
             top_bar = new JPanel(),
@@ -95,9 +95,9 @@ public class OrderCreatePage {
         panel.add(bottom_bar);
         panel.add(top_bar);
 
-        back_button.addActionListener(e -> OrdersMain.goto_orders());
-        add_button.addActionListener(e -> OrdersMain.goto_order_item_select());
-        order_button.addActionListener(e -> OrdersMain.submit_order());
+        back_button.addActionListener(e -> OrdersMain.gotoOrders());
+        add_button.addActionListener(e -> OrdersMain.gotoOrderItemSelect());
+        order_button.addActionListener(e -> OrdersMain.submitOrder());
 
         return panel;
     }

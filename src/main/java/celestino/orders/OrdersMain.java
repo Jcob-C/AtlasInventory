@@ -1,5 +1,6 @@
 package celestino.orders;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import java.awt.Color;
@@ -14,72 +15,70 @@ public class OrdersMain {
     private static final TableBrowserJPanel 
         orders_panel = new TableBrowserJPanel(
             column_names, 
-            OrdersMain::select_order, 
-            OrdersMain::goto_orders, 
-            OrdersMain::update_orders_jtable,
-            OrdersMain::refresh_orders
+            OrdersMain::selectOrder, 
+            OrdersMain::gotoOrders, 
+            OrdersMain::updateOrdersJTable,
+            OrdersMain::refreshOrders
         ),
         order_item_select_panel = new TableBrowserJPanel(
             Main.inventory_columns,
-            OrdersMain::add_to_order,
-            OrdersMain::goto_order_create,
-            OrdersMain::update_item_select_jtable,
-            OrdersMain::refresh_item_select
+            OrdersMain::addToOrder,
+            OrdersMain::gotoOrderCreate,
+            OrdersMain::updateItemSelectJTable,
+            OrdersMain::refreshItemSelect
         )
     ;
     
 
-    public static void create_orders_module() {
-        Main.addCard(OrderViewPage.create_panel(), "order view");
+    public static void createOrdersModule() {
+        Main.addCard(OrderViewPage.createPanel(), "order view");
         Main.addCard(orders_panel, "orders");
-        Main.addCard(OrderCreatePage.create_panel(), "order create");
+        Main.addCard(OrderCreatePage.createPanel(), "order create");
         Main.addCard(order_item_select_panel, "order item select");
 
         orders_panel.setTitle("ORDERS");
-        order_item_select_panel.setTitle("Select an item");
+        order_item_select_panel.setTitle("SELECT an ITEM to ADD on your ORDER");
 
-        JButton order_create_button = new JButton("Order");
+        JButton order_create_button = new JButton(new ImageIcon("src/main/resources/add.png"));
         order_create_button.setBackground(Main.getMidColor());
-        order_create_button.setForeground(Color.WHITE);
-        order_create_button.setFont(Main.getFont(16));
-        order_create_button.setBounds(66,49,92,40);
-        order_create_button.addActionListener(e -> goto_order_create());
+        order_create_button.setBounds(29,116,40,40);
+        order_create_button.addActionListener(e -> gotoOrderCreate());
         orders_panel.add(order_create_button);
         orders_panel.setComponentZOrder(order_create_button, 1);
 
-        refresh_orders();
+        refreshOrders();
     }
 
 
-    public static void goto_orders() {
-        refresh_orders();
+    public static void gotoOrders() {
+        refreshOrders();
         Main.changeCard("orders");
     }
 
 
-    static void goto_order_create() {
+    static void gotoOrderCreate() {
         Main.changeCard("order create");
     }
 
 
-    static void goto_order_items(int order_id) {
-        OrderViewPage.set_table(OrdersDB.get_order_items(order_id));
+    static void gotoOrderItems(int order_id) {
+        OrderViewPage.setTable(OrdersDB.getOrderItems(order_id));
         Main.changeCard("order view");
     }
 
 
-    static void goto_order_item_select() {
-        refresh_item_select();
+    static void gotoOrderItemSelect() {
+        refreshItemSelect();
         Main.changeCard("order item select");
     }
 
 
-    static void change_order_status(int order_id) {
+    static void changeOrderStatus(int order_id) {
         String order_statuses[] = {"Cancelled","Verifying","Preparing","On Delivery","Completed"};
         int order_status = Main.popupOption("Update order status to:", order_statuses);
         if (order_status != -1) {
             if (OrdersDB.edit(order_id, 5, order_statuses[order_status])) {
-                update_orders_jtable();
+                updateOrdersJTable();
                 Main.popupMessage("Order Status Updated");
             }
             else {
@@ -89,14 +88,14 @@ public class OrdersMain {
     }
 
 
-    static void edit_order_attribute(int order_id, int column) {
+    static void editOrderAttribute(int order_id, int column) {
         
     }
 
 
-    static void update_orders_jtable() {
+    static void updateOrdersJTable() {
         orders_panel.updateTable(
-            OrdersDB.get_searchedsorted_table(
+            OrdersDB.getSearchedSortedTable(
                 orders_panel.getSearchInput(), 
                 orders_panel.getSortColumnIndex(),
                 orders_panel.getSortOrder()
@@ -105,7 +104,7 @@ public class OrdersMain {
     }
 
 
-    static void update_item_select_jtable() {
+    static void updateItemSelectJTable() {
         order_item_select_panel.updateTable(
             DB.getSearchSortedInventoryTable(
                 order_item_select_panel.getSearchInput(), 
@@ -116,20 +115,20 @@ public class OrdersMain {
     }
 
 
-    static void refresh_item_select() {
+    static void refreshItemSelect() {
         order_item_select_panel.resetSortFilter();
         order_item_select_panel.updateTable(DB.getInventoryTable());
     }
 
 
-    static void refresh_orders() {
+    static void refreshOrders() {
         orders_panel.resetSortFilter();
         orders_panel.flipSortOrder();
         orders_panel.updateTable(OrdersDB.getTable());
     }
 
 
-    static void select_order(int[] xy) {
+    static void selectOrder(int[] xy) {
         if (xy[0] == -1 || xy[1] == -1) return;
 
         Integer selected_id = Main.toInteger(orders_panel.getValueAt(xy[0],0));
@@ -146,23 +145,23 @@ public class OrdersMain {
         );
 
         switch (decision) {
-            case 0: goto_order_items(selected_id); break;
-            case 1: edit_order_attribute(selected_id, xy[1]); break;
-            case 2: change_order_status(selected_id); break;
+            case 0: gotoOrderItems(selected_id); break;
+            case 1: editOrderAttribute(selected_id, xy[1]); break;
+            case 2: changeOrderStatus(selected_id); break;
         }          
     }
 
 
-    static void add_to_order(int[] xy) {
+    static void addToOrder(int[] xy) {
         if (xy[0] == -1 || xy[1] == -1) return;
         String
             item_id = order_item_select_panel.getValueAt(xy[0], 0),
             name = order_item_select_panel.getValueAt(xy[0], 2),
             type = order_item_select_panel.getValueAt(xy[0], 3),
             price = order_item_select_panel.getValueAt(xy[0], 6);
-        OrderCreatePage.add_item(new String[]{item_id,name,type,price,"1"});
-        goto_order_create();
-        if(merge_new_item()) {
+        OrderCreatePage.addItem(new String[]{item_id,name,type,price,"1"});
+        gotoOrderCreate();
+        if(mergeNewItem()) {
             Main.popupMessage("Added 1 to item's Quantity");
         }
         else {
@@ -171,17 +170,17 @@ public class OrdersMain {
     }
 
 
-    static boolean merge_new_item() {
-        int new_item_index = OrderCreatePage.get_row_count()-1;
+    static boolean mergeNewItem() {
+        int new_item_index = OrderCreatePage.getRowCount()-1;
         for(int i = new_item_index-1; i >= 0; i--) {
-            if(OrderCreatePage.get_value(i, 0).equals(OrderCreatePage.get_value(new_item_index, 0))) {
-                OrderCreatePage.set_value(i, 4, String.valueOf(
-                        Main.toInteger(OrderCreatePage.get_value(i, 4))
+            if(OrderCreatePage.getValue(i, 0).equals(OrderCreatePage.getValue(new_item_index, 0))) {
+                OrderCreatePage.setValue(i, 4, String.valueOf(
+                        Main.toInteger(OrderCreatePage.getValue(i, 4))
                         +
-                        Main.toInteger(OrderCreatePage.get_value(new_item_index, 4))
+                        Main.toInteger(OrderCreatePage.getValue(new_item_index, 4))
                     )
                 );
-                OrderCreatePage.remove_item(new_item_index);
+                OrderCreatePage.removeItem(new_item_index);
                 return true;
             }
         }
@@ -189,17 +188,17 @@ public class OrdersMain {
     }
 
 
-    static void select_order_item(int[] xy) {
+    static void selectOrderItem(int[] xy) {
         
     }
 
 
-    static void submit_order() {
+    static void submitOrder() {
 
     }
 
 
-    static void clear_order_create() {
-        OrderCreatePage.clear_table();
+    static void clearOrderCreate() {
+        OrderCreatePage.clearTable();
     }
 }

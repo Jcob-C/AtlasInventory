@@ -47,6 +47,11 @@ public class TableBrowserJPanel extends JPanel {
         sort_order_button.setText("ASC");
         sort_column_dropdown.setSelectedIndex(0);
     }
+
+
+    public void setSearchInput(String input) {
+        search_field.setText(input);
+    }
     
     
     public void updateTable(ArrayList<ArrayList<String>> data) {
@@ -66,7 +71,7 @@ public class TableBrowserJPanel extends JPanel {
         JLabel title_label = new JLabel(title);
         title_label.setFont(Main.getFont(33));
         title_label.setForeground(Color.WHITE);
-        title_label.setBounds(100,102,780,44);
+        title_label.setBounds(150,102,730,44);
         add(title_label);
         this.setComponentZOrder(title_label, 1);
     }
