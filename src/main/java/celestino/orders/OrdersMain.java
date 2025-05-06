@@ -3,7 +3,6 @@ package celestino.orders;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import java.awt.Color;
 import celestino.TableBrowserJPanel;
 import main.DB;
 import main.Main;
