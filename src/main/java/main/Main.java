@@ -2,7 +2,6 @@ package main;
 
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
-import delarama.AccountsMain;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -139,6 +138,5 @@ public class Main {
     private static void initializeModules() {
         InventoryMain.createModule();
         OrdersMain.createOrdersModule();
-        AccountsMain.addAccountsModule();
     }
 }
