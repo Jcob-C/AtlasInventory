@@ -1,6 +1,7 @@
 package celestino.inventory;
 
 import main.DB;
+import main.Main;
 
 import java.sql.Statement;
 import java.sql.Connection;
@@ -28,7 +29,7 @@ public class InventoryDB {
         } 
         catch (SQLException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            Main.popupError(e.getMessage());
         }
         return false;
     }

@@ -1,15 +1,14 @@
 package celestino.orders;
 
+import celestino.PresetJTable;
+import main.Main;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
 import java.awt.Color;
 import java.util.ArrayList;
-
-import celestino.PresetJTable;
-import main.Main;
 
 public class OrderViewPage {
 
@@ -34,7 +33,14 @@ public class OrderViewPage {
 
 
     static void setOrderInfo(ArrayList<ArrayList<String>> data) {
-        
+        order_id.setText("Order ID: " + data.get(0).get(0));
+        order_date.setText("Order Date: " + data.get(0).get(1));
+        customer_name.setText("Customer: " + data.get(0).get(2));
+        customer_no.setText("Contact No: " + data.get(0).get(3));
+        customer_addr.setText("Address: " + data.get(0).get(4));
+        order_status.setText("Status: " + data.get(0).get(5));
+        transac_id.setText("Transaction ID: " + data.get(0).get(6));
+        order_price.setText("Total Price: " + data.get(0).get(7));
     }
 
 

@@ -1,11 +1,11 @@
 package celestino.orders;
 
+import main.DB;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import main.DB;
 
 public class OrdersDB {
     
@@ -54,6 +54,15 @@ public class OrdersDB {
         }
         return false;
     }
+
+
+    static ArrayList<ArrayList<String>> getOrder(int order_id) {
+        return DB.getTable(
+            "SELECT * FROM orders WHERE "
+            +"CAST(order_id AS CHAR) LIKE '%" + order_id + "%';",
+            column_names.length
+        );
+    }   
 
 
     static ArrayList<ArrayList<String>> getSearchedSortedTable(String keyword,int column_index, String order) {

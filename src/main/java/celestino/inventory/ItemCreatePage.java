@@ -3,7 +3,6 @@ package celestino.inventory;
 import main.Main;
 
 import java.awt.Color;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;

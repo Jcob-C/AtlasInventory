@@ -5,7 +5,6 @@ import main.Main;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.function.Consumer;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;

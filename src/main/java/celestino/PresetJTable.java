@@ -1,13 +1,13 @@
 package celestino;
 
+import main.Main;
+
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
-
-import main.Main;
 
 public class PresetJTable extends JTable {
 

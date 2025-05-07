@@ -39,28 +39,6 @@
         FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
         FOREIGN KEY (item_id) REFERENCES inventory(item_id) ON DELETE SET NULL
     );
-
-    Create table Accounts(
-        Id int primary key auto_increment not null, 
-        Username varchar(50) not null unique, 
-        Password varchar(50) not null, 
-        Role varchar(50) not null, 
-        Full_Name varchar(50) not null, 
-        Email varchar(50) not null, 
-        Profile blob, 
-        Contact_no varchar(11) not null, 
-        Address varchar(50) not null
-    );
-
-    Create table Activity(
-        activity_id int primary key auto_increment,
-        Id int, 
-        Full_Name varchar(50) not null, 
-        Activity varchar(50) not null, 
-        Ddate date default (current_date), 
-        Ttime time default (current_time), 
-        foreign key(Id) references Accounts(Id)
-    );
     ```
 
 2. **Set your Database Credentials**

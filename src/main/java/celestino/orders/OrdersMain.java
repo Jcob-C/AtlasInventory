@@ -1,11 +1,11 @@
 package celestino.orders;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-import celestino.TableBrowserJPanel;
 import main.DB;
 import main.Main;
+import celestino.TableBrowserJPanel;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public class OrdersMain {
 
@@ -62,6 +62,7 @@ public class OrdersMain {
 
     static void gotoOrderItems(int order_id) {
         OrderViewPage.setTable(OrdersDB.getOrderItems(order_id));
+        OrderViewPage.setOrderInfo(OrdersDB.getOrder(order_id));
         Main.changeCard("order view");
     }
 
@@ -88,7 +89,6 @@ public class OrdersMain {
 
 
     static void editOrderAttribute(int order_id, int column) {
-        
     }
 
 
