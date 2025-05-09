@@ -4,6 +4,7 @@ import main.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -56,13 +57,57 @@ public class OrdersDB {
     }
 
 
-    static boolean insertNewOrder() {
-        return false;
+    static int insertNewOrder(String[] order) {
+        String insertSql = """
+        INSERT INTO orders (customer_name, contact_no, address, payment_id, total_price) 
+        VALUES (?, ?, ?, ?, ?);
+        """;
+        try (
+            Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(insertSql, PreparedStatement.RETURN_GENERATED_KEYS)
+            ) {
+
+            for (int i = 0; i < order.length; i++) {
+                stmt.setString(i+1, order[i]);
+            }
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return -1;
     }
 
 
-    static void insertOrderItem() {
-        
+    static void insertOrderItem(String[] new_row) {
+        String insertSql = """
+        INSERT INTO order_items (order_id, item_id, quantity, price_each) 
+        VALUES (?, ?, ?, ?);
+        """;
+        try (
+            Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(insertSql, PreparedStatement.RETURN_GENERATED_KEYS)
+            ) {
+                
+            for (int i = 0; i < new_row.length; i++) {
+                stmt.setString(i+1, new_row[i]);
+            }
+            stmt.executeUpdate();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 
 

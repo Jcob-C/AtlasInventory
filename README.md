@@ -20,11 +20,11 @@
 
     CREATE TABLE orders (
         order_id INT AUTO_INCREMENT PRIMARY KEY,
-        order_datetime DATETIME,
+        order_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
         customer_name VARCHAR(100),
         contact_no VARCHAR(20),
         address TEXT,
-        order_status VARCHAR(50),
+        order_status VARCHAR(50) DEFAULT 'Pending',
         payment_id VARCHAR(100),
         total_price DECIMAL(10,2)
     );
@@ -34,11 +34,13 @@
         order_id INT,
         item_id INT,
         quantity INT,
-        price_each DECIMAL(10,2),
-        subtotal DECIMAL(10,2),
+        price_each DECIMAL(10,2)
         FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
         FOREIGN KEY (item_id) REFERENCES inventory(item_id) ON DELETE SET NULL
     );
+
+
+    
     ```
 
 2. **Set your Database Credentials**

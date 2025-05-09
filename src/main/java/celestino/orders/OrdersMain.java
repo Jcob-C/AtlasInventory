@@ -27,7 +27,8 @@ public class OrdersMain {
             OrdersMain::gotoOrderCreate,
             OrdersMain::updateItemSelectJTable,
             OrdersMain::refreshItemSelect
-        );
+        )
+    ;
     
 
     public static void createOrdersModule() {
@@ -96,14 +97,14 @@ public class OrdersMain {
         
             switch(order_status) {
                 case 0: case 1:
-                    if (Main.popupConfirm("ADD order items to inventory STOCK?")) {
+                    if (Main.popupConfirm("ADD order QUANTITY to inventory STOCK?")) {
                         for (ArrayList<String> x : order_items) {
                             DB.addStock(x.get(0), x.get(4));
                         }
                     }
                 break;
                 case 2:
-                    if (Main.popupConfirm("SUBTRACT order items from inventory STOCK?")) {
+                    if (Main.popupConfirm("SUBTRACT order QUANTITY from inventory STOCK?")) {
                         for (ArrayList<String> x : order_items) {
                             DB.addStock(x.get(0), "-"+x.get(4));
                         }
@@ -245,12 +246,41 @@ public class OrdersMain {
 
 
     static void selectOrderItem(int[] xy) {
-        
+        if (xy[0] == -1 || xy[1] == -1) return;
+        int option = Main.popupOption("Selected Item: " + OrderCreatePage.getValue(xy[0], 1), new String[]{"Remove Item","Edit Quantity"});
+
+        switch (option) {
+            case 0: OrderCreatePage.removeItem(xy[0]); break;
+            case 1: 
+                String quantity = Main.popupInput("Enter quantity:");
+                if (Main.toInteger(quantity) != null) {
+                    OrderCreatePage.setValue(xy[0], 4, quantity);
+                }
+                else {
+                    Main.popupMessage("Invalid Quantity");
+                }
+            break;
+        }
     }
 
 
     static void submitOrder() {
-
+        if (OrderCreatePage.getRowCount() == 0) return;
+        String[] order = OrderCreatePage.getOrderInfo();
+        ArrayList<ArrayList<String>> items = OrderCreatePage.getTable();
+        int order_id = OrdersDB.insertNewOrder(order);
+        for (ArrayList<String> x : items) {
+            OrdersDB.insertOrderItem(new String[]{
+                String.valueOf(order_id),
+                x.get(0),
+                x.get(4),
+                x.get(3)
+            });
+        }
+        gotoOrders();
+        OrderCreatePage.clearInputs();
+        OrderCreatePage.clearTable();
+        Main.popupMessage("Order Submitted");
     }
 
 

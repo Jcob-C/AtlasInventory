@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "order create";
+    private static final String initial_card = "orders";
     
     private static final Color theme[] = {
         new Color(252, 153, 51), // light (orange)

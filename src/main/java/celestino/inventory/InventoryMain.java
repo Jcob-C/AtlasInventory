@@ -1,5 +1,6 @@
 package celestino.inventory;
 
+import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
 import main.DB;
 import main.Main;
@@ -176,7 +177,7 @@ public class InventoryMain {
         String selected_id = inventory_panel.getValueAt(xy[0],0);
 
         int decision = Main.popupOption(
-            "Selected Item ID: " + selected_id + "\n\n" + 
+            "Selected Item: " + inventory_panel.getValueAt(xy[0],2) + "\n\n" + 
             Main.inventory_columns[xy[1]] + ":\n" + 
             inventory_panel.getValueAt(xy[0],xy[1]) + "\n\n", 
             new String[]{

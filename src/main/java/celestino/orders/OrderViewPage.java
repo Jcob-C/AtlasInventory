@@ -99,7 +99,7 @@ public class OrderViewPage {
         bottom_bar.setBounds(0,630,880,30);
         order_id.setBounds(45,40,291,48);
         order_date.setBounds(45,98,437,27);  
-        order_price.setBounds(457,98,200,27);
+        order_price.setBounds(457,98,400,27);
         order_status.setBounds(457,56,357,27);
         customer_name.setBounds(45,294,395,38);
         customer_no.setBounds(45,401,205,38);
