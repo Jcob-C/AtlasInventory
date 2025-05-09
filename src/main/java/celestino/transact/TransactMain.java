@@ -46,17 +46,22 @@ public class TransactMain {
 
 
     static void transact() {
-        checkStocks();
-        double total = TransactPage.getTransactionTotal();
-        if (!Main.popupConfirm("Total Transaction Price: "+total+"\n\nContinue?")) return;
-        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(TransactPage.getTransactionTotal())});
-        TransactPage.clearNameField();
+        if (!checkStocks()) return;
 
         ArrayList<ArrayList<String>> sell_table = TransactPage.getSellTable();
+        ArrayList<ArrayList<String>> refund_table = TransactPage.getRefundTable();
+        if (sell_table.size() <= 0 && refund_table.size() <= 0) return;
+
+        double total = TransactPage.getTransactionTotal();
+        if (!Main.popupConfirm("Total Transaction Price: "+total+"\n\nContinue?")) return;
+
+        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(total)});
+        
+        TransactPage.clearNameField();
+
         for (ArrayList<String> x : sell_table) {
             DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), x.get(4));
         }
-        ArrayList<ArrayList<String>> refund_table = TransactPage.getRefundTable();
         for (ArrayList<String> x : refund_table) {
             if (x.get(5).equals("BAD")) continue;
             DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), '-'+x.get(4));
