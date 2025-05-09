@@ -6,7 +6,6 @@ import main.Main;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

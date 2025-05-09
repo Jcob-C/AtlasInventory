@@ -128,7 +128,58 @@ public class DB {
     }   
 
 
-    public static int transactSale(String[] sale) {
-        return 0;
+    public static int insertNewSale(String[] sale) {
+        String insertSql = """
+        INSERT INTO sales (customer_name, employee_name, total_price) 
+        VALUES (?, ?, ?);
+        """;
+        try (
+            Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(insertSql, PreparedStatement.RETURN_GENERATED_KEYS)
+            ) {
+
+            for (int i = 0; i < sale.length; i++) {
+                stmt.setString(i+1, sale[i]);
+            }
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
+
+
+    public static void insertSaleItems(String sale_id, String item_id, String price, String quantity) {
+        String insertSql = """
+        INSERT INTO sale_items (sale_id, item_id, price_sold, quantity) 
+        VALUES (?, ?, ?, ?);
+        """;
+        try (
+            Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(insertSql, PreparedStatement.RETURN_GENERATED_KEYS)
+            ) {
+                
+            stmt.setString(1, sale_id);
+            stmt.setString(2, item_id);
+            stmt.setString(3, price);
+            stmt.setString(4, quantity);
+
+            stmt.executeUpdate();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 }

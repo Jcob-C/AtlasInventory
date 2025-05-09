@@ -83,6 +83,7 @@ public class PresetJTable extends JTable {
         {
             selected_x = new_selected_row;
             selected_y = new_selected_col;
+            if (selected_x == -1 || selected_y == -1) return;
             action_method.accept(new int[]{selected_x, selected_y});
         }
     }

@@ -107,6 +107,15 @@ public class OrdersMain {
                         }
                     }
                 break;
+                case 4:
+                    if (Main.popupConfirm("RECORD the completed ORDER as a new SALE?")) {
+                        ArrayList<ArrayList<String>> order = OrdersDB.getOrder(order_id);
+                        int sale_id = DB.insertNewSale(new String[] {order.get(0).get(2),"Celestino",order.get(0).get(7)});
+                        for (ArrayList<String> x : order_items) {
+                            DB.insertSaleItems(String.valueOf(sale_id), x.get(0),x.get(3),x.get(4));
+                        }
+                    }
+                break;
             }
         } 
     }
@@ -262,6 +271,12 @@ public class OrdersMain {
         if (OrderCreatePage.getRowCount() == 0) return;
         String[] order = OrderCreatePage.getOrderInfo();
         ArrayList<ArrayList<String>> items = OrderCreatePage.getTable();
+        for (ArrayList<String> x : items) {
+            if (!DB.checkStock(x.get(0), x.get(4))) {
+                Main.popupMessage("Insufficient stock for " + x.get(1));
+                return;
+            }
+        }
         int order_id = OrdersDB.insertNewOrder(order);
         for (ArrayList<String> x : items) {
             OrdersDB.insertOrderItem(new String[]{

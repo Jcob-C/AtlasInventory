@@ -45,7 +45,7 @@ public class TransactMain {
     }
 
 
-    static void submitOrder() {
+    static void transact() {
 
     }
 
@@ -86,12 +86,51 @@ public class TransactMain {
 
 
     static void refundItemSelected(int xy[]) {
-
+        int option = Main.popupOption("Selected Item: " + TransactPage.getRefundTableValue(xy[0], 1), new String[]{"Change Condition","Remove Item","Edit Quantity"});
+        switch (option) {
+            case 0:
+                if (TransactPage.getRefundTableValue(xy[0], 5).equals("OK")) {
+                    TransactPage.setRefundTableValue(xy[0], 5, "BAD");
+                }
+                else {
+                    TransactPage.setRefundTableValue(xy[0], 5, "OK");
+                }
+                mergeRefundTable();
+            break;
+            case 1:
+                TransactPage.removeRefundTableRow(xy[0]);
+                updateRefundTotal();
+            break;
+            case 2:
+                String new_quantity = Main.popupInput("Enter Quantity:");
+                if (Main.toInteger(new_quantity) == null) {
+                    Main.popupMessage("Invalid Quantity");
+                    return;
+                }
+                TransactPage.setRefundTableValue(xy[0], 4, new_quantity);
+                updateRefundTotal();
+            break;
+        }
     }
 
 
     static void sellItemSelected(int xy[]) {
-
+        int option = Main.popupOption("Selected Item: " + TransactPage.getSellTableValue(xy[0], 1), new String[]{"Remove Item","Edit Quantity"});
+        switch (option) {
+            case 0:
+                TransactPage.removeSellTableRow(xy[0]);
+                updateSellTotal();
+            break;
+            case 1:
+                String new_quantity = Main.popupInput("Enter Quantity:");
+                if (Main.toInteger(new_quantity) == null) {
+                    Main.popupMessage("Invalid Quantity");
+                    return;
+                }
+                TransactPage.setSellTableValue(xy[0], 4, new_quantity);
+                updateSellTotal();
+            break;
+        }
     }
 
 
@@ -120,7 +159,7 @@ public class TransactMain {
     static boolean mergeRefundTable() {
         int new_item_index = TransactPage.getRefundRowCount()-1;
         for(int i = new_item_index-1; i >= 0; i--) {
-            if(TransactPage.getRefundTableValue(i, 0).equals(TransactPage.getRefundTableValue(new_item_index, 0))) {
+            if(TransactPage.getRefundTableValue(i, 0).equals(TransactPage.getRefundTableValue(new_item_index, 0)) && TransactPage.getRefundTableValue(i, 5).equals(TransactPage.getRefundTableValue(new_item_index, 5))) {
                 TransactPage.setRefundTableValue(i, 4, String.valueOf(
                         Main.toInteger(TransactPage.getRefundTableValue(i, 4))
                         +

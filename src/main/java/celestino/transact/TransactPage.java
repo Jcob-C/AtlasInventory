@@ -197,7 +197,10 @@ public class TransactPage {
         panel.add(top_bar);
         panel.add(bottom_bar);
 
-        transact_button.addActionListener(e -> TransactMain.submitOrder());
+        
+        reset_sell.addActionListener(e -> {sell_table.updateTable(null); setSellTotal("Total: 0.0");});
+        reset_refund.addActionListener(e -> {refund_table.updateTable(null); setRefundTotal("Total: 0.0");});
+        transact_button.addActionListener(e -> TransactMain.transact());
         add_refund.addActionListener(e -> addToRefund());
         add_sell.addActionListener(e -> addToSell());
         back_button.addActionListener(e -> OrdersMain.gotoOrders());

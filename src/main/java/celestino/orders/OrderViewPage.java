@@ -16,7 +16,7 @@ public class OrderViewPage {
 
     private static final JPanel panel = new JPanel();
     private static final String[] columns = {"ID","Name","Type","Price","Quantity"};
-    private static final PresetJTable table = new PresetJTable(columns, OrdersMain::selectOrderItem); 
+    private static final PresetJTable table = new PresetJTable(columns, OrderViewPage::emptyMethod); 
     private static final JTextField
         customer_name = new JTextField(),
         customer_no = new JTextField(),
@@ -158,4 +158,7 @@ public class OrderViewPage {
 
         return panel;
     }
+
+
+    private static void emptyMethod(int[] xy) {}
 }
