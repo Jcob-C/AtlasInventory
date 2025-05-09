@@ -67,7 +67,7 @@ public class InventoryMain {
             gotoInventory();
             inventory_panel.setSearchInput(input);
             updateTable();
-            selectCell(new int[]{0,0});
+            addStock(Integer.parseInt(inventory_panel.getValueAt(0, 0)));
             gotoScanner();
         }
         else {
@@ -180,6 +180,7 @@ public class InventoryMain {
             Main.inventory_columns[xy[1]] + ":\n" + 
             inventory_panel.getValueAt(xy[0],xy[1]) + "\n\n", 
             new String[]{
+                "Copy",
                 "Restock Item",
                 "Edit Attribute",
                 "Delete Item"
@@ -187,9 +188,10 @@ public class InventoryMain {
         );
 
         switch (decision) {
-            case 0: addStock(selected_id); break;
-            case 1: editAttribute(selected_id, xy[1]); break;
-            case 2: delete(selected_id); break;
+            case 0: Main.copyToClipboard(inventory_panel.getValueAt(xy[0],xy[1])); break;
+            case 1: addStock(selected_id); break;
+            case 2: editAttribute(selected_id, xy[1]); break;
+            case 3: delete(selected_id); break;
         }
     }
 }

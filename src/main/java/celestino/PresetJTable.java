@@ -10,13 +10,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 public class PresetJTable extends JTable {
-
+    
     private final DefaultTableModel table_model;
     private final Consumer<int[]> action_method;
     private int
         selected_x = -1,
-        selected_y = -1
-    ;
+        selected_y = -1;
+    private ArrayList<ArrayList<String>> cached_table = null;
 
 
     public PresetJTable(String[] columns, Consumer<int[]> action_method) {
@@ -39,9 +39,15 @@ public class PresetJTable extends JTable {
         getColumnModel().getSelectionModel().addListSelectionListener(e ->cellSelected(e));
     }
 
+
+    public ArrayList<ArrayList<String>> getTable() {
+        return cached_table;
+    }
+
     
     public void updateTable(ArrayList<ArrayList<String>> data) {
         table_model.setRowCount(0);
+        cached_table = data;
         if (data == null) return;
         for (int x = 0; x < data.size(); x++) {
             String[] new_row = new String[data.get(x).size()];

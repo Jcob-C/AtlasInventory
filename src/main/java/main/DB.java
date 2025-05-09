@@ -79,15 +79,32 @@ public class DB {
         try (
             Connection conn = getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM inventory WHERE barcode LIKE '%" + barcode + "%';");
+            ResultSet rs = stmt.executeQuery("SELECT 1 FROM inventory WHERE barcode LIKE '%" + barcode + "%';");
             ) 
         {
-            if (rs.next()) return true;
+            return rs.next();
         } 
         catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
+            return false;
         }
-        return false;
     }
+
+
+    public static boolean checkStock(String item_id, String stock) {
+        try (
+            Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT 1 FROM inventory WHERE item_id = " + item_id + " AND stock >= "+ stock +";");
+            ) 
+        {
+            return rs.next();
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }   
 }

@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -17,9 +19,9 @@ public class Main {
     private static final String initial_card = "inventory";
     
     private static final Color theme[] = {
-        new Color(252, 153, 51), // light (decoration)
-        new Color(0, 80, 160), // mid (buttons)
-        new Color(1, 69, 24) }; // dark (background)
+        new Color(252, 153, 51), // light (orange)
+        new Color(0, 80, 160), // mid (blue)
+        new Color(1, 69, 24) }; // dark (green)
     private static final String font = "Segoe UI";
 
     private static final JFrame window = new JFrame();
@@ -120,6 +122,12 @@ public class Main {
             System.out.println("\n" + text + " cannot be a Double");
             return null;
         }
+    }
+
+
+    public static void copyToClipboard(String text) {
+        StringSelection stringSelection = new StringSelection(text);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
     }
     
     

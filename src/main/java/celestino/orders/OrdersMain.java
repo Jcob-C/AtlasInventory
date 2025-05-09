@@ -4,6 +4,8 @@ import main.DB;
 import main.Main;
 import celestino.TableBrowserJPanel;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -25,8 +27,7 @@ public class OrdersMain {
             OrdersMain::gotoOrderCreate,
             OrdersMain::updateItemSelectJTable,
             OrdersMain::refreshItemSelect
-        )
-    ;
+        );
     
 
     public static void createOrdersModule() {
@@ -74,9 +75,15 @@ public class OrdersMain {
 
 
     static void changeOrderStatus(int order_id) {
-        String order_statuses[] = {"Cancelled","Verifying","Preparing","On Delivery","Completed"};
+        String order_statuses[] = {"Cancelled","Pending","Preparing","Shipping","Completed"};
         int order_status = Main.popupOption("Update order status to:", order_statuses);
         if (order_status != -1) {
+            if (!checkStocks(order_id)) {
+                if (!Main.popupConfirm("Insufficient Stock!\n\nContinue?")) {
+                    return;
+                } 
+            }
+
             if (OrdersDB.edit(order_id, 5, order_statuses[order_status])) {
                 updateOrdersJTable();
                 Main.popupMessage("Order Status Updated");
@@ -84,11 +91,20 @@ public class OrdersMain {
             else {
                 Main.popupError("Order Status Update Failed");
             }
+
+            switch(order_status) {
+                case 0:
+                    if (Main.popupConfirm("ADD order items to inventory STOCK?")) {
+                        
+                    }
+                break;
+                case 2:
+                    if (Main.popupConfirm("SUBTRACT order items from inventory STOCK?")) {
+                        
+                    }
+                break;
+            }
         } 
-    }
-
-
-    static void editOrderAttribute(int order_id, int column) {
     }
 
 
@@ -137,17 +153,28 @@ public class OrdersMain {
             column_names[xy[1]] + ":\n" + 
             orders_panel.getValueAt(xy[0],xy[1]) + "\n\n", 
             new String[]{
+                "Copy",
                 "View Order",
-                "Edit Attribute",
                 "Update Status"
             }
         );
 
         switch (decision) {
-            case 0: gotoOrderItems(selected_id); break;
-            case 1: editOrderAttribute(selected_id, xy[1]); break;
+            case 0: Main.copyToClipboard(orders_panel.getValueAt(xy[0],xy[1])); break;
+            case 1: gotoOrderItems(selected_id); break;
             case 2: changeOrderStatus(selected_id); break;
         }          
+    }
+
+
+    static boolean checkStocks(int order_id) {
+        ArrayList<ArrayList<String>> order_items = OrdersDB.getOrderItems(order_id);
+        for (ArrayList<String> x : order_items) {
+            if (!DB.checkStock(x.get(0),x.get(4))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
