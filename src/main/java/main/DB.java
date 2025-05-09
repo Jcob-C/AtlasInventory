@@ -2,6 +2,7 @@ package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -89,6 +90,24 @@ public class DB {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+
+    public static boolean addStock(String id, String new_stock) {
+        String edit_query = "UPDATE inventory SET stock = stock + ? WHERE item_id = " + id + ";";
+        try (
+            Connection conn = DB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(edit_query) 
+            ) 
+        {
+            stmt.setInt(1, Main.toInteger(new_stock));
+            if (stmt.executeUpdate() > 0) return true;
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
 

@@ -17,7 +17,7 @@ public class OrdersDB {
     }
 
 
-    static ArrayList<ArrayList<String>> getOrderItems(int order_id) {
+    static ArrayList<ArrayList<String>> getOrderItems(String order_id) {
         String query = 
         """
         SELECT 
@@ -38,7 +38,7 @@ public class OrdersDB {
     }
 
 
-    static boolean edit(int id, int column, String new_value) {
+    static boolean edit(String id, int column, String new_value) {
         String edit_query = "UPDATE orders SET " + column_names[column] + " = ? WHERE order_id = " + id + ";";
         try (
             Connection conn = DB.getConnection();
@@ -56,7 +56,17 @@ public class OrdersDB {
     }
 
 
-    static ArrayList<ArrayList<String>> getOrder(int order_id) {
+    static boolean insertNewOrder() {
+        return false;
+    }
+
+
+    static void insertOrderItem() {
+        
+    }
+
+
+    static ArrayList<ArrayList<String>> getOrder(String order_id) {
         return DB.getTable(
             "SELECT * FROM orders WHERE "
             +"CAST(order_id AS CHAR) LIKE '%" + order_id + "%';",

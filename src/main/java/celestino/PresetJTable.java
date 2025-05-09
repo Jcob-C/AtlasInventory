@@ -16,7 +16,6 @@ public class PresetJTable extends JTable {
     private int
         selected_x = -1,
         selected_y = -1;
-    private ArrayList<ArrayList<String>> cached_table = null;
 
 
     public PresetJTable(String[] columns, Consumer<int[]> action_method) {
@@ -41,13 +40,20 @@ public class PresetJTable extends JTable {
 
 
     public ArrayList<ArrayList<String>> getTable() {
-        return cached_table;
+        ArrayList<ArrayList<String>> tableData = new ArrayList<>();
+        for (int row = 0; row < getRowCount(); row++) {
+            ArrayList<String> rowData = new ArrayList<>();
+            for (int col = 0; col < getColumnCount(); col++) {
+                rowData.add(String.valueOf(getValueAt(row, col)));
+            }
+            tableData.add(rowData);
+        }
+        return tableData;
     }
 
     
     public void updateTable(ArrayList<ArrayList<String>> data) {
         table_model.setRowCount(0);
-        cached_table = data;
         if (data == null) return;
         for (int x = 0; x < data.size(); x++) {
             String[] new_row = new String[data.get(x).size()];

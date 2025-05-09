@@ -50,6 +50,21 @@ public class OrderViewPage {
     }
 
 
+    static String getViewedID() {
+        return order_id.getText();
+    }
+
+
+    static String[] getCustomerInfoFields() {
+        return new String[] {
+            customer_name.getText(),
+            customer_no.getText(),
+            customer_addr.getText(),
+            transac_id.getText()
+        };
+    }
+
+
     static JPanel createPanel() {
         panel.setLayout(null);
         JPanel
@@ -139,7 +154,7 @@ public class OrderViewPage {
         panel.add(addr_label);
 
 
-        back_button.addActionListener(e -> OrdersMain.gotoOrders());
+        back_button.addActionListener(e -> OrdersMain.updateViewedOrder());
 
         return panel;
     }

@@ -67,7 +67,7 @@ public class InventoryMain {
             gotoInventory();
             inventory_panel.setSearchInput(input);
             updateTable();
-            addStock(Integer.parseInt(inventory_panel.getValueAt(0, 0)));
+            addStock(inventory_panel.getValueAt(0, 0));
             gotoScanner();
         }
         else {
@@ -97,7 +97,7 @@ public class InventoryMain {
     }
     
     
-    static void addStock(Integer item_id) {
+    static void addStock(String item_id) {
         String new_stock = Main.popupInput("Enter the amount to add on stock:");
         if (new_stock == null) return;
 
@@ -107,7 +107,7 @@ public class InventoryMain {
             return;
         }
         
-        if (InventoryDB.addStock(item_id, int_new_stock)) {
+        if (DB.addStock(item_id, new_stock)) {
             updateTable();
             Main.popupMessage("Add Stock Successful!");
             return;
@@ -118,7 +118,7 @@ public class InventoryMain {
     }
 
 
-    static void editAttribute(Integer item_id, int column_index) {
+    static void editAttribute(String item_id, int column_index) {
         String new_value = Main.popupInput("Enter the new " + Main.inventory_columns[column_index] + ":");
         if (new_value == null ) return;
 
@@ -140,7 +140,7 @@ public class InventoryMain {
     }
 
 
-    static void delete(Integer item_id) {
+    static void delete(String item_id) {
         if (Main.popupConfirm("Delete item with ID:\n\n                     "+item_id+"\n\n")) {
             if (InventoryDB.delete(item_id)) {
                 updateTable();
@@ -173,7 +173,7 @@ public class InventoryMain {
     static void selectCell(int[] xy) {
         if (xy[0] == -1 || xy[1] == -1) return;
 
-        Integer selected_id = Main.toInteger(inventory_panel.getValueAt(xy[0],0));
+        String selected_id = inventory_panel.getValueAt(xy[0],0);
 
         int decision = Main.popupOption(
             "Selected Item ID: " + selected_id + "\n\n" + 
