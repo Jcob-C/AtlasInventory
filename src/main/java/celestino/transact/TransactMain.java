@@ -75,14 +75,15 @@ public class TransactMain {
 
 
     static boolean checkStocks() {
+        boolean output = true;
         ArrayList<ArrayList<String>> order_items = TransactPage.getSellTable();
         for (ArrayList<String> x : order_items) {
             if (!DB.checkStock(x.get(0),x.get(4))) {
                 Main.popupMessage("Insufficient stock for " + x.get(1));
-                return false;
+                output = false;
             }
         }
-        return true;
+        return output;
     }
 
 

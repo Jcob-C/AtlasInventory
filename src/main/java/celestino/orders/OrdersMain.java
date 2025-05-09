@@ -194,15 +194,16 @@ public class OrdersMain {
 
 
     static boolean checkStocks(String order_id) {
+        boolean output = false;
         ArrayList<ArrayList<String>> order_items = OrdersDB.getOrderItems(order_id);
         for (ArrayList<String> x : order_items) {
             if (!DB.checkStock(x.get(0),x.get(4))) {
                 if (!Main.popupConfirm("Insufficient stock for " + x.get(1) + "\n\n Continue?")) {
-                    return true;
+                    output = true;
                 }
             }
         }
-        return false;
+        return output;
     }
 
 
@@ -271,12 +272,14 @@ public class OrdersMain {
         if (OrderCreatePage.getRowCount() == 0) return;
         String[] order = OrderCreatePage.getOrderInfo();
         ArrayList<ArrayList<String>> items = OrderCreatePage.getTable();
+        boolean insufficientStock = false;
         for (ArrayList<String> x : items) {
             if (!DB.checkStock(x.get(0), x.get(4))) {
                 Main.popupMessage("Insufficient stock for " + x.get(1));
-                return;
+                insufficientStock = true;
             }
         }
+        if (insufficientStock) return;
         int order_id = OrdersDB.insertNewOrder(order);
         for (ArrayList<String> x : items) {
             OrdersDB.insertOrderItem(new String[]{
