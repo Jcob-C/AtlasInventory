@@ -46,7 +46,38 @@ public class TransactMain {
 
 
     static void transact() {
+        checkStocks();
+        double total = TransactPage.getTransactionTotal();
+        if (!Main.popupConfirm("Total Transaction Price: "+total+"\n\nContinue?")) return;
+        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(TransactPage.getTransactionTotal())});
+        TransactPage.clearNameField();
 
+        ArrayList<ArrayList<String>> sell_table = TransactPage.getSellTable();
+        for (ArrayList<String> x : sell_table) {
+            DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), x.get(4));
+        }
+        ArrayList<ArrayList<String>> refund_table = TransactPage.getRefundTable();
+        for (ArrayList<String> x : refund_table) {
+            if (x.get(5).equals("BAD")) continue;
+            DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), '-'+x.get(4));
+        }
+
+        TransactPage.resetRefundTable();
+        TransactPage.resetSellTable();
+
+        Main.popupMessage("Sale recorded!\n\nSale ID: "+sale_id);
+    }
+
+
+    static boolean checkStocks() {
+        ArrayList<ArrayList<String>> order_items = TransactPage.getSellTable();
+        for (ArrayList<String> x : order_items) {
+            if (!DB.checkStock(x.get(0),x.get(4))) {
+                Main.popupMessage("Insufficient stock for " + x.get(1));
+                return false;
+            }
+        }
+        return true;
     }
 
 

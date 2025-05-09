@@ -108,6 +108,11 @@ public class TransactPage {
     }
 
 
+    static void clearNameField() {
+        customer_field.setText("");
+    }
+
+
     static void removeRefundTableRow(int row) {
         refund_table.deleteRow(row);
     }
@@ -115,6 +120,18 @@ public class TransactPage {
 
     static void removeSellTableRow(int row) {
         sell_table.deleteRow(row);
+    }
+
+
+    static void resetSellTable() {
+        sell_table.updateTable(null); 
+        setSellTotal("Total: 0.0");
+    }
+
+
+    static void resetRefundTable() {
+        refund_table.updateTable(null); 
+        setRefundTotal("Total: 0.0");
     }
 
 
@@ -198,8 +215,8 @@ public class TransactPage {
         panel.add(bottom_bar);
 
         
-        reset_sell.addActionListener(e -> {sell_table.updateTable(null); setSellTotal("Total: 0.0");});
-        reset_refund.addActionListener(e -> {refund_table.updateTable(null); setRefundTotal("Total: 0.0");});
+        reset_sell.addActionListener(e -> resetSellTable());
+        reset_refund.addActionListener(e -> resetRefundTable());
         transact_button.addActionListener(e -> TransactMain.transact());
         add_refund.addActionListener(e -> addToRefund());
         add_sell.addActionListener(e -> addToSell());
