@@ -102,10 +102,10 @@ public class OrderCreatePage {
             bottom_bar = new JPanel(),
             ribbon_box = new JPanel();
         JButton
-            clear_order_button = new JButton(new ImageIcon("src/main/resources/refresh.png")),
+            clear_order_button = new JButton(Main.refreshIcon),
             order_button = new JButton("Submit Order"),
-            clear_button = new JButton(new ImageIcon("src/main/resources/refresh.png")),
-            add_button = new JButton(new ImageIcon("src/main/resources/add.png")),
+            clear_button = new JButton(Main.refreshIcon),
+            add_button = new JButton(Main.addIcon),
             back_button = new JButton("<");
         JScrollPane 
             address_pane = new JScrollPane(address_field),

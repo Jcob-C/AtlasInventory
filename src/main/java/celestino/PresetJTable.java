@@ -30,7 +30,7 @@ public class PresetJTable extends JTable {
         setCellSelectionEnabled(true);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         getTableHeader().setReorderingAllowed(false);
-        getColumnModel().getColumn(0).setPreferredWidth(5);
+        getColumnModel().getColumn(0).setPreferredWidth(30);
         setFont(Main.getFont(12));
         setRowHeight(24);
 

@@ -2,7 +2,9 @@ package main;
 
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
+import celestino.transact.TransactMain;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,7 +18,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "orders";
+    private static final String initial_card = "transact";
     
     private static final Color theme[] = {
         new Color(252, 153, 51), // light (orange)
@@ -29,7 +31,8 @@ public class Main {
     private static final JPanel main_panel = new JPanel(card_layout);
 
     public static final String[] inventory_columns = {"ID","Barcode","Name","Type","Description","Location","Price","Stock"};
-
+    public static final ImageIcon refreshIcon = new ImageIcon("src/main/resources/refresh.png");
+    public static final ImageIcon addIcon = new ImageIcon("src/main/resources/add.png");
     
     public static void main(String[] args) throws Exception {
         setupWindow();
@@ -146,5 +149,6 @@ public class Main {
     private static void initializeModules() {
         InventoryMain.createModule();
         OrdersMain.createOrdersModule();
+        TransactMain.createModule();
     }
 }

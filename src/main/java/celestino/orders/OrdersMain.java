@@ -3,10 +3,9 @@ package celestino.orders;
 import main.DB;
 import main.Main;
 import celestino.TableBrowserJPanel;
+import celestino.inventory.InventoryMain;
 
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class OrdersMain {
@@ -17,7 +16,7 @@ public class OrdersMain {
         orders_panel = new TableBrowserJPanel(
             column_names, 
             OrdersMain::selectOrder, 
-            OrdersMain::gotoOrders, 
+            InventoryMain::gotoInventory, 
             OrdersMain::updateOrdersJTable,
             OrdersMain::refreshOrders
         ),
@@ -40,7 +39,7 @@ public class OrdersMain {
         orders_panel.setTitle("ORDERS");
         order_item_select_panel.setTitle("SELECT an ITEM to ADD on your ORDER");
 
-        JButton order_create_button = new JButton(new ImageIcon("src/main/resources/add.png"));
+        JButton order_create_button = new JButton(Main.addIcon);
         order_create_button.setBackground(Main.getMidColor());
         order_create_button.setBounds(29,116,40,40);
         order_create_button.addActionListener(e -> gotoOrderCreate());
@@ -79,10 +78,8 @@ public class OrdersMain {
         String order_statuses[] = {"Cancelled","Pending","Preparing","Shipping","Completed"};
         int order_status = Main.popupOption("Update order status to:", order_statuses);
         if (order_status != -1) {
-            if (!checkStocks(order_id)) {
-                if (!Main.popupConfirm("Insufficient stock for this order!\n\nContinue?")) {
-                    return;
-                } 
+            if (checkStocks(order_id)) {
+                return;
             }
 
             if (OrdersDB.edit(order_id, 5, order_statuses[order_status])) {
@@ -191,10 +188,12 @@ public class OrdersMain {
         ArrayList<ArrayList<String>> order_items = OrdersDB.getOrderItems(order_id);
         for (ArrayList<String> x : order_items) {
             if (!DB.checkStock(x.get(0),x.get(4))) {
-                return false;
+                if (!Main.popupConfirm("Insufficient stock for " + x.get(1) + "\n\n Continue?")) {
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
     }
 
 
@@ -207,12 +206,7 @@ public class OrdersMain {
             price = order_item_select_panel.getValueAt(xy[0], 6);
         OrderCreatePage.addItem(new String[]{item_id,name,type,price,"1"});
         gotoOrderCreate();
-        if(mergeNewItem()) {
-            Main.popupMessage("Added 1 to item's Quantity");
-        }
-        else {
-            Main.popupMessage("New item Added");
-        }
+        mergeNewItem();
     }
 
     

@@ -126,4 +126,9 @@ public class DB {
             return false;
         }
     }   
+
+
+    public static int transactSale(String[] sale) {
+        return 0;
+    }
 }

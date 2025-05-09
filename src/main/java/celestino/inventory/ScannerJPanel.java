@@ -1,10 +1,8 @@
-package celestino;
+package celestino.inventory;
 
 import main.Main;
 
 import javax.swing.*;
-
-import celestino.inventory.InventoryMain;
 
 import java.awt.Color;
 import java.awt.event.*;
@@ -30,7 +28,7 @@ public class ScannerJPanel extends JPanel implements KeyListener {
             bottom_bar = new JPanel();
         JButton 
             back_button = new JButton("<"),
-            reset_scan = new JButton(new ImageIcon("src/main/resources/refresh.png"));
+            reset_scan = new JButton(Main.refreshIcon);
         JLabel scanning_label = new JLabel("Waiting for Scan");
 
 

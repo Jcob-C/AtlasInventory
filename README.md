@@ -39,8 +39,22 @@
         FOREIGN KEY (item_id) REFERENCES inventory(item_id) ON DELETE SET NULL
     );
 
+    CREATE TABLE sales (
+        sale_id INT AUTO_INCREMENT PRIMARY KEY,
+        sale_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+        customer_name VARCHAR(100),
+        employee_name VARCHAR(100),
+        total_price DECIMAL(10, 2)
+    );
 
-    
+    CREATE TABLE sale_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        sale_id INT,
+        item_id INT,
+        price_sold DECIMAL(10, 2),
+        quantity INT,
+        FOREIGN KEY (sale_id) REFERENCES sales(sale_id)
+    );
     ```
 
 2. **Set your Database Credentials**

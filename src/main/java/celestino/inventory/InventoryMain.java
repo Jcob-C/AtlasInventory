@@ -1,7 +1,7 @@
 package celestino.inventory;
 
-import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
+import celestino.transact.TransactMain;
 import main.DB;
 import main.Main;
 
@@ -13,7 +13,7 @@ public class InventoryMain {
     private static final TableBrowserJPanel inventory_panel = new TableBrowserJPanel(
         Main.inventory_columns, 
         InventoryMain::selectCell,
-        InventoryMain::gotoInventory,
+        TransactMain::gotoTransact,
         InventoryMain::updateTable,
         InventoryMain::refresh
     );
@@ -25,7 +25,7 @@ public class InventoryMain {
         Main.addCard(ItemCreatePage.createPanel(), "item create");
         Main.addCard(scanner_panel, "scanner");
         
-        JButton item_create_button = new JButton(new ImageIcon("src/main/resources/add.png"));
+        JButton item_create_button = new JButton(Main.addIcon);
         item_create_button.setBackground(Main.getMidColor());
         item_create_button.setBounds(29,116,40,40);
         item_create_button.addActionListener(e -> gotoItemCreate());
