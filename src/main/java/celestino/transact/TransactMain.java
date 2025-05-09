@@ -20,6 +20,8 @@ public class TransactMain {
     public static void createModule() {
         Main.addCard(TransactPage.createPanel(), "transact");
         Main.addCard(item_select_panel, "transact item select");
+
+        item_select_panel.setTitle("SELECT an item to ADD on TRANSACTION");
     }
 
 
