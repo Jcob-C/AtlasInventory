@@ -1,12 +1,14 @@
 package celestino.inventory;
 
+import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
 import celestino.transact.TransactMain;
-import main.DB;
-import main.Main;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import base.DB;
+import base.Main;
 
 public class InventoryMain {
 
@@ -17,7 +19,7 @@ public class InventoryMain {
         InventoryMain::updateTable,
         InventoryMain::refresh
     );
-    private static final ScannerJPanel scanner_panel = new ScannerJPanel(InventoryMain::scanned);
+    private static final ScannerJPanel scanner_panel = new ScannerJPanel(InventoryMain::scanned,InventoryMain::gotoInventory);
 
     
     public static void createModule() {

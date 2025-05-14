@@ -1,9 +1,10 @@
 package celestino.inventory;
 
-import main.DB;
-import main.Main;
-
 import java.sql.Statement;
+
+import base.DB;
+import base.Main;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

@@ -1,8 +1,8 @@
-package celestino.inventory;
-
-import main.Main;
+package celestino;
 
 import javax.swing.*;
+
+import base.Main;
 
 import java.awt.Color;
 import java.awt.event.*;
@@ -15,8 +15,8 @@ public class ScannerJPanel extends JPanel implements KeyListener {
     private JLabel input_label = new JLabel("Scanned: ");
 
 
-    public ScannerJPanel(Consumer<String> receiver) {
-        this.receiver = receiver;
+    public ScannerJPanel(Consumer<String> scan_receiver, Runnable back_function) {
+        receiver = scan_receiver;
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(this);
@@ -58,7 +58,7 @@ public class ScannerJPanel extends JPanel implements KeyListener {
         add(bottom_bar);
 
         reset_scan.addActionListener(e -> clearBuffer());
-        back_button.addActionListener(e -> InventoryMain.gotoInventory());
+        back_button.addActionListener(e -> back_function.run());
     }
 
 

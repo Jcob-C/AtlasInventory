@@ -1,4 +1,4 @@
-package main;
+package base;
 
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;

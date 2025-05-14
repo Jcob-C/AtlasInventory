@@ -1,12 +1,13 @@
 package celestino.orders;
 
-import main.DB;
-import main.Main;
 import celestino.TableBrowserJPanel;
 import celestino.inventory.InventoryMain;
 
 import java.util.ArrayList;
 import javax.swing.JButton;
+
+import base.DB;
+import base.Main;
 
 public class OrdersMain {
 
@@ -257,7 +258,7 @@ public class OrdersMain {
             case 0: OrderCreatePage.removeItem(xy[0]); break;
             case 1: 
                 String quantity = Main.popupInput("Enter quantity:");
-                if (Main.toInteger(quantity) != null) {
+                if (Main.toInteger(quantity) != null && Main.toInteger(quantity) >= 1) {
                     OrderCreatePage.setValue(xy[0], 4, quantity);
                 }
                 else {

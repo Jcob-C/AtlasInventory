@@ -2,7 +2,6 @@ package celestino.transact;
 
 import celestino.PresetJTable;
 import celestino.orders.OrdersMain;
-import main.Main;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -12,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import base.Main;
 
 public class TransactPage {
 

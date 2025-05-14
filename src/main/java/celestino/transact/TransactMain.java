@@ -2,9 +2,9 @@ package celestino.transact;
 
 import java.util.ArrayList;
 
+import base.DB;
+import base.Main;
 import celestino.TableBrowserJPanel;
-import main.DB;
-import main.Main;
 
 public class TransactMain {
 
@@ -142,12 +142,13 @@ public class TransactMain {
             break;
             case 2:
                 String new_quantity = Main.popupInput("Enter Quantity:");
-                if (Main.toInteger(new_quantity) == null) {
-                    Main.popupMessage("Invalid Quantity");
-                    return;
+                if (Main.toInteger(new_quantity) != null && Main.toInteger(new_quantity) >= 1) {
+                    TransactPage.setRefundTableValue(xy[0], 4, new_quantity);
+                    updateRefundTotal();
                 }
-                TransactPage.setRefundTableValue(xy[0], 4, new_quantity);
-                updateRefundTotal();
+                else {
+                    Main.popupMessage("Invalid Quantity");
+                }
             break;
         }
     }
@@ -162,12 +163,14 @@ public class TransactMain {
             break;
             case 1:
                 String new_quantity = Main.popupInput("Enter Quantity:");
-                if (Main.toInteger(new_quantity) == null) {
-                    Main.popupMessage("Invalid Quantity");
-                    return;
+                if (Main.toInteger(new_quantity) != null && Main.toInteger(new_quantity) >= 1) {
+                    TransactPage.setSellTableValue(xy[0], 4, new_quantity);
+                    updateSellTotal();
                 }
-                TransactPage.setSellTableValue(xy[0], 4, new_quantity);
-                updateSellTotal();
+                else {
+                    Main.popupMessage("Invalid Quantity");
+                }
+                
             break;
         }
     }
