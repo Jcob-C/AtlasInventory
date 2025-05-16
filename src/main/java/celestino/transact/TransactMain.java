@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import base.DB;
 import base.Main;
+import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
 import delarama.UserActivity;
 
@@ -14,15 +15,23 @@ public class TransactMain {
         TransactMain::newItemSelected,
         TransactMain::gotoTransact,
         TransactMain::updateItemSelect,
-        TransactMain::refreshItemSelect
-    );
+        TransactMain::refreshItemSelect);
+    private static final ScannerJPanel scan_panel = new ScannerJPanel(TransactMain::scanned, TransactMain::gotoTransact);
 
 
     public static void createModule() {
         Main.addCard(TransactPage.createPanel(), "transact");
         Main.addCard(item_select_panel, "transact item select");
+        Main.addCard(scan_panel, "transact scan");
 
         item_select_panel.setTitle("SELECT an item to ADD on TRANSACTION");
+    }
+
+
+    public static void gotoScan() {
+        scan_panel.clearBuffer();
+        Main.changeCard("transact scan");
+        scan_panel.requestFocusInWindow();
     }
 
 
@@ -48,23 +57,61 @@ public class TransactMain {
     }
 
 
+    static void scanned(String scan) {
+        ArrayList<String> item = DB.getItem(scan);
+        switch(TransactPage.getTargetTable()) {
+            case "refund":
+                TransactPage.addRefundItem(
+                    new String[] {
+                        item.get(0),
+                        item.get(1),
+                        item.get(2),
+                        item.get(3),
+                        "1",
+                        "OK"
+                    }
+                );
+                mergeRefundTable();
+                updateRefundTotal();
+            break;
+            case "sell":
+                TransactPage.addSellItem(
+                    new String[] {
+                        item.get(0),
+                        item.get(1),
+                        item.get(2),
+                        item.get(3),
+                        "1"
+                    }
+                );
+                mergeSellTable();
+                updateSellTotal();
+            break;
+        }
+        gotoTransact();
+    }
+
+
     static void transact() {
         if (!checkStocks()) return;
 
+        double total = TransactPage.getTransactionTotal();
         ArrayList<ArrayList<String>> sell_table = TransactPage.getSellTable();
         ArrayList<ArrayList<String>> refund_table = TransactPage.getRefundTable();
-        if (sell_table.size() <= 0 && refund_table.size() <= 0) return;
 
-        double total = TransactPage.getTransactionTotal();
+        if (sell_table.size() <= 0 && refund_table.size() <= 0) return;
+        
         if (!Main.popupConfirm("Total Transaction Price: "+total+"\n\nContinue?")) return;
 
-        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(total)});
+        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(total),TransactPage.getPaymentMethod()});
         
         UserActivity.Audit_Trail("Transaction complete with sale ID " + sale_id + " for customer " + TransactPage.getCustomerName() + " with total: " + total);
         TransactPage.clearNameField();
+        TransactPage.clearMethodField();
 
         for (ArrayList<String> x : sell_table) {
             DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), x.get(4));
+            DB.addStock(x.get(0), '-'+x.get(4));
             UserActivity.Audit_Trail("Added sale item with ID of " + x.get(0) + " with price: " + x.get(3) + " with quantity: " + x.get(4) + " with the sale ID: " + sale_id);
         }
         for (ArrayList<String> x : refund_table) {
@@ -76,7 +123,7 @@ public class TransactMain {
         TransactPage.resetRefundTable();
         TransactPage.resetSellTable();
 
-        Main.popupMessage("Sale recorded!\n\nSale ID: "+sale_id);
+        Main.popupMessage("New Stock & Sale recorded!\n\nSale ID: "+sale_id);
     }
 
 
@@ -194,7 +241,7 @@ public class TransactMain {
         for(ArrayList<String> y : x) {
             total += Double.parseDouble(y.get(3))* Double.parseDouble(y.get(4));
         }
-        TransactPage.setRefundTotal("Total: "+total);
+        TransactPage.setRefundTotal("Refund Total: "+total);
     }
 
     
@@ -205,7 +252,7 @@ public class TransactMain {
         for(ArrayList<String> y : x) {
             total += Double.parseDouble(y.get(3))* Double.parseDouble(y.get(4));
         }
-        TransactPage.setSellTotal("Total: "+total);
+        TransactPage.setSellTotal("Sell Total: "+total);
     }
 
 

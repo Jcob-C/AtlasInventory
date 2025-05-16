@@ -71,24 +71,24 @@ public class salesHistoryPanel extends JPanel {
         JScrollPane
                 scrollPane = new JScrollPane(table);
 
-        setBackground(Color.decode("#014518"));
-        reportHistory.setBackground(Color.decode("#ff9933"));
-        topBorder.setBackground(Color.decode("#ff9933"));
-        bottomBorder.setBackground(Color.decode("#ff9933"));
-        exportButton.setBackground(Color.decode("#014518"));
-        exportButton.setForeground(Color.decode("#ffffff"));
-        searchButton.setBackground(Color.decode("#014518"));
-        searchButton.setForeground(Color.decode("#ffffff"));
-        refreshButton.setBackground(Color.decode("#014518"));
-        refreshButton.setForeground(Color.decode("#ffffff"));
-        setDateButton.setBackground(Color.decode("#014518"));
-        setDateButton.setForeground(Color.decode("#ffffff"));
-        sortButton.setBackground(Color.decode("#014518"));
-        sortButton.setForeground(Color.decode("#ffffff"));
-        startDateLabel.setForeground(Color.decode("#ffffff"));
-        endDateLabel.setForeground(Color.decode("#ffffff"));
-        tableSort.setBackground(Color.decode("#014518"));
-        tableSort.setForeground(Color.decode("#ffffff"));
+        setBackground(Main.getDarkColor());
+        reportHistory.setBackground(Main.getLightColor());
+        topBorder.setBackground(Main.getLightColor());
+        bottomBorder.setBackground(Main.getLightColor());
+        exportButton.setBackground(Main.getMidColor());
+        exportButton.setForeground(Color.WHITE);
+        searchButton.setBackground(Main.getMidColor());
+        searchButton.setForeground(Color.WHITE);
+        refreshButton.setBackground(Main.getMidColor());
+        refreshButton.setForeground(Color.WHITE);
+        setDateButton.setBackground(Main.getMidColor());
+        setDateButton.setForeground(Color.WHITE);
+        sortButton.setBackground(Main.getMidColor());
+        sortButton.setForeground(Color.WHITE);
+        startDateLabel.setForeground(Color.WHITE);
+        endDateLabel.setForeground(Color.WHITE);
+        tableSort.setBackground(Main.getMidColor());
+        tableSort.setForeground(Color.WHITE);
 
         //salesHistoryPanel
         setBounds(0, 0, 880, 660);

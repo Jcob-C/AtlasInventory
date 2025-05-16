@@ -130,8 +130,8 @@ public class DB {
 
     public static int insertNewSale(String[] sale) {
         String insertSql = """
-        INSERT INTO sales (customer_name, employee_name, total_price) 
-        VALUES (?, ?, ?);
+        INSERT INTO sales (customer_name, employee_name, total_price, payment_method) 
+        VALUES (?, ?, ?, ?);
         """;
         try (
             Connection conn = DB.getConnection();

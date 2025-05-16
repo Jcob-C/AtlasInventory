@@ -67,7 +67,7 @@ public class dashboardPanel extends JPanel {
     private static void gotoAccount() {
     }
 
-    private static void gotoUserAdmin() {
+    private static void gotoUserSettings() {
     }
 
     private static void gotoSalesHistory() {
@@ -146,43 +146,44 @@ public class dashboardPanel extends JPanel {
         stockLevelTable.getTableHeader().setResizingAllowed(false);
         stockLevelTable.getTableHeader().setReorderingAllowed(false);
 
-        salesLabel.setForeground(Color.decode("#ffffff"));
-        salesLabel.setBackground(Color.decode("#014518"));
-        topSellingLabel.setForeground(Color.decode("#ffffff"));
-        topSellingLabel.setBackground(Color.decode("#014518"));
-        stockLabel.setForeground(Color.decode("#ffffff"));
-        stockLabel.setBackground(Color.decode("#014518"));
-        recentSalesLabel.setForeground(Color.decode("#ffffff"));
-        recentSalesLabel.setBackground(Color.decode("#014518"));
-        dbCardPanel.setBackground(Color.decode("#014518"));
-        modulesPanel.setBackground(Color.decode("#ff9933"));
-        dbPanel.setBackground(Color.decode("#ff9933"));
-        topBorder.setBackground(Color.decode("#ff9933"));
-        bottomBorder.setBackground(Color.decode("#ff9933"));
-        userButton.setForeground(Color.decode("#ffffff"));
-        userButton.setBackground(Color.decode("#014518"));
-        inventoryButton.setForeground(Color.decode("#ffffff"));
-        inventoryButton.setBackground(Color.decode("#014518"));
-        transactButton.setForeground(Color.decode("#ffffff"));
-        transactButton.setBackground(Color.decode("#014518"));
-        ordersButton.setForeground(Color.decode("#ffffff"));
-        ordersButton.setBackground(Color.decode("#014518"));
-        accountButton.setForeground(Color.decode("#ffffff"));
-        accountButton.setBackground(Color.decode("#014518"));
-        dbsearchButton.setForeground(Color.decode("#ffffff"));
-        dbsearchButton.setBackground(Color.decode("#014518"));
-        dbrefreshButton.setForeground(Color.decode("#ffffff"));
-        dbrefreshButton.setBackground(Color.decode("#014518"));
-        salesHistoryButton.setForeground(Color.decode("#ffffff"));
-        salesHistoryButton.setBackground(Color.decode("#014518"));
-        sortButton.setBackground(Color.decode("#014518"));
-        sortButton.setForeground(Color.decode("#ffffff"));
-        exitButton.setForeground(Color.decode("#ffffff"));
-        exitButton.setBackground(Color.decode("#ff3131"));
-        dbSearchField.setBackground(Color.decode("#ffffff"));
-        dbSearchField.setForeground(Color.decode("#000000"));
-        tableFilterDropdown.setBackground(Color.decode("#014518"));
-        tableFilterDropdown.setForeground(Color.decode("#ffffff"));
+        salesLabel.setForeground(Color.WHITE);
+        salesLabel.setBackground(Main.getDarkColor());
+        topSellingLabel.setForeground(Color.WHITE);
+        topSellingLabel.setBackground(Main.getDarkColor());
+        stockLabel.setForeground(Color.WHITE);
+        stockLabel.setBackground(Main.getDarkColor());
+        recentSalesLabel.setForeground(Color.WHITE);
+        recentSalesLabel.setBackground(Main.getDarkColor());
+        dbCardPanel.setBackground(Main.getDarkColor());
+        modulesPanel.setBackground(Main.getLightColor());
+        dbPanel.setBackground(Main.getLightColor());
+        topBorder.setBackground(Main.getLightColor());
+        bottomBorder.setBackground(Main.getLightColor());
+        userButton.setForeground(Color.WHITE);
+        userButton.setBackground(Main.getMidColor());
+        inventoryButton.setForeground(Color.WHITE);
+        inventoryButton.setBackground(Main.getMidColor());
+        transactButton.setForeground(Color.WHITE);
+        transactButton.setBackground(Main.getMidColor());
+        ordersButton.setForeground(Color.WHITE);
+        ordersButton.setBackground(Main.getMidColor());
+        accountButton.setForeground(Color.WHITE);
+        accountButton.setBackground(Main.getMidColor());
+        dbsearchButton.setForeground(Color.WHITE);
+        dbsearchButton.setBackground(Main.getMidColor());
+        dbrefreshButton.setForeground(Color.WHITE);
+        dbrefreshButton.setBackground(Main.getMidColor());
+        salesHistoryButton.setForeground(Color.WHITE);
+        salesHistoryButton.setBackground(Main.getMidColor());
+        sortButton.setBackground(Main.getMidColor());
+        sortButton.setForeground(Color.WHITE);
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(Color.RED);
+        dbSearchField.setBackground(Color.WHITE);
+        dbSearchField.setForeground(Color.BLACK);
+        tableFilterDropdown.setBackground(Main.getDarkColor());
+        tableFilterDropdown.setForeground(Color.WHITE);
+        tableFilterDropdown.setBackground(Main.getMidColor());
 
         salesLabel.setBounds(635, 175, 100, 20);
         topSellingLabel.setBounds(635, 305, 150, 20);

@@ -26,7 +26,8 @@
         address TEXT,
         order_status VARCHAR(50) DEFAULT 'Pending',
         payment_id VARCHAR(100),
-        total_price DECIMAL(10,2)
+        total_price DECIMAL(10,2),
+        payment_method VARCHAR(50)
     );
 
     CREATE TABLE order_items (
@@ -34,7 +35,7 @@
         order_id INT,
         item_id INT,
         quantity INT,
-        price_each DECIMAL(10,2)
+        price_each DECIMAL(10,2),
         FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
         FOREIGN KEY (item_id) REFERENCES inventory(item_id) ON DELETE SET NULL
     );

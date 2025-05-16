@@ -22,16 +22,18 @@ public class OrderViewPage {
     private static final JTextField
         customer_name = new JTextField(),
         customer_no = new JTextField(),
-        transac_id = new JTextField();
+        transac_id = new JTextField(),
+        payment_method = new JTextField();
     private static final JLabel
         name_label = new JLabel("Customer's Name:"),
-        transac_id_label = new JLabel("Transaction ID:"),
+        transac_id_label = new JLabel("Payment ID:"),
         no_label = new JLabel("Contact:"),
         addr_label = new JLabel("Address:"),
         order_id = new JLabel(),
         order_date = new JLabel(),
         order_status = new JLabel(),      
-        order_price = new JLabel();
+        order_price = new JLabel(),
+        payment_method_label = new JLabel("Payment Method:"); 
     private static final JTextArea customer_addr = new JTextArea();
 
 
@@ -43,12 +45,13 @@ public class OrderViewPage {
     static void setOrderInfo(ArrayList<ArrayList<String>> data) {
         order_id.setText("Order ID: " + data.get(0).get(0));
         order_date.setText("Order Date: " + data.get(0).get(1));
-        customer_name.setText("" + data.get(0).get(2));
-        customer_no.setText("" + data.get(0).get(3));
-        customer_addr.setText("" + data.get(0).get(4));
+        customer_name.setText(data.get(0).get(2));
+        customer_no.setText(data.get(0).get(3));
+        customer_addr.setText(data.get(0).get(4));
         order_status.setText("Status: " + data.get(0).get(5));
-        transac_id.setText("" + data.get(0).get(6));
+        transac_id.setText(data.get(0).get(6));
         order_price.setText("Total Price: " + data.get(0).get(7));
+        payment_method.setText(data.get(0).get(8));
     }
 
 
@@ -62,7 +65,8 @@ public class OrderViewPage {
             customer_name.getText(),
             customer_no.getText(),
             customer_addr.getText(),
-            transac_id.getText()
+            transac_id.getText(),
+            payment_method.getText()
         };
     }
 
@@ -93,6 +97,8 @@ public class OrderViewPage {
         transac_id_label.setForeground(Color.WHITE);
         name_label.setForeground(Color.WHITE);
         addr_label.setForeground(Color.WHITE);
+        payment_method.setForeground(Color.BLACK);
+        payment_method_label.setForeground(Color.WHITE);
 
         ribbon.setBounds(0,39,880,96);
         back_button.setBounds(0,0,45,30);
@@ -103,14 +109,16 @@ public class OrderViewPage {
         order_date.setBounds(45,98,437,27);  
         order_price.setBounds(457,98,400,27);
         order_status.setBounds(457,56,357,27);
-        customer_name.setBounds(45,294,395,38);
-        customer_no.setBounds(45,401,205,38);
-        transac_id.setBounds(45,187,275,38);
-        addr_pane.setBounds(45,509,395,92);
-        no_label.setBounds(45,370,409,27);
-        transac_id_label.setBounds(45,155,409,27);
-        name_label.setBounds(45,262,409,27);
-        addr_label.setBounds(45,477,409,27);
+        customer_name.setBounds(45,339,395,38);
+        customer_no.setBounds(45,413,205,38);
+        transac_id.setBounds(45,266,275,38);
+        addr_pane.setBounds(45,486,395,92);
+        no_label.setBounds(45,381,409,27);
+        transac_id_label.setBounds(45,234,409,27);
+        name_label.setBounds(45,308,409,27);
+        addr_label.setBounds(45,455,409,27);
+        payment_method.setBounds(45,193,234,38);
+        payment_method_label.setBounds(45,156,234,38);
 
         order_id.setFont(Main.getFont(40));
         order_date.setFont(Main.getFont(21));
@@ -124,6 +132,8 @@ public class OrderViewPage {
         transac_id_label.setFont(Main.getFont(21));
         name_label.setFont(Main.getFont(21));
         addr_label.setFont(Main.getFont(21));
+        payment_method.setFont(Main.getFont(20));
+        payment_method_label.setFont(Main.getFont(21));
         
         order_id.setText("Order: 1000");
         order_price.setText("Price: 1000000");
@@ -137,6 +147,8 @@ public class OrderViewPage {
         customer_addr.setLineWrap(true);
         customer_addr.setWrapStyleWord(true);
 
+        panel.add(payment_method);
+        panel.add(payment_method_label);
         panel.add(transac_id);
         panel.add(addr_pane);
         panel.add(customer_no);
@@ -154,7 +166,6 @@ public class OrderViewPage {
         panel.add(name_label);
         panel.add(no_label);
         panel.add(addr_label);
-
 
         back_button.addActionListener(e -> OrdersMain.updateViewedOrder());
 
