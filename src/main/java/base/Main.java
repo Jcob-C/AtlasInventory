@@ -3,7 +3,6 @@ package base;
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
 import celestino.transact.TransactMain;
-import delarama.Account_Manager;
 import delarama.MainCard;
 import valmonte.dashboardPanel;
 
@@ -11,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import bernabe.UserProfileMain;
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -24,9 +26,9 @@ public class Main {
     private static final String initial_card = "dashboard";
     
     private static final Color theme[] = {
-        new Color(252, 153, 51), // light (orange)
-        new Color(0, 80, 160), // mid (blue)
-        new Color(1, 69, 24) }; // dark (green)
+        new Color(252, 153, 51), // light 
+        new Color(0, 80, 160), // mid 
+        new Color(1, 69, 24) }; // dark
     private static final String font = "Segoe UI";
 
     private static final JFrame window = new JFrame();
@@ -67,6 +69,21 @@ public class Main {
 
     public static Font getFont(int size) {
         return new Font(font, Font.BOLD, size);
+    }
+
+
+    public static void setDarkColor(int R, int G, int B) {
+        theme[2] = new Color(R,G,B);
+    }
+
+
+    public static void setMidColor(int R, int G, int B) {
+        theme[1] = new Color(R,G,B);
+    }
+
+
+    public static void setLightColor(int R, int G, int B) {
+        theme[0] = new Color(R,G,B);
     }
 
 
@@ -171,5 +188,6 @@ public class Main {
         addCard(new valmonte.SalesHistory.salesHistoryPanel(), "SalesHistory");
 
         MainCard.createModule();
+        UserProfileMain.createModule();
     }
 }

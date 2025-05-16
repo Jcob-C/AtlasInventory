@@ -1,6 +1,7 @@
 package valmonte;
 
 import base.Main;
+import bernabe.UserProfileMain;
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
 import celestino.transact.TransactMain;
@@ -69,6 +70,7 @@ public class dashboardPanel extends JPanel {
     }
 
     private static void gotoUserSettings() {
+        UserProfileMain.gotoUserSettings();
     }
 
     private static void gotoSalesHistory() {
@@ -252,7 +254,7 @@ public class dashboardPanel extends JPanel {
         transactButton.addActionListener(e -> gotoTransact());
         ordersButton.addActionListener(e -> gotoOrders());
         accountButton.addActionListener(e -> gotoAccount());
-        //dashboardPanel.getUserButton().addActionListener(e -> gotoUserAdmin());
+        userButton.addActionListener(e -> gotoUserSettings());
         //dashboardPanel.getSalesHistoryButton().addActionListener(e -> gotoSalesHistory());
     }
 
