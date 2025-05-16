@@ -45,7 +45,7 @@
         customer_name VARCHAR(100), 
         employee_name VARCHAR(100),
         total_price DECIMAL(10, 2),
-        payment_method VARCHAR(50) NOT NULL
+        payment_method VARCHAR(50)
     );
 
     CREATE TABLE sale_items (
