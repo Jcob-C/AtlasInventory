@@ -80,7 +80,7 @@ public class DB {
         try (
             Connection conn = getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT 1 FROM inventory WHERE barcode LIKE '%" + barcode + "%';");
+            ResultSet rs = stmt.executeQuery("SELECT 1 FROM inventory WHERE barcode = '" + barcode + "';");
             ) 
         {
             return rs.next();
@@ -181,5 +181,28 @@ public class DB {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
+    }
+
+
+    public static ArrayList<String> getItem(String barcode) {
+        ArrayList<String> item = new ArrayList<>();
+        try (
+            Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM inventory WHERE barcode = '"+barcode+"';");
+            ) 
+        {
+            if (rs.next()) {
+                item.add(rs.getString(1));
+                item.add(rs.getString(3));
+                item.add(rs.getString(4));
+                item.add(rs.getString(7));
+            }
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return item;
     }
 }

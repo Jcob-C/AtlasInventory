@@ -99,7 +99,7 @@ public class TableBrowserJPanel extends JPanel {
         JButton 
             back_button = new JButton("<"),
             search_button = new JButton(new ImageIcon("src/main/resources/search.png")),
-            refresh_button = new JButton(Main.refreshIcon);
+            refresh_button = new JButton(Main.refresh_icon);
         JScrollPane table_pane = new JScrollPane(preset_table);
 
         setBackground(Main.getDarkColor());

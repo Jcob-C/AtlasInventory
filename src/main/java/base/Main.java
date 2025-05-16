@@ -31,9 +31,14 @@ public class Main {
     private static final JPanel main_panel = new JPanel(card_layout);
 
     public static final String[] inventory_columns = {"ID","Barcode","Name","Type","Description","Location","Price","Stock"};
-    public static final ImageIcon refreshIcon = new ImageIcon("src/main/resources/refresh.png");
-    public static final ImageIcon addIcon = new ImageIcon("src/main/resources/add.png");
+
+    public static final ImageIcon 
+        refresh_icon = new ImageIcon("src/main/resources/refresh.png"),
+        add_icon = new ImageIcon("src/main/resources/add.png"),
+        scanner_icon = new ImageIcon("src/main/resources/scanner.png")
+    ;
     
+
     public static void main(String[] args) throws Exception {
         setupWindow();
         initializeModules();
@@ -139,8 +144,8 @@ public class Main {
         window.setTitle("AtlasInventory");
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
         window.setUndecorated(true);
+        window.setResizable(false);
         window.add(main_panel);
         window.setFocusable(true);
     }

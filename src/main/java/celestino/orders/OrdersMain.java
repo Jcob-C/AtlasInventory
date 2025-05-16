@@ -1,5 +1,6 @@
 package celestino.orders;
 
+import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
 import celestino.inventory.InventoryMain;
 
@@ -27,8 +28,8 @@ public class OrdersMain {
             OrdersMain::gotoOrderCreate,
             OrdersMain::updateItemSelectJTable,
             OrdersMain::refreshItemSelect
-        )
-    ;
+        );
+    private static final ScannerJPanel scan_page = new ScannerJPanel(OrdersMain::scanned, OrdersMain::gotoOrderCreate);
     
 
     public static void createOrdersModule() {
@@ -36,11 +37,12 @@ public class OrdersMain {
         Main.addCard(orders_panel, "orders");
         Main.addCard(OrderCreatePage.createPanel(), "order create");
         Main.addCard(order_item_select_panel, "order item select");
+        Main.addCard(scan_page, "order add scan");
 
         orders_panel.setTitle("ORDERS");
         order_item_select_panel.setTitle("SELECT an ITEM to ADD on your ORDER");
 
-        JButton order_create_button = new JButton(Main.addIcon);
+        JButton order_create_button = new JButton(Main.add_icon);
         order_create_button.setBackground(Main.getMidColor());
         order_create_button.setBounds(29,116,40,40);
         order_create_button.addActionListener(e -> gotoOrderCreate());
@@ -72,6 +74,13 @@ public class OrdersMain {
     static void gotoOrderItemSelect() {
         refreshItemSelect();
         Main.changeCard("order item select");
+    }
+
+
+    static void gotoScanPage() {
+        scan_page.clearBuffer();
+        Main.changeCard("order add scan");
+        scan_page.requestFocusInWindow();
     }
 
 
@@ -193,6 +202,20 @@ public class OrdersMain {
         }          
     }
 
+
+    static void scanned(String scanned) {
+        if(DB.findBarcode(scanned)) {
+            ArrayList<String> item = DB.getItem(scanned);
+            OrderCreatePage.addItem(new String[]{item.get(0),item.get(1),item.get(2),item.get(3),"1"});
+            gotoOrderCreate();
+            mergeNewItem();
+            Main.popupMessage("1 of "+item.get(1)+" has been added");
+        }
+        else {
+            Main.popupMessage("Barcode not Found");
+        }
+    }
+ 
 
     static boolean checkStocks(String order_id) {
         boolean output = false;

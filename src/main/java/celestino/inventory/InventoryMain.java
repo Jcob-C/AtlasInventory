@@ -25,9 +25,9 @@ public class InventoryMain {
     public static void createModule() {
         Main.addCard(inventory_panel, "inventory");
         Main.addCard(ItemCreatePage.createPanel(), "item create");
-        Main.addCard(scanner_panel, "scanner");
+        Main.addCard(scanner_panel, "restock scan");
         
-        JButton item_create_button = new JButton(Main.addIcon);
+        JButton item_create_button = new JButton(Main.add_icon);
         item_create_button.setBackground(Main.getMidColor());
         item_create_button.setBounds(29,116,40,40);
         item_create_button.addActionListener(e -> gotoItemCreate());
@@ -60,7 +60,7 @@ public class InventoryMain {
 
     static void gotoScanner() {
         scanner_panel.clearBuffer();
-        Main.changeCard("scanner");
+        Main.changeCard("restock scan");
         scanner_panel.requestFocusInWindow();
     }
 

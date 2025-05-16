@@ -145,12 +145,12 @@ public class TransactPage {
             refund_pane = new JScrollPane(refund_table),
             sell_pane = new JScrollPane(sell_table);
         JButton
-            add_refund = new JButton(Main.addIcon),
-            add_sell = new JButton(Main.addIcon),
+            add_refund = new JButton(Main.add_icon),
+            add_sell = new JButton(Main.add_icon),
             transact_button = new JButton("Transact"),
             back_button = new JButton("<"),
-            reset_refund = new JButton(Main.refreshIcon),
-            reset_sell = new JButton(Main.refreshIcon);
+            reset_refund = new JButton(Main.refresh_icon),
+            reset_sell = new JButton(Main.refresh_icon);
         JLabel 
             name_label = new JLabel("Customer:"),
             refund_label = new JLabel("Refund"),

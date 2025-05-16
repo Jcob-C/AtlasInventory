@@ -68,7 +68,7 @@ public class ItemCreatePage {
         JButton 
             back_button = new JButton("<"),
             add_button = new JButton("Create"),
-            clear_button = new JButton(Main.refreshIcon);
+            clear_button = new JButton(Main.refresh_icon);
         JScrollPane desc_pane = new JScrollPane(desc_field);
 
         panel.setBackground(Main.getDarkColor());

@@ -102,11 +102,12 @@ public class OrderCreatePage {
             bottom_bar = new JPanel(),
             ribbon_box = new JPanel();
         JButton
-            clear_order_button = new JButton(Main.refreshIcon),
+            clear_order_button = new JButton(Main.refresh_icon),
             order_button = new JButton("Submit Order"),
-            clear_button = new JButton(Main.refreshIcon),
-            add_button = new JButton(Main.addIcon),
-            back_button = new JButton("<");
+            clear_button = new JButton(Main.refresh_icon),
+            add_button = new JButton(Main.add_icon),
+            back_button = new JButton("<"),
+            scan_button = new JButton(Main.scanner_icon);
         JScrollPane 
             address_pane = new JScrollPane(address_field),
             table_pane = new JScrollPane(table)
@@ -129,8 +130,9 @@ public class OrderCreatePage {
         name_label.setForeground(Color.WHITE);
         contact_label.setForeground(Color.WHITE);
         address_label.setForeground(Color.WHITE);
+        scan_button.setBackground(Main.getMidColor());
 
-        clear_order_button.setBounds(509,84,40,40);
+        clear_order_button.setBounds(561,84,40,40);
         clear_button.setBounds(22,548,40,40);
         payment_label.setBounds(23,124,215,27);
         name_label.setBounds(23,210,215,27);
@@ -148,6 +150,7 @@ public class OrderCreatePage {
         ribbon_box.setBounds(440,0,440,645);
         add_button.setBounds(457,84,40,40);
         order_button.setBounds(688,28,164,40);
+        scan_button.setBounds(509,84,40,40);
 
         payment_label.setFont(Main.getFont(20));
         name_label.setFont(Main.getFont(20));
@@ -163,6 +166,7 @@ public class OrderCreatePage {
         address_field.setLineWrap(true);
         address_field.setWrapStyleWord(true);
         
+        panel.add(scan_button);
         panel.add(clear_order_button);
         panel.add(payment_label);
         panel.add(name_label);
@@ -187,6 +191,7 @@ public class OrderCreatePage {
         back_button.addActionListener(e -> OrdersMain.gotoOrders());
         add_button.addActionListener(e -> OrdersMain.gotoOrderItemSelect());
         order_button.addActionListener(e -> OrdersMain.submitOrder());
+        scan_button.addActionListener(e -> OrdersMain.gotoScanPage());
 
         return panel;
     }

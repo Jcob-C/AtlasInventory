@@ -28,7 +28,7 @@ public class ScannerJPanel extends JPanel implements KeyListener {
             bottom_bar = new JPanel();
         JButton 
             back_button = new JButton("<"),
-            reset_scan = new JButton(Main.refreshIcon);
+            reset_scan = new JButton(Main.refresh_icon);
         JLabel scanning_label = new JLabel("Waiting for Scan");
 
 
