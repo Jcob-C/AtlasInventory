@@ -2,6 +2,7 @@ package celestino.orders;
 
 import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
+import delarama.UserActivity;
 
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -93,6 +94,7 @@ public class OrdersMain {
 
             if (OrdersDB.edit(order_id, 5, order_statuses[order_status])) {
                 updateOrdersJTable();
+                UserActivity.Audit_Trail("Updated the status to " + order_statuses[order_status] + " in order ID " + order_id);
                 Main.popupMessage("Order Status Updated");
             }
             else {
@@ -107,6 +109,7 @@ public class OrdersMain {
                         for (ArrayList<String> x : order_items) {
                             DB.addStock(x.get(0), x.get(4));
                         }
+                    UserActivity.Audit_Trail("Added quantities back to inventory stock from order ID " + order_id);
                     }
                 break;
                 case 2:
@@ -114,7 +117,8 @@ public class OrdersMain {
                         for (ArrayList<String> x : order_items) {
                             DB.addStock(x.get(0), "-"+x.get(4));
                         }
-                    }
+                    UserActivity.Audit_Trail("Subtracted quantities from inventory stock for order ID " + order_id);    
+                    }    
                 break;
                 case 4:
                     if (Main.popupConfirm("RECORD the completed ORDER as a new SALE?")) {
@@ -123,7 +127,8 @@ public class OrdersMain {
                         for (ArrayList<String> x : order_items) {
                             DB.insertSaleItems(String.valueOf(sale_id), x.get(0),x.get(3),x.get(4));
                         }
-                    }
+                         UserActivity.Audit_Trail("Recorded order ID " + order_id + " as sale ID " + sale_id);
+                    }    
                 break;
             }
         } 
@@ -173,6 +178,8 @@ public class OrdersMain {
             OrdersDB.edit(id, 3, data[1]);
             OrdersDB.edit(id, 4, data[2]);
             OrdersDB.edit(id, 6, data[3]);
+
+            UserActivity.Audit_Trail("Updated customer information for order ID " + id);
         }
         gotoOrders();
     }
@@ -206,6 +213,7 @@ public class OrdersMain {
         if(DB.findBarcode(scanned)) {
             ArrayList<String> item = DB.getItem(scanned);
             OrderCreatePage.addItem(new String[]{item.get(0),item.get(1),item.get(2),item.get(3),"1"});
+            UserActivity.Audit_Trail("Added item " + item.get(1) + " (ID: " + item.get(0) + ") to order via barcode scan");
             gotoOrderCreate();
             mergeNewItem();
             Main.popupMessage("1 of "+item.get(1)+" has been added");
@@ -238,6 +246,7 @@ public class OrdersMain {
             type = order_item_select_panel.getValueAt(xy[0], 3),
             price = order_item_select_panel.getValueAt(xy[0], 6);
         OrderCreatePage.addItem(new String[]{item_id,name,type,price,"1"});
+        UserActivity.Audit_Trail("Added item " + name + " (ID: " + item_id + ") to order");
         gotoOrderCreate();
         mergeNewItem();
     }
@@ -277,11 +286,14 @@ public class OrdersMain {
         int option = Main.popupOption("Selected Item: " + OrderCreatePage.getValue(xy[0], 1), new String[]{"Remove Item","Edit Quantity"});
 
         switch (option) {
-            case 0: OrderCreatePage.removeItem(xy[0]); break;
+            case 0: OrderCreatePage.removeItem(xy[0]);
+            UserActivity.Audit_Trail("Removed item " + OrderCreatePage.getValue(xy[0], 1) + " from order");
+            break;
             case 1: 
                 String quantity = Main.popupInput("Enter quantity:");
                 if (Main.toInteger(quantity) != null && Main.toInteger(quantity) >= 1) {
                     OrderCreatePage.setValue(xy[0], 4, quantity);
+                    UserActivity.Audit_Trail("Changed quantity of item " + OrderCreatePage.getValue(xy[0], 1) + " from quantity " + OrderCreatePage.getValue(xy[0], 4) + " to  new quantity " + quantity);
                 }
                 else {
                     Main.popupMessage("Invalid Quantity");
@@ -313,6 +325,7 @@ public class OrdersMain {
             });
         }
         gotoOrders();
+        UserActivity.Audit_Trail("Submitted an order with order ID " + order_id);
         OrderCreatePage.clearInputs();
         OrderCreatePage.clearTable();
         Main.popupMessage("Order Submitted");

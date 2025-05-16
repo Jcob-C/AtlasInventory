@@ -87,7 +87,7 @@ public class salesHistoryDB {
         PdfWriter.getInstance(doc, new FileOutputStream("Sales_Report.pdf"));
         doc.open();
 
-        Image logo = Image.getInstance("src/main/resources/Atlas-Feeds-Logo.png");
+        Image logo = Image.getInstance("src/main/resources/Atlas-Feeds-Logo-v.png");
         logo.setAbsolutePosition(365, 725);
         logo.scaleToFit(204, 83);
         doc.add(logo);
