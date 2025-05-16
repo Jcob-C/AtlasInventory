@@ -57,6 +57,27 @@
         quantity INT,
         FOREIGN KEY (sale_id) REFERENCES sales(sale_id)
     );
+
+    CREATE TABLE Accounts (
+        ID INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+        Username VARCHAR(50) NOT NULL UNIQUE,
+        Acc_Password VARCHAR(50) NOT NULL,
+        User_Role VARCHAR(50) NOT NULL,
+        Full_Name VARCHAR(50) NOT NULL,
+        Email VARCHAR(50) NOT NULL,
+        Contact_no VARCHAR(11) NOT NULL,
+        Address VARCHAR(50) NOT NULL,
+        Theme varchar(10) default 'Default'
+    );
+
+    CREATE TABLE Activity (
+        activity_id int primary key auto_increment,
+        ID INT,
+        Full_Name VARCHAR(50) NOT NULL,
+        Activity VARCHAR(150) NOT NULL,
+        Date_Time DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (ID) REFERENCES Accounts(Id)
+    );
     ```
 
 2. **Set your Database Credentials**

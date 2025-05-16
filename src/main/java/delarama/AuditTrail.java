@@ -1,5 +1,6 @@
 package delarama;
 
+import base.DB;
 import java.sql.*;
 import java.awt.*;
 import javax.swing.*;
@@ -39,13 +40,8 @@ public class AuditTrail extends JPanel {
         panel2.setBackground(Main.getLightColor());
         panel2.setBounds(0, 630, 880, 30);
 
-        JLabel title = new JLabel("Audit Trail");
-        title.setForeground(Color.WHITE);
-        title.setBounds(0, 0, 200, 20);
-        panel1.add(title);
-
         JLabel searchLabel = new JLabel("Search by ID:");
-        searchLabel.setBounds(1, 49, 139, 34);
+        searchLabel.setBounds(50, 49, 139, 34);
         searchLabel.setForeground(Color.WHITE);
 
         searchField.setBounds(132, 49, 139, 34);
@@ -56,14 +52,9 @@ public class AuditTrail extends JPanel {
         searchButton.setForeground(Color.WHITE);
 
         JButton createButton = new JButton("Create");
-        createButton.setBounds(634, 51, 79, 33);
+        createButton.setBounds(735, 51, 105, 33);
         createButton.setBackground(Main.getMidColor());
         createButton.setForeground(Color.WHITE);
-
-        JButton accountButton = new JButton("Account");
-        accountButton.setBounds(735, 51, 105, 33);
-        accountButton.setBackground(Main.getMidColor());
-        accountButton.setForeground(Color.WHITE);
         
         JButton exportButton = new JButton("Export to PDF");
         exportButton.setBounds(587,93,126,33);
@@ -74,6 +65,12 @@ public class AuditTrail extends JPanel {
         refreshButton.setBounds(735,93,105,33);
         refreshButton.setBackground(Main.getMidColor());
         refreshButton.setForeground(Color.WHITE);
+
+        JButton backButton = new JButton("<");
+        backButton.setBounds(0, 0, 45, 30);
+        backButton.setBackground(Main.getMidColor());
+        backButton.setForeground(Color.WHITE);
+        panel1.add(backButton);
 
         JButton closeButton = new JButton("X");
         closeButton.setBounds(835, 0, 45, 30);
@@ -88,7 +85,6 @@ public class AuditTrail extends JPanel {
         add(searchField);
         add(searchButton);
         add(createButton);
-        add(accountButton);
         add(exportButton);
         add(refreshButton);
 
@@ -107,17 +103,17 @@ public class AuditTrail extends JPanel {
             Panels.allFalseVisibility();
             Panels.createPanel.setVisible(true);
         });
-
-        accountButton.addActionListener(e -> {
-            Panels.allFalseVisibility();
-            Panels.accountPanel.setVisible(true);
-        });
         
         refreshButton.addActionListener(e -> LoadAllActivities());
         
         exportButton.addActionListener(e -> exportToPDF());
 
         closeButton.addActionListener(e -> System.exit(0));
+
+        backButton.addActionListener(e -> {
+            Panels.allFalseVisibility();
+            Panels.accountPanel.setVisible(true);
+        });
     }
 
     private void popupWarning(String message) {
@@ -129,7 +125,7 @@ public class AuditTrail extends JPanel {
     }
 
     public void LoadAllActivities() {
-        try (Connection conn = DBC.getConnection()) {
+        try (Connection conn = DB.getConnection()) {
             model.setRowCount(0);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Activity ORDER BY activity_id DESC");
@@ -197,7 +193,7 @@ public class AuditTrail extends JPanel {
             return;
         }
 
-        try (Connection conn = DBC.getConnection()) {
+        try (Connection conn = DB.getConnection()) {
             model.setRowCount(0);
             
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Activity WHERE ID = ?");
@@ -218,6 +214,21 @@ public class AuditTrail extends JPanel {
 
             rs.close();
             stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void Audit_Trail(String action) {
+        try (Connection conn = DB.getConnection()) {
+            
+            PreparedStatement insert = conn.prepareStatement("INSERT INTO Activity (ID, Full_Name, Activity) VALUES (?, ?, ?)");
+
+            insert.setString(1, Main.loggedInID);
+            insert.setString(2, Main.userFullName);
+            insert.setString(3, action);
+
+            insert.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }

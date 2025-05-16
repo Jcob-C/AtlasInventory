@@ -2,7 +2,7 @@ package celestino.inventory;
 
 import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
-import delarama.UserActivity;
+import delarama.AuditTrail;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -112,7 +112,7 @@ public class InventoryMain {
         
         if (DB.addStock(item_id, new_stock)) {
             updateTable();
-            UserActivity.Audit_Trail("Added " + new_stock + " stocks in item ID "  + item_id);
+            AuditTrail.Audit_Trail("Added " + new_stock + " stocks in item ID "  + item_id);
             Main.popupMessage("Add Stock Successful!");
             return;
         }
@@ -136,7 +136,7 @@ public class InventoryMain {
 
         if (InventoryDB.edit(item_id,column_index,new_value)) {
             updateTable();
-            UserActivity.Audit_Trail("Edited " + Main.inventory_columns[column_index] + " of item ID " + item_id + " with new value " + new_value);
+            AuditTrail.Audit_Trail("Edited " + Main.inventory_columns[column_index] + " of item ID " + item_id + " with new value " + new_value);
             Main.popupMessage("Edit Successful!");
         } 
         else {
@@ -149,7 +149,7 @@ public class InventoryMain {
         if (Main.popupConfirm("Delete item with ID:\n\n                     "+item_id+"\n\n")) {
             if (InventoryDB.delete(item_id)) {
                 updateTable();
-                UserActivity.Audit_Trail("Deleted the item with ID " + item_id);
+                AuditTrail.Audit_Trail("Deleted the item with ID " + item_id);
                 Main.popupMessage("Delete Successful");
             } else {
                 Main.popupError("Delete Failed");
@@ -169,7 +169,7 @@ public class InventoryMain {
             return;
         }
         if (InventoryDB.insert(new_item_inputs)) {
-            UserActivity.Audit_Trail("Created item " + new_item_inputs[1] + " with barcode " + new_item_inputs[0]);
+            AuditTrail.Audit_Trail("Created item " + new_item_inputs[1] + " with barcode " + new_item_inputs[0]);
             Main.popupMessage("New item added");
             ItemCreatePage.clearNewItemFields();
             gotoInventory();
