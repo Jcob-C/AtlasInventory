@@ -12,7 +12,12 @@ import com.itextpdf.text.pdf.*;
 import base.Main;
 
 public class AuditTrail extends JPanel {
-    private final DefaultTableModel model = new DefaultTableModel();
+    private final DefaultTableModel model = new DefaultTableModel() {
+        @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+        }
+    };
     private final JTextField searchField = new JTextField();
     
     public AuditTrail() {
@@ -115,6 +120,7 @@ public class AuditTrail extends JPanel {
             Panels.accountPanel.setVisible(true);
         });
     }
+
 
     private void popupWarning(String message) {
         JOptionPane.showMessageDialog(this, message, "WARNING", JOptionPane.WARNING_MESSAGE);
