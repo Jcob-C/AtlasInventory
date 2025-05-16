@@ -27,9 +27,11 @@ public class TransactPage {
             TransactMain::sellItemSelected
         );
     private static final JLabel 
-        refund_total = new JLabel("Total: 0.0"),
-        sell_total = new JLabel("Total: 0.0");
-    private static final JTextField customer_field = new JTextField();
+        refund_total = new JLabel("Refund Total: 0.0"),
+        sell_total = new JLabel("Sell Total: 0.0");
+    private static final JTextField 
+        customer_field = new JTextField(),
+        method_field = new JTextField();
     
 
     static void setRefundTotal(String total) {
@@ -72,8 +74,13 @@ public class TransactPage {
     }
 
 
+    static String getPaymentMethod() {
+        return method_field.getText();
+    }
+
+
     static Double getTransactionTotal() {
-        return Double.parseDouble(sell_total.getText().substring(7))-Double.parseDouble(refund_total.getText().substring(7));
+        return Double.parseDouble(sell_total.getText().substring(12))-Double.parseDouble(refund_total.getText().substring(14));
     }
 
 
@@ -112,6 +119,11 @@ public class TransactPage {
     }
 
 
+    static void clearMethodField() {
+        method_field.setText("");
+    }
+
+
     static void removeRefundTableRow(int row) {
         refund_table.deleteRow(row);
     }
@@ -124,13 +136,13 @@ public class TransactPage {
 
     static void resetSellTable() {
         sell_table.updateTable(null); 
-        setSellTotal("Total: 0.0");
+        setSellTotal("Sell Total: 0.0");
     }
 
 
     static void resetRefundTable() {
         refund_table.updateTable(null); 
-        setRefundTotal("Total: 0.0");
+        setRefundTotal("Refund Total: 0.0");
     }
 
 
@@ -151,39 +163,37 @@ public class TransactPage {
             reset_sell = new JButton(Main.refresh_icon);
         JLabel 
             name_label = new JLabel("Customer:"),
-            refund_label = new JLabel("Refund"),
-            sell_label = new JLabel("Sell")
+            method_label = new JLabel("Payment Method:")
         ;
 
-        reset_refund.setBounds(33,112,40,40);
-        reset_sell.setBounds(445,112,40,40);
-        refund_label.setBounds(82,117,88,27);
-        sell_label.setBounds(511,117,58,27);
-        name_label.setBounds(50,34,212,27);
+        reset_refund.setBounds(146,112,40,40);
+        reset_sell.setBounds(557,112,40,40);
+        name_label.setBounds(193,37,212,27);
         back_button.setBounds(0,0,45,30);
         top_bar.setBounds(0,0,880,30);
         bottom_bar.setBounds(0,630,880,30);
-        transact_button.setBounds(489, 30, 123, 40);
-        customer_field.setBounds(175,32,294,32);
-        refund_total.setBounds(233,117,202,27);
-        sell_total.setBounds(645,117,202,27);
-        add_refund.setBounds(170,112,40,40);
-        add_sell.setBounds(582,112,40,40);
+        transact_button.setBounds(654, 49, 123, 40);
+        customer_field.setBounds(323,35,294,32);
+        refund_total.setBounds(197,121,238,22);
+        sell_total.setBounds(608,121,238,22);
+        add_refund.setBounds(44,112,40,40);
+        add_sell.setBounds(456,112,40,40);
         refund_pane.setBounds(33,152,401,478);
         sell_pane.setBounds(445,152,401,478);
+        method_label.setBounds(111,76,212,27);
+        method_field.setBounds(322,73,294,32);
 
-        refund_label.setFont(Main.getFont(22));
-        sell_label.setFont(Main.getFont(22));
+        method_field.setFont(Main.getFont(16));
+        method_label.setFont(Main.getFont(22));
         name_label.setFont(Main.getFont(22));
         transact_button.setFont(Main.getFont(20));
         customer_field.setFont(Main.getFont(16));
         refund_total.setFont(Main.getFont(24));
         sell_total.setFont(Main.getFont(24));
 
+        method_label.setForeground(Color.WHITE);
         reset_refund.setBackground(Main.getMidColor());
         reset_sell.setBackground(Main.getMidColor());
-        refund_label.setForeground(Color.WHITE);
-        sell_label.setForeground(Color.WHITE);
         name_label.setForeground(Color.WHITE);
         top_bar.setBackground(Main.getLightColor());
         bottom_bar.setBackground(Main.getLightColor());
@@ -196,10 +206,10 @@ public class TransactPage {
         back_button.setBackground(Main.getMidColor());
         back_button.setForeground(Color.WHITE);
 
+        panel.add(method_field);
+        panel.add(method_label);
         panel.add(reset_refund);
         panel.add(reset_sell);
-        panel.add(refund_label);
-        panel.add(sell_label);
         panel.add(name_label);
         panel.add(back_button);
         panel.add(transact_button);

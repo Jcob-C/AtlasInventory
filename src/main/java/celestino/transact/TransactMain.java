@@ -50,16 +50,18 @@ public class TransactMain {
     static void transact() {
         if (!checkStocks()) return;
 
+        double total = TransactPage.getTransactionTotal();
         ArrayList<ArrayList<String>> sell_table = TransactPage.getSellTable();
         ArrayList<ArrayList<String>> refund_table = TransactPage.getRefundTable();
-        if (sell_table.size() <= 0 && refund_table.size() <= 0) return;
 
-        double total = TransactPage.getTransactionTotal();
+        if (total == 0) return;
+        
         if (!Main.popupConfirm("Total Transaction Price: "+total+"\n\nContinue?")) return;
 
-        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(total)});
+        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(total),TransactPage.getPaymentMethod()});
         
         TransactPage.clearNameField();
+        TransactPage.clearMethodField();
 
         for (ArrayList<String> x : sell_table) {
             DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), x.get(4));
@@ -183,7 +185,7 @@ public class TransactMain {
         for(ArrayList<String> y : x) {
             total += Double.parseDouble(y.get(3))* Double.parseDouble(y.get(4));
         }
-        TransactPage.setRefundTotal("Total: "+total);
+        TransactPage.setRefundTotal("Refund Total: "+total);
     }
 
     
@@ -194,7 +196,7 @@ public class TransactMain {
         for(ArrayList<String> y : x) {
             total += Double.parseDouble(y.get(3))* Double.parseDouble(y.get(4));
         }
-        TransactPage.setSellTotal("Total: "+total);
+        TransactPage.setSellTotal("Sell Total: "+total);
     }
 
 
