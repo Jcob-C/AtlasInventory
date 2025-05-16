@@ -23,6 +23,11 @@ public class Login extends JPanel{
         lowerPanel.setBackground(Main.getLightColor());
         lowerPanel.setLayout(null);
 
+        JPanel lowerPanel2 = new JPanel();
+        lowerPanel2.setBounds(0,630,880,30);
+        lowerPanel2.setBackground(Main.getLightColor());
+        lowerPanel2.setLayout(null);
+
         ImageIcon image = new ImageIcon("src/main/resources/Atlas-Feeds-Logo-d.png");
 
         JLabel imageLabel = new JLabel();
@@ -64,6 +69,7 @@ public class Login extends JPanel{
 
         add(upperPanel);
         add(lowerPanel);
+        add(lowerPanel2);
         add(imageLabel);
 
         loginButton.addActionListener(e -> {
@@ -74,6 +80,8 @@ public class Login extends JPanel{
 
             if (isAuthenticated) {
                 Main.popupMessage("Login successful!");
+                Main.initializeModules();
+                Main.gotoDashboard();
             } else {
                 Main.popupError("Invalid username or password");
             }
@@ -95,6 +103,7 @@ public class Login extends JPanel{
             if (rs.next()) {
                 Main.loggedInID = rs.getString("ID");
                 Main.userFullName = rs.getString("Full_Name");
+                Main.loggedInTheme = rs.getString("Theme");
 
                 AuditTrail.Audit_Trail("Logged in");
                 return true;

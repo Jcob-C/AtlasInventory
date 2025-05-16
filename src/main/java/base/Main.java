@@ -20,8 +20,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
-
-    private static final String initial_card = "dashboard";
     
     private static final Color theme[] = {
         new Color(252, 153, 51), // light (orange)
@@ -43,12 +41,12 @@ public class Main {
 
     public static final dashboardPanel dashboard_page = new dashboardPanel();
     
-    public static String loggedInID, userFullName;
+    public static String loggedInID, userFullName, loggedInTheme = "Default";
 
     public static void main(String[] args) throws Exception {
         setupWindow();
-        initializeModules();
-        changeCard(initial_card);
+        LoginCard.createModule();
+        changeCard("login");
         window.setVisible(true);
         
         try(Connection conn = DB.getConnection()) {
@@ -163,15 +161,16 @@ public class Main {
     }
 
 
-    private static void initializeModules() {
-        InventoryMain.createModule();
-        OrdersMain.createOrdersModule();
-        TransactMain.createModule();
+    public static void initializeModules() {
 
         addCard(dashboard_page, "dashboard");
         addCard(new valmonte.SalesHistory.salesHistoryPanel(), "SalesHistory");
 
+        InventoryMain.createModule();
+        OrdersMain.createOrdersModule();
+        TransactMain.createModule();
+
         Panels.createModule();
-        LoginCard.createModule();
+       
     }
 }
