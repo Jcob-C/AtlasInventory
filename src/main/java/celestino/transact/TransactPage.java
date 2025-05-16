@@ -31,7 +31,8 @@ public class TransactPage {
         sell_total = new JLabel("Sell Total: 0.0");
     private static final JTextField 
         customer_field = new JTextField(),
-        method_field = new JTextField();
+        method_field = new JTextField()
+    ;
     
 
     static void setRefundTotal(String total) {
@@ -160,7 +161,9 @@ public class TransactPage {
             transact_button = new JButton("Transact"),
             back_button = new JButton("<"),
             reset_refund = new JButton(Main.refresh_icon),
-            reset_sell = new JButton(Main.refresh_icon);
+            reset_sell = new JButton(Main.refresh_icon),
+            refund_scan = new JButton(Main.scanner_icon),
+            sell_scan = new JButton(Main.scanner_icon);
         JLabel 
             name_label = new JLabel("Customer:"),
             method_label = new JLabel("Payment Method:")
@@ -181,7 +184,9 @@ public class TransactPage {
         refund_pane.setBounds(33,152,401,478);
         sell_pane.setBounds(445,152,401,478);
         method_label.setBounds(111,76,212,27);
-        method_field.setBounds(322,73,294,32);
+        method_field.setBounds(322,73,294,32);  
+        refund_scan.setBounds(95,112,40,40);
+        sell_scan.setBounds(506,112,40,40);
 
         method_field.setFont(Main.getFont(16));
         method_label.setFont(Main.getFont(22));
@@ -205,7 +210,11 @@ public class TransactPage {
         sell_total.setForeground(Color.WHITE);
         back_button.setBackground(Main.getMidColor());
         back_button.setForeground(Color.WHITE);
+        refund_scan.setBackground(Main.getMidColor());
+        sell_scan.setBackground(Main.getMidColor());
 
+        panel.add(refund_scan);
+        panel.add(sell_scan);
         panel.add(method_field);
         panel.add(method_label);
         panel.add(reset_refund);
@@ -230,6 +239,8 @@ public class TransactPage {
         add_refund.addActionListener(e -> addToRefund());
         add_sell.addActionListener(e -> addToSell());
         back_button.addActionListener(e -> Main.gotoDashboard());
+        refund_scan.addActionListener(e -> {target_table = "refund"; TransactMain.gotoScan();});
+        sell_scan.addActionListener(e -> {target_table = "sell"; TransactMain.gotoScan();});
 
         return panel;
     }
