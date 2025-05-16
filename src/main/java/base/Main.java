@@ -39,11 +39,8 @@ public class Main {
     public static final ImageIcon 
         refresh_icon = new ImageIcon("src/main/resources/refresh.png"),
         add_icon = new ImageIcon("src/main/resources/add.png"),
-        scanner_icon = new ImageIcon("src/main/resources/scanner.png")
-    ;
+        scanner_icon = new ImageIcon("src/main/resources/scanner.png");
 
-    public static final dashboardPanel dashboard_page = new dashboardPanel();
-    
     public static String loggedInID, userFullName, loggedInTheme = "Default";
 
     public static void main(String[] args) throws Exception {
@@ -62,7 +59,6 @@ public class Main {
 
 
     public static void gotoDashboard() {
-        dashboard_page.refreshDashboard();
         Main.changeCard("dashboard");
     }
 
@@ -72,18 +68,19 @@ public class Main {
     }
 
 
-    public static void setDarkColor(int R, int G, int B) {
-        theme[2] = new Color(R,G,B);
-    }
-
-
-    public static void setMidColor(int R, int G, int B) {
-        theme[1] = new Color(R,G,B);
-    }
-
-
-    public static void setLightColor(int R, int G, int B) {
-        theme[0] = new Color(R,G,B);
+    public static void loadAccountTheme() {
+        switch(loggedInTheme) {
+            case "Dark":
+                theme[2] = new Color(32,32,32);
+                theme[1] = new Color(64,64,64);
+                theme[0] = new Color(128,128,128);
+            break; 
+            case "Light":
+                theme[2] = new Color(128,128,128);
+                theme[1] = new Color(64,64,64);
+                theme[0] = new Color(255,255,255);
+            break;
+        }
     }
 
 
@@ -180,8 +177,9 @@ public class Main {
 
 
     public static void initializeModules() {
+        loadAccountTheme();
 
-        addCard(dashboard_page, "dashboard");
+        addCard(new dashboardPanel(), "dashboard");
         addCard(new valmonte.SalesHistory.salesHistoryPanel(), "SalesHistory");
 
         InventoryMain.createModule();
