@@ -42,9 +42,10 @@
     CREATE TABLE sales (
         sale_id INT AUTO_INCREMENT PRIMARY KEY,
         sale_datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
-        customer_name VARCHAR(100),
+        customer_name VARCHAR(100), 
         employee_name VARCHAR(100),
-        total_price DECIMAL(10, 2)
+        total_price DECIMAL(10, 2),
+        payment_method VARCHAR(50) NOT NULL
     );
 
     CREATE TABLE sale_items (

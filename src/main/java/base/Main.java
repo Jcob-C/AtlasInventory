@@ -3,6 +3,7 @@ package base;
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
 import celestino.transact.TransactMain;
+import valmonte.dashboardPanel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static final String initial_card = "transact";
+    private static final String initial_card = "dashboard";
     
     private static final Color theme[] = {
         new Color(252, 153, 51), // light (orange)
@@ -37,6 +38,8 @@ public class Main {
         add_icon = new ImageIcon("src/main/resources/add.png"),
         scanner_icon = new ImageIcon("src/main/resources/scanner.png")
     ;
+
+    public static final dashboardPanel dashboard_page = new dashboardPanel();
     
 
     public static void main(String[] args) throws Exception {
@@ -51,6 +54,12 @@ public class Main {
             popupError(e.getMessage());
             System.exit(0);
         }
+    }
+
+
+    public static void gotoDashboard() {
+        dashboard_page.refreshDashboard();
+        Main.changeCard("dashboard");
     }
 
 
@@ -155,5 +164,8 @@ public class Main {
         InventoryMain.createModule();
         OrdersMain.createOrdersModule();
         TransactMain.createModule();
+
+        addCard(dashboard_page, "dashboard");
+        addCard(new valmonte.SalesHistory.salesHistoryPanel(), "SalesHistory");
     }
 }

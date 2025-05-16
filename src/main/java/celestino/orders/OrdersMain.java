@@ -2,7 +2,6 @@ package celestino.orders;
 
 import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
-import celestino.inventory.InventoryMain;
 
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -18,7 +17,7 @@ public class OrdersMain {
         orders_panel = new TableBrowserJPanel(
             column_names, 
             OrdersMain::selectOrder, 
-            InventoryMain::gotoInventory, 
+            Main::gotoDashboard, 
             OrdersMain::updateOrdersJTable,
             OrdersMain::refreshOrders
         ),

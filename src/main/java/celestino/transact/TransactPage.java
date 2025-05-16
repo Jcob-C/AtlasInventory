@@ -1,11 +1,9 @@
 package celestino.transact;
 
 import celestino.PresetJTable;
-import celestino.orders.OrdersMain;
 
 import java.awt.Color;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -221,7 +219,7 @@ public class TransactPage {
         transact_button.addActionListener(e -> TransactMain.transact());
         add_refund.addActionListener(e -> addToRefund());
         add_sell.addActionListener(e -> addToSell());
-        back_button.addActionListener(e -> OrdersMain.gotoOrders());
+        back_button.addActionListener(e -> Main.gotoDashboard());
 
         return panel;
     }

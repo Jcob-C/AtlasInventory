@@ -15,7 +15,7 @@ public class InventoryMain {
     private static final TableBrowserJPanel inventory_panel = new TableBrowserJPanel(
         Main.inventory_columns, 
         InventoryMain::selectCell,
-        TransactMain::gotoTransact,
+        Main::gotoDashboard,
         InventoryMain::updateTable,
         InventoryMain::refresh
     );
