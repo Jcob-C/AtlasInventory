@@ -1,5 +1,6 @@
 package delarama;
 
+import base.DB;
 import javax.swing.*; 
 import javax.swing.table.DefaultTableModel;
 import java.awt.*; 
@@ -41,7 +42,7 @@ public class Account_Manager extends JPanel {
         panel2.setBounds(0, 630, 880, 30);
     
         JLabel searchLabel = new JLabel("Search by ID:");
-        searchLabel.setBounds(1, 49, 139, 34);
+        searchLabel.setBounds(50, 49, 139, 34);
         searchLabel.setForeground(Color.WHITE);
         searchLabel.setFont(new Font(font_style, Font.BOLD, 12));
     
@@ -179,7 +180,7 @@ public class Account_Manager extends JPanel {
             }
             
             if (columnName.equals("Username")) {
-                try (Connection conn = DBC.getConnection()) {
+                try (Connection conn = DB.getConnection()) {
                     PreparedStatement checkStmt = conn.prepareStatement("SELECT ID FROM Accounts WHERE Username = ? AND ID != ?");
                     checkStmt.setString(1, newValue.toString().trim());
                     checkStmt.setInt(2, id);
@@ -199,13 +200,13 @@ public class Account_Manager extends JPanel {
                 }
             }
         
-            try (Connection conn = DBC.getConnection()) {
+            try (Connection conn = DB.getConnection()) {
                 String query = "UPDATE Accounts SET `" + columnName + "` = ? WHERE ID = ?";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setObject(1, newValue);
                 stmt.setInt(2, id);
                 stmt.executeUpdate();
-                UserActivity.Audit_Trail("Updated " + columnName + " for ID: " + id);
+                AuditTrail.Audit_Trail("Updated " + columnName + " for ID: " + id);
             } catch (Exception e) {
                 e.printStackTrace();
                 LoadAllAccounts();
@@ -219,12 +220,12 @@ public class Account_Manager extends JPanel {
             int confirm = popupConfirmation("Are you sure you want to delete this account?", "Confirm Deletion");
             if (confirm == JOptionPane.YES_OPTION) {
                 int id = Integer.parseInt(model.getValueAt(row, 0).toString());
-                try (Connection conn = DBC.getConnection()) {
+                try (Connection conn = DB.getConnection()) {
                     PreparedStatement stmt = conn.prepareStatement("DELETE FROM Accounts WHERE Id = ?");
                     stmt.setInt(1, id);
                     stmt.executeUpdate();
                     model.removeRow(row);
-                    UserActivity.Audit_Trail("Deleted account with ID: " + id);
+                    AuditTrail.Audit_Trail("Deleted account with ID: " + id);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -233,7 +234,7 @@ public class Account_Manager extends JPanel {
     }
     
     static void LoadAllAccounts() {
-        try (Connection conn = DBC.getConnection()) {
+        try (Connection conn = DB.getConnection()) {
             model.setRowCount(0);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Accounts");
@@ -267,7 +268,7 @@ public class Account_Manager extends JPanel {
             return;
         }
     
-        try (Connection conn = DBC.getConnection()) {
+        try (Connection conn = DB.getConnection()) {
             model.setRowCount(0);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Accounts WHERE ID = ?");
             stmt.setInt(1, id);

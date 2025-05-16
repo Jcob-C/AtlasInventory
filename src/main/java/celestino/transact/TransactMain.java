@@ -6,7 +6,7 @@ import base.DB;
 import base.Main;
 import celestino.ScannerJPanel;
 import celestino.TableBrowserJPanel;
-import delarama.UserActivity;
+import delarama.AuditTrail;
 
 public class TransactMain {
 
@@ -105,19 +105,19 @@ public class TransactMain {
 
         int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(total),TransactPage.getPaymentMethod()});
         
-        UserActivity.Audit_Trail("Transaction complete with sale ID " + sale_id + " for customer " + TransactPage.getCustomerName() + " with total: " + total);
+        AuditTrail.Audit_Trail("Transaction complete with sale ID " + sale_id + " for customer " + TransactPage.getCustomerName() + " with total: " + total);
         TransactPage.clearNameField();
         TransactPage.clearMethodField();
 
         for (ArrayList<String> x : sell_table) {
             DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), x.get(4));
             DB.addStock(x.get(0), '-'+x.get(4));
-            UserActivity.Audit_Trail("Added sale item with ID of " + x.get(0) + " with price: " + x.get(3) + " with quantity: " + x.get(4) + " with the sale ID: " + sale_id);
+            AuditTrail.Audit_Trail("Added sale item with ID of " + x.get(0) + " with price: " + x.get(3) + " with quantity: " + x.get(4) + " with the sale ID: " + sale_id);
         }
         for (ArrayList<String> x : refund_table) {
             if (x.get(5).equals("BAD")) continue;
             DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), '-'+x.get(4));
-            UserActivity.Audit_Trail("Added refund item with ID of " + x.get(0) + " with price: " + x.get(3) + " with quantity: " + x.get(4) + " with the sale ID: " + sale_id);
+            AuditTrail.Audit_Trail("Added refund item with ID of " + x.get(0) + " with price: " + x.get(3) + " with quantity: " + x.get(4) + " with the sale ID: " + sale_id);
         }
 
         TransactPage.resetRefundTable();
@@ -154,7 +154,7 @@ public class TransactMain {
                         "OK"
                     }
                 );
-            UserActivity.Audit_Trail("Added a refund item with ID: " + item_select_panel.getValueAt(xy[0], 0));
+            AuditTrail.Audit_Trail("Added a refund item with ID: " + item_select_panel.getValueAt(xy[0], 0));
             break;
             case "sell":
                 TransactPage.addSellItem(
@@ -166,7 +166,7 @@ public class TransactMain {
                         "1"
                     }
                 );
-            UserActivity.Audit_Trail("Added a sell item with ID: " + item_select_panel.getValueAt(xy[0], 0));    
+            AuditTrail.Audit_Trail("Added a sell item with ID: " + item_select_panel.getValueAt(xy[0], 0));    
             break;
         }
         mergeRefundTable();
@@ -187,19 +187,19 @@ public class TransactMain {
                 else {
                     TransactPage.setRefundTableValue(xy[0], 5, "OK");
                 }
-                UserActivity.Audit_Trail("Change the refund item condition of " + TransactPage.getRefundTableValue(xy[0], 1) + " to " + (TransactPage.getRefundTableValue(xy[0], 5).equals("OK") ? "BAD" : "OK"));
+                AuditTrail.Audit_Trail("Change the refund item condition of " + TransactPage.getRefundTableValue(xy[0], 1) + " to " + (TransactPage.getRefundTableValue(xy[0], 5).equals("OK") ? "BAD" : "OK"));
                 mergeRefundTable();
             break;
             case 1:
                 TransactPage.removeRefundTableRow(xy[0]);
-                UserActivity.Audit_Trail("Removed the refund item " + TransactPage.getRefundTableValue(xy[0], 1));
+                AuditTrail.Audit_Trail("Removed the refund item " + TransactPage.getRefundTableValue(xy[0], 1));
                 updateRefundTotal();
             break;
             case 2:
                 String new_quantity = Main.popupInput("Enter Quantity:");
                 if (Main.toInteger(new_quantity) != null && Main.toInteger(new_quantity) >= 1) {
                     TransactPage.setRefundTableValue(xy[0], 4, new_quantity);
-                    UserActivity.Audit_Trail("Changed the refund item " + TransactPage.getRefundTableValue(xy[0], 1) + " quantity to " + new_quantity);
+                    AuditTrail.Audit_Trail("Changed the refund item " + TransactPage.getRefundTableValue(xy[0], 1) + " quantity to " + new_quantity);
                     updateRefundTotal();
                 }
                 else {
@@ -215,14 +215,14 @@ public class TransactMain {
         switch (option) {
             case 0:
                 TransactPage.removeSellTableRow(xy[0]);
-                UserActivity.Audit_Trail("Removed sell item " + TransactPage.getSellTableValue(xy[0], 1));
+                AuditTrail.Audit_Trail("Removed sell item " + TransactPage.getSellTableValue(xy[0], 1));
                 updateSellTotal();
             break;
             case 1:
                 String new_quantity = Main.popupInput("Enter Quantity:");
                 if (Main.toInteger(new_quantity) != null && Main.toInteger(new_quantity) >= 1) {
                     TransactPage.setSellTableValue(xy[0], 4, new_quantity);
-                    UserActivity.Audit_Trail("Changed the sell item " + TransactPage.getSellTableValue(xy[0], 1) + " quantity to " + new_quantity);
+                    AuditTrail.Audit_Trail("Changed the sell item " + TransactPage.getSellTableValue(xy[0], 1) + " quantity to " + new_quantity);
                     updateSellTotal();
                 }
                 else {
@@ -266,7 +266,7 @@ public class TransactMain {
                         Main.toInteger(TransactPage.getRefundTableValue(new_item_index, 4))
                     )
                 );
-                UserActivity.Audit_Trail("Merged refund item quantities for " + TransactPage.getRefundTableValue(i, 1) + " new quantities " + (Main.toInteger(TransactPage.getRefundTableValue(i, 4)) + Main.toInteger(TransactPage.getRefundTableValue(new_item_index, 4))));
+                AuditTrail.Audit_Trail("Merged refund item quantities for " + TransactPage.getRefundTableValue(i, 1) + " new quantities " + (Main.toInteger(TransactPage.getRefundTableValue(i, 4)) + Main.toInteger(TransactPage.getRefundTableValue(new_item_index, 4))));
                 TransactPage.removeRefundTableRow(new_item_index);
                 return true;
             }
@@ -285,7 +285,7 @@ public class TransactMain {
                         Main.toInteger(TransactPage.getSellTableValue(new_item_index, 4))
                     )
                 );
-                UserActivity.Audit_Trail("Merged sell item quantities for " + TransactPage.getSellTableValue(i, 1) + " new quantities " + (Main.toInteger(TransactPage.getSellTableValue(i, 4)) + Main.toInteger(TransactPage.getSellTableValue(new_item_index, 4))));
+                AuditTrail.Audit_Trail("Merged sell item quantities for " + TransactPage.getSellTableValue(i, 1) + " new quantities " + (Main.toInteger(TransactPage.getSellTableValue(i, 4)) + Main.toInteger(TransactPage.getSellTableValue(new_item_index, 4))));
                 TransactPage.removeSellTableRow(new_item_index);
                 return true;
             }

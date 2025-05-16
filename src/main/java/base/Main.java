@@ -3,7 +3,8 @@ package base;
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
 import celestino.transact.TransactMain;
-import delarama.MainCard;
+import delarama.Panels;
+import sandil.LoginCard;
 import valmonte.dashboardPanel;
 
 import javax.swing.ImageIcon;
@@ -45,6 +46,7 @@ public class Main {
 
     public static final dashboardPanel dashboard_page = new dashboardPanel();
     
+    public static String loggedInID, userFullName;
 
     public static void main(String[] args) throws Exception {
         setupWindow();
@@ -187,7 +189,8 @@ public class Main {
         addCard(dashboard_page, "dashboard");
         addCard(new valmonte.SalesHistory.salesHistoryPanel(), "SalesHistory");
 
-        MainCard.createModule();
+        Panels.createModule();
+        LoginCard.createModule();
         UserProfileMain.createModule();
     }
 }

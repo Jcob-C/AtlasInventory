@@ -1,5 +1,6 @@
 package delarama;
 
+import base.DB;
 import javax.swing.*;
 import java.sql.*;
 import java.awt.*;
@@ -145,7 +146,7 @@ public class Create extends JPanel {
     }
 
     public static void AddAccounts() {
-        try (Connection conn = DBC.getConnection()) {
+        try (Connection conn = DB.getConnection()) {
             String username = userField.getText();
             String password = new String(passField.getPassword());
             String role = roleField.getText();
@@ -177,7 +178,7 @@ public class Create extends JPanel {
                 insert.close();
 
                 popupInformation("Added Account Successfully!");
-                UserActivity.Audit_Trail("Created account for: " + fullname);
+                AuditTrail.Audit_Trail("Created account for: " + fullname);
                 Account_Manager.LoadAllAccounts();
                 clearFields();
             }
