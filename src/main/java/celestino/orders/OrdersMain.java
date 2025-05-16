@@ -12,7 +12,7 @@ import base.Main;
 public class OrdersMain {
 
     private static final String[]
-        column_names = {"ID","Date&Time","Customer","Contact","Address","Status","PaymentID","Price"};
+        column_names = {"ID","Date&Time","Customer","Contact","Address","Status","PaymentID","Price","PaymentMethod"};
     private static final TableBrowserJPanel 
         orders_panel = new TableBrowserJPanel(
             column_names, 
@@ -173,6 +173,7 @@ public class OrdersMain {
             OrdersDB.edit(id, 3, data[1]);
             OrdersDB.edit(id, 4, data[2]);
             OrdersDB.edit(id, 6, data[3]);
+            OrdersDB.edit(id, 8, data[4]);
         }
         gotoOrders();
     }

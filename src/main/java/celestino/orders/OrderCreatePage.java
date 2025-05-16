@@ -22,7 +22,8 @@ public class OrderCreatePage {
     private static final JTextField
         customer_name_field = new JTextField(),
         contact_field = new JTextField(),
-        payment_id = new JTextField();
+        payment_id = new JTextField(),
+        payment_method = new JTextField();
     private static final JTextArea address_field = new JTextArea();
     private static final JLabel total_price = new JLabel("Total: 0.0");
 
@@ -33,7 +34,8 @@ public class OrderCreatePage {
             contact_field.getText(),
             address_field.getText(),
             payment_id.getText(),
-            total_price.getText().substring(7)
+            total_price.getText().substring(7),
+            payment_method.getText()
         };
     }
 
@@ -48,6 +50,7 @@ public class OrderCreatePage {
         contact_field.setText("");
         address_field.setText("");
         payment_id.setText("");
+        payment_method.setText("");
     }
 
 
@@ -93,6 +96,7 @@ public class OrderCreatePage {
     static JPanel createPanel() {
         panel.setLayout(null);
         JLabel
+            payment_method_label = new JLabel("Payment Method:"),
             payment_label = new JLabel("Payment ID:"),
             name_label = new JLabel("Customer:"),
             contact_label = new JLabel("Contact:"),
@@ -131,17 +135,20 @@ public class OrderCreatePage {
         contact_label.setForeground(Color.WHITE);
         address_label.setForeground(Color.WHITE);
         scan_button.setBackground(Main.getMidColor());
+        payment_method_label.setForeground(Color.WHITE);
 
+        payment_method.setBounds(23,98,234,38);
+        payment_method_label.setBounds(23,66,215,27);
         clear_order_button.setBounds(561,84,40,40);
-        clear_button.setBounds(22,548,40,40);
-        payment_label.setBounds(23,124,215,27);
-        name_label.setBounds(23,210,215,27);
-        contact_label.setBounds(23,296,215,27);
-        address_label.setBounds(23,382,215,27);
-        address_pane.setBounds(23,414,395,92);
-        contact_field.setBounds(23,328,205,38);
-        customer_name_field.setBounds(23,242,395,38);
-        payment_id.setBounds(23,156,275,38);
+        clear_button.setBounds(22,562,40,40);
+        payment_label.setBounds(23,152,215,27);
+        name_label.setBounds(23,238,215,27);
+        contact_label.setBounds(23,325,215,27);
+        address_label.setBounds(23,411  ,215,27);
+        address_pane.setBounds(23,442,395,92);
+        contact_field.setBounds(23,356,205,38);
+        customer_name_field.setBounds(23,270,395,38);
+        payment_id.setBounds(23,184,275,38);
         total_price.setBounds(652,97,200,27);
         back_button.setBounds(0,0,45,30);
         top_bar.setBounds(0,0,880,30);
@@ -152,6 +159,8 @@ public class OrderCreatePage {
         order_button.setBounds(688,28,164,40);
         scan_button.setBounds(509,84,40,40);
 
+        payment_method.setFont(Main.getFont(19));
+        payment_method_label.setFont(Main.getFont(20));
         payment_label.setFont(Main.getFont(20));
         name_label.setFont(Main.getFont(20));
         contact_label.setFont(Main.getFont(20));
@@ -166,6 +175,8 @@ public class OrderCreatePage {
         address_field.setLineWrap(true);
         address_field.setWrapStyleWord(true);
         
+        panel.add(payment_method);
+        panel.add(payment_method_label);
         panel.add(scan_button);
         panel.add(clear_order_button);
         panel.add(payment_label);

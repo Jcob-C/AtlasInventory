@@ -10,7 +10,7 @@ import base.DB;
 
 public class OrdersDB {
     
-    private static final String column_names[] = {"order_id","order_datetime","customer_name","contact_no","address","order_status","payment_id","total_price"};
+    private static final String column_names[] = {"order_id","order_datetime","customer_name","contact_no","address","order_status","payment_id","total_price","payment_method"};
 
 
     static ArrayList<ArrayList<String>> getTable() {
@@ -59,8 +59,8 @@ public class OrdersDB {
 
     static int insertNewOrder(String[] order) {
         String insertSql = """
-        INSERT INTO orders (customer_name, contact_no, address, payment_id, total_price) 
-        VALUES (?, ?, ?, ?, ?);
+        INSERT INTO orders (customer_name, contact_no, address, payment_id, total_price, payment_method) 
+        VALUES (?, ?, ?, ?, ?, ?);
         """;
         try (
             Connection conn = DB.getConnection();
