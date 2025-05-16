@@ -65,6 +65,7 @@ public class dashboardPanel extends JPanel {
     }
 
     private static void gotoAccount() {
+        Main.changeCard("Accounts");
     }
 
     private static void gotoUserSettings() {
@@ -250,7 +251,7 @@ public class dashboardPanel extends JPanel {
         inventoryButton.addActionListener(e -> gotoInventory());
         transactButton.addActionListener(e -> gotoTransact());
         ordersButton.addActionListener(e -> gotoOrders());
-        //dashboardPanel.getAccountButton().addActionListener(e -> gotoAccount());
+        accountButton.addActionListener(e -> gotoAccount());
         //dashboardPanel.getUserButton().addActionListener(e -> gotoUserAdmin());
         //dashboardPanel.getSalesHistoryButton().addActionListener(e -> gotoSalesHistory());
     }

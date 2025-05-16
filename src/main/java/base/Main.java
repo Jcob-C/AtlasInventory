@@ -3,6 +3,8 @@ package base;
 import celestino.inventory.InventoryMain;
 import celestino.orders.OrdersMain;
 import celestino.transact.TransactMain;
+import delarama.Account_Manager;
+import delarama.MainCard;
 import valmonte.dashboardPanel;
 
 import javax.swing.ImageIcon;
@@ -167,5 +169,7 @@ public class Main {
 
         addCard(dashboard_page, "dashboard");
         addCard(new valmonte.SalesHistory.salesHistoryPanel(), "SalesHistory");
+
+        MainCard.createModule();
     }
 }

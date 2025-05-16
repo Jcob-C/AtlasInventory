@@ -1,4 +1,4 @@
-package Sandil;
+package sandil;
 
 import javax.swing.*;
 import java.awt.*;

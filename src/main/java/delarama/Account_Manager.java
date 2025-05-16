@@ -131,6 +131,8 @@ public class Account_Manager extends JPanel {
         refreshButton.addActionListener(e -> LoadAllAccounts());
     
         closeButton.addActionListener(e -> System.exit(0));
+
+        backButton.addActionListener(e -> Main.changeCard("dashboard"));
     
         table.getSelectionModel().addListSelectionListener(e -> {
             boolean selected = table.getSelectedRow() != -1;
