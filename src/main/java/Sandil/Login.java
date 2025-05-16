@@ -94,7 +94,7 @@ public class Login extends JPanel{
 
     public static boolean Authentication(String username, String password) {
         try (Connection conn = DB.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Accounts WHERE Username = ? AND Acc_Password = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Accounts WHERE BINARY Username = ? AND BINARY Acc_Password = ?");
 
             stmt.setString(1, username);
             stmt.setString(2, password);
