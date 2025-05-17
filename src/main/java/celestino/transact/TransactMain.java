@@ -115,7 +115,7 @@ public class TransactMain {
             AuditTrail.Audit_Trail("Added sale item with ID of " + x.get(0) + " with price: " + x.get(3) + " with quantity: " + x.get(4) + " with the sale ID: " + sale_id);
         }
         for (ArrayList<String> x : refund_table) {
-            if (x.get(5).equals("BAD")) continue;
+            if (x.get(5).equals("OK")) DB.addStock(x.get(0), x.get(4));
             DB.insertSaleItems(String.valueOf(sale_id), x.get(0), x.get(3), '-'+x.get(4));
             AuditTrail.Audit_Trail("Added refund item with ID of " + x.get(0) + " with price: " + x.get(3) + " with quantity: " + x.get(4) + " with the sale ID: " + sale_id);
         }
