@@ -66,8 +66,7 @@
         Full_Name VARCHAR(50) NOT NULL,
         Email VARCHAR(50) NOT NULL,
         Contact_no VARCHAR(11) NOT NULL,
-        Address VARCHAR(50) NOT NULL,
-        Theme VARCHAR(10) DEFAULT 'Default'
+        Address VARCHAR(50) NOT NULL
     );
 
     CREATE TABLE Activity (

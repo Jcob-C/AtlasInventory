@@ -10,6 +10,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 import java.awt.*;
 import java.util.Arrays;
 
@@ -27,9 +30,15 @@ public class dashboardPanel extends JPanel {
     private JTextField dbSearchField;
     private JButton inventoryButton, transactButton, ordersButton, accountButton, userButton, salesHistoryButton;
 
-    private static final dashboardPanel dashboardPanel = new dashboardPanel();
+    private static dashboardPanel dashboardPanel;
 
     private boolean ascending = true;
+
+
+    public static JPanel createModule() {
+        dashboardPanel = new dashboardPanel();
+        return dashboardPanel;
+    }
 
 
     public dashboardPanel() {

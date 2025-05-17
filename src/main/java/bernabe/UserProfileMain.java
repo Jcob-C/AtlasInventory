@@ -1,5 +1,7 @@
 package bernabe;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,29 +41,25 @@ public class UserProfileMain {
     }
 
 
-    public static void changeAccountTheme(Object theme) {
+    public static void changeAppTheme(Object theme) {
+        saveTheme(String.valueOf(theme));
         if (Main.popupConfirm("Theme change requires a restart\n\nClose app now?")) {
-            editTheme(Main.loggedInID, String.valueOf(theme));
             System.exit(0);
         }
         else {
-            Main.popupMessage("Theme will be applied on your next login");
+            Main.popupMessage("Theme will be applied on next startup");
         }
     }
 
 
-    public static void editTheme(String id, String new_theme) {
-        String edit_query = "UPDATE Accounts SET Theme = '" + new_theme + "' WHERE ID = " + id + ";";
-        try (
-            Connection conn = DB.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(edit_query) 
-            ) 
-        {
-            stmt.executeUpdate();
-        } 
-        catch (SQLException e) {
+    public static void saveTheme(String new_theme) {
+        String value = new_theme;
+        try {
+            FileWriter writer = new FileWriter("theme.txt");
+            writer.write(value);
+            writer.close();
+        } catch (IOException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
         }
     }
 

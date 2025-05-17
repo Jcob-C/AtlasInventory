@@ -58,8 +58,8 @@ public class UserProfilePage {
         JButton 
             back_button = new JButton("<"),
             view_pass_button = new JButton("View"),
-            save_changes = new JButton("Save Changes");
-        
+            save_changes = new JButton("Save Changes"),
+            logout_button = new JButton("Log Out");
         JScrollPane addr_pane = new JScrollPane(addr);
 
         panel.setBackground(Main.getDarkColor());
@@ -75,7 +75,10 @@ public class UserProfilePage {
         view_pass_button.setForeground(Color.WHITE);
         save_changes.setBackground(Main.getMidColor());
         save_changes.setForeground(Color.WHITE);
+        logout_button.setBackground(Main.getMidColor());
+        logout_button.setForeground(Color.WHITE);
         
+        logout_button.setBounds(700,556,110,37);
         backdrop.setBounds(64,8,432,645);
         back_button.setBounds(0,0,45,30);
         top_bar.setBounds(0,0,880,30);
@@ -91,7 +94,7 @@ public class UserProfilePage {
         view_pass_button.setBounds(323,136,82,37);
         theme_dropdown.setBounds(700,85,101,32);
 
-
+        logout_button.setFont(Main.getFont(18));
         save_changes.setFont(Main.getFont(18));
         view_pass_button.setFont(Main.getFont(18));
         theme_dropdown.setFont(Main.getFont(18));
@@ -102,10 +105,10 @@ public class UserProfilePage {
         email.setFont(Main.getFont(19));
         addr.setFont(Main.getFont(19));
 
-
         addr.setLineWrap(true);
         addr.setWrapStyleWord(true);
 
+        panel.add(logout_button);
         panel.add(theme_dropdown);
         panel.add(save_changes);
         panel.add(view_pass_button);
@@ -121,9 +124,10 @@ public class UserProfilePage {
         panel.add(top_bar);
         panel.add(bottom_bar);
 
+        logout_button.addActionListener(e -> Main.changeCard("login"));
         view_pass_button.addActionListener(e -> Main.popupMessage(new String(pass_field.getPassword())));
         save_changes.addActionListener(e -> UserProfileMain.saveAccountChanges());
-        theme_dropdown.addActionListener(e -> UserProfileMain.changeAccountTheme(theme_dropdown.getSelectedItem()));
+        theme_dropdown.addActionListener(e -> UserProfileMain.changeAppTheme(theme_dropdown.getSelectedItem()));
         back_button.addActionListener(e -> Main.gotoDashboard());
 
         return panel;

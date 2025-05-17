@@ -80,7 +80,6 @@ public class Login extends JPanel{
 
             if (isAuthenticated) {
                 Main.popupMessage("Login successful!");
-                Main.initializeModules();
                 Main.gotoDashboard();
             } else {
                 Main.popupError("Invalid username or password");
@@ -103,7 +102,6 @@ public class Login extends JPanel{
             if (rs.next()) {
                 Main.loggedInID = rs.getString("ID");
                 Main.userFullName = rs.getString("Full_Name");
-                Main.loggedInTheme = rs.getString("Theme");
 
                 AuditTrail.Audit_Trail("Logged in");
                 return true;

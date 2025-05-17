@@ -6,6 +6,7 @@ import celestino.transact.TransactMain;
 import delarama.Panels;
 import sandil.LoginCard;
 import valmonte.dashboardPanel;
+import valmonte.SalesHistory.salesHistoryPanel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -19,6 +20,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -41,11 +45,11 @@ public class Main {
         add_icon = new ImageIcon("src/main/resources/add.png"),
         scanner_icon = new ImageIcon("src/main/resources/scanner.png");
 
-    public static String loggedInID, userFullName, loggedInTheme = "Default";
+    public static String loggedInID, userFullName;
 
     public static void main(String[] args) throws Exception {
         setupWindow();
-        LoginCard.createModule();
+        initializeModules();
         changeCard("login");
         window.setVisible(true);
         
@@ -69,17 +73,30 @@ public class Main {
 
 
     public static void loadAccountTheme() {
-        switch(loggedInTheme) {
-            case "Dark":
-                theme[2] = new Color(32,32,32);
-                theme[1] = new Color(64,64,64);
-                theme[0] = new Color(128,128,128);
-            break; 
-            case "Light":
-                theme[2] = new Color(128,128,128);
-                theme[1] = new Color(64,64,64);
-                theme[0] = new Color(255,255,255);
-            break;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("theme.txt"));
+            String word = reader.readLine(); 
+            reader.close();
+            switch(word) {
+                case "Dark":
+                    theme[2] = new Color(32,32,32);
+                    theme[1] = new Color(64,64,64);
+                    theme[0] = new Color(128,128,128);
+                break; 
+                case "Light":
+                    theme[2] = new Color(128,128,128);
+                    theme[1] = new Color(64,64,64);
+                    theme[0] = new Color(255,255,255);
+                break;
+                default:
+                    theme[2] = new Color(1,69,24);
+                    theme[1] = new Color(0,80,160);
+                    theme[0] = new Color(252,153,51);
+                break;
+            }
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -179,8 +196,10 @@ public class Main {
     public static void initializeModules() {
         loadAccountTheme();
 
-        addCard(new dashboardPanel(), "dashboard");
-        addCard(new valmonte.SalesHistory.salesHistoryPanel(), "SalesHistory");
+        LoginCard.createModule();
+        
+        addCard(dashboardPanel.createModule(),"dashboard");
+        addCard(new salesHistoryPanel(), "SalesHistory");
 
         InventoryMain.createModule();
         OrdersMain.createOrdersModule();
