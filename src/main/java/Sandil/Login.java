@@ -79,6 +79,8 @@ public class Login extends JPanel{
             boolean isAuthenticated = Authentication(user, password);
 
             if (isAuthenticated) {
+                userField.setText("");
+                passField.setText("");
                 Main.popupMessage("Login successful!");
                 Main.gotoDashboard();
             } else {

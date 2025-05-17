@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import delarama.AuditTrail;
 import base.DB;
 import base.Main;
 
@@ -37,6 +37,7 @@ public class UserProfileMain {
         edit(Main.loggedInID, 6, fields[4]);
         edit(Main.loggedInID, 7, fields[5]);
 
+        AuditTrail.Audit_Trail("Accounts of " + fields[2] + " has been updated");
         Main.popupMessage("Account Updated!");
     }
 

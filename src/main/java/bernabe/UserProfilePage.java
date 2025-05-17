@@ -1,6 +1,7 @@
 package bernabe;
 
 import base.Main;
+import delarama.AuditTrail;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,7 +24,14 @@ public class UserProfilePage {
         no = new JTextField(),
         full_name = new JTextField(),
         email = new JTextField();
-    private static final JLabel theme_label = new JLabel("App Theme:");
+    private static final JLabel 
+        username_label = new JLabel("Username:"),
+        password_label = new JLabel("Password:"),
+        fullname_label = new JLabel("Full Name:"),
+        email_label = new JLabel("Email:"),
+        no_label = new JLabel("Contact Number:"),
+        addr_label = new JLabel("Address:"),
+        theme_label = new JLabel("App Theme:");
     private static final JComboBox<String> theme_dropdown = new JComboBox<>(new String[]{"Default","Dark","Light"});
     
 
@@ -77,7 +85,19 @@ public class UserProfilePage {
         save_changes.setForeground(Color.WHITE);
         logout_button.setBackground(Main.getMidColor());
         logout_button.setForeground(Color.WHITE);
+        username_label.setForeground(Color.BLACK);
+        password_label.setForeground(Color.BLACK);
+        fullname_label.setForeground(Color.BLACK);
+        email_label.setForeground(Color.BLACK);
+        no_label.setForeground(Color.BLACK);
+        addr_label.setForeground(Color.BLACK);
         
+        password_label.setBounds(82,97,234,38);
+        email_label.setBounds(82,244,234,38);
+        addr_label.setBounds(82,391,234,38);
+        no_label.setBounds(82,317,234,38);
+        fullname_label.setBounds(82,170,234,38);
+        username_label.setBounds(82,24,234,38);
         logout_button.setBounds(700,556,110,37);
         backdrop.setBounds(64,8,432,645);
         back_button.setBounds(0,0,45,30);
@@ -94,6 +114,12 @@ public class UserProfilePage {
         view_pass_button.setBounds(323,136,82,37);
         theme_dropdown.setBounds(700,85,101,32);
 
+        addr_label.setFont(Main.getFont(24));
+        no_label.setFont(Main.getFont(24));
+        email_label.setFont(Main.getFont(24));
+        fullname_label.setFont(Main.getFont(24));
+        password_label.setFont(Main.getFont(24));
+        username_label.setFont(Main.getFont(24));
         logout_button.setFont(Main.getFont(18));
         save_changes.setFont(Main.getFont(18));
         view_pass_button.setFont(Main.getFont(18));
@@ -108,6 +134,12 @@ public class UserProfilePage {
         addr.setLineWrap(true);
         addr.setWrapStyleWord(true);
 
+        panel.add(username_label);
+        panel.add(password_label);
+        panel.add(fullname_label);
+        panel.add(email_label);
+        panel.add(no_label);
+        panel.add(addr_label);
         panel.add(logout_button);
         panel.add(theme_dropdown);
         panel.add(save_changes);
@@ -124,7 +156,10 @@ public class UserProfilePage {
         panel.add(top_bar);
         panel.add(bottom_bar);
 
-        logout_button.addActionListener(e -> Main.changeCard("login"));
+        logout_button.addActionListener(e -> {
+            AuditTrail.Audit_Trail("Logged out");
+            Main.changeCard("login");
+        });
         view_pass_button.addActionListener(e -> Main.popupMessage(new String(pass_field.getPassword())));
         save_changes.addActionListener(e -> UserProfileMain.saveAccountChanges());
         theme_dropdown.addActionListener(e -> UserProfileMain.changeAppTheme(theme_dropdown.getSelectedItem()));

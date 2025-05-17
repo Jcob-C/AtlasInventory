@@ -103,7 +103,7 @@ public class TransactMain {
         
         if (!Main.popupConfirm("Total Transaction Price: "+total+"\n\nContinue?")) return;
 
-        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),"Celestino",String.valueOf(total),TransactPage.getPaymentMethod()});
+        int sale_id = DB.insertNewSale(new String[]{TransactPage.getCustomerName(),Main.userFullName,String.valueOf(total),TransactPage.getPaymentMethod()});
         
         AuditTrail.Audit_Trail("Transaction complete with sale ID " + sale_id + " for customer " + TransactPage.getCustomerName() + " with total: " + total);
         TransactPage.clearNameField();
@@ -266,7 +266,6 @@ public class TransactMain {
                         Main.toInteger(TransactPage.getRefundTableValue(new_item_index, 4))
                     )
                 );
-                AuditTrail.Audit_Trail("Merged refund item quantities for " + TransactPage.getRefundTableValue(i, 1) + " new quantities " + (Main.toInteger(TransactPage.getRefundTableValue(i, 4)) + Main.toInteger(TransactPage.getRefundTableValue(new_item_index, 4))));
                 TransactPage.removeRefundTableRow(new_item_index);
                 return true;
             }
@@ -285,7 +284,6 @@ public class TransactMain {
                         Main.toInteger(TransactPage.getSellTableValue(new_item_index, 4))
                     )
                 );
-                AuditTrail.Audit_Trail("Merged sell item quantities for " + TransactPage.getSellTableValue(i, 1) + " new quantities " + (Main.toInteger(TransactPage.getSellTableValue(i, 4)) + Main.toInteger(TransactPage.getSellTableValue(new_item_index, 4))));
                 TransactPage.removeSellTableRow(new_item_index);
                 return true;
             }
